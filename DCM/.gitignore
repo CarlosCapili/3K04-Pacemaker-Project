@@ -1,0 +1,4 @@
+*.pyc
+*.iml
+.mypy_cache
+.idea
