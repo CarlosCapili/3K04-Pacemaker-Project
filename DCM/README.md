@@ -1,5 +1,7 @@
 # DCM
 Dump DCM stuff here, and update this later
+
+[MAKE SURE YOU ADD TYPING FOR ALL YOUR VARIABLES AND FUNCTIONS/METHODS](https://docs.python.org/3.7/library/typing.html)
 ___
 ## To-do list
 DCM (English only, 3.2.2, 3.2.3, 3.2.4 only 1 and 2, for 3.2.5 display egrams without markers)
