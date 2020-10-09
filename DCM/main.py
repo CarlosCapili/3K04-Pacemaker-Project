@@ -1,16 +1,35 @@
-# This is a sample Python script.
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QColor, QPalette
+from PyQt5.QtWidgets import QApplication, QMessageBox, QWidget, QPushButton, QVBoxLayout
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+
+def on_button_clicked():
+    alert = QMessageBox()
+    alert.setText('You clicked the button!')
+    alert.exec_()
 
 
 def main():
-    name = "Pycharm"
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    app = QApplication([])
+    app.setStyle('Fusion')
+
+    palette = QPalette()
+    palette.setColor(QPalette.Window, QColor(53, 53, 53))
+    palette.setColor(QPalette.WindowText, Qt.white)
+    app.setPalette(palette)
+
+    button = QPushButton('Click')
+    window = QWidget()
+    layout = QVBoxLayout()
+
+    button.clicked.connect(on_button_clicked)
+    layout.addWidget(QPushButton('Top'))
+    layout.addWidget(QPushButton('Bottom'))
+    layout.addWidget(button)
+    window.setLayout(layout)
+    window.show()
+    app.exec_()
 
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     main()

@@ -2,6 +2,8 @@
 Dump DCM stuff here, and update this later
 
 [MAKE SURE YOU ADD TYPING FOR ALL YOUR VARIABLES AND FUNCTIONS/METHODS](https://docs.python.org/3.7/library/typing.html)
+
+[Qt Designer](https://github.com/pyqt/examples/tree/_/src/05%20Qt%20Designer%20Python)
 ___
 ## To-do list
 DCM (English only, 3.2.2, 3.2.3, 3.2.4 only 1 and 2, for 3.2.5 display egrams without markers)
@@ -61,7 +63,6 @@ link was broken during the transmission of electrograms and then reestablished
             - [ ] Be selectable (0.5X, 1X, or 2X)
             - [ ] Apply to all channels
 ___
-    
 - [ ] Develop an interface that includes a welcome screen, including the ability to register a new user (name and password), and to login as an existing user. A maximum of 10 users should be allowed to be stored locally.
 ___
 - [ ] Develop essential aspects of the user interface - with respect to 3.2.2 in PACEMAKER, you should include: 1, 2 (input buttons), 3, 4, and 7.
