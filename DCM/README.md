@@ -43,7 +43,6 @@ time traces, along with full annotation for display of event markers.
 - [ ] 4.7: Real-time Electrograms
     - [ ] Real-time internal electrograms shall be made available from
         - [ ] The atrial and ventricular sense/pace leads.
-        - [ ] A surface electrogram.
     - [ ] The real-time electrogram transmission shall be re-initiated if the telemetry
 link was broken during the transmission of electrograms and then reestablished
     - [ ] 4.7.1: Electrogram Viewing
@@ -55,10 +54,6 @@ link was broken during the transmission of electrograms and then reestablished
             - [ ] An atrial internal electrogram option shall be provided.
             - [ ] A ventricular internal electrogram option shall be provided.
             - [ ] An atrial and ventricular internal electrogram option shall be provided.
-        - [ ] For the surface electrocardiogram (ECG), the user shall have the capability
-    to select
-            - [ ] The gain utilized (0.5X, 1X, or 2X)
-            - [ ] Whether high pass filtering is on
         - [ ] For the internal electrogram (EGM), the display gain shall
             - [ ] Be selectable (0.5X, 1X, or 2X)
             - [ ] Apply to all channels
