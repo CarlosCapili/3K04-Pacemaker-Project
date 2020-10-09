@@ -1,5 +1,35 @@
 ### To-do list
-- [ ] Develop an interface that includes a welcome screen, including the ability to register a new user (name and password), and to login as an existing user. A maximum of 10 users should be allowed to be stored locally. 
+DCM (English only, 3.2.2, 3.2.3, 3.2.4 only 1 and 2, for 3.2.5 display egrams without markers)
+- [ ] 3.2.3 DCM Utility Functions
+    - [ ] 3.2.3.1: The About function displays the following:
+        - [ ] Application model number
+        - [ ] Application software revision number currently in use
+        - [ ] DCM serial number
+        - [ ] Institution name
+    - [ ] 3.2.3.2: The Set Clock function shall set the date and time of the device.
+    - [ ] 3.2.3.3: The New Patient function shall allow a new device to be interrogated without exiting the software application.    
+    - [ ] 3.2.3.4: The Quit function shall end a telemetry session.
+- [ ] 3.2.4 Printed Reports
+    - [ ] 3.2.4.1: A Bradycardia Parameters Report shall be available.
+    - [ ] 3.2.4.2: A Temporary Parameters Report shall be available.
+- [ ] Develop an interface that includes a welcome screen, including the ability to register a new user (name and password), and to login as an existing user. A maximum of 10 users should be allowed to be stored locally.
 - [ ] Develop essential aspects of the user interface - with respect to 3.2.2 in PACEMAKER, you should include: 1, 2 (input buttons), 3, 4, and 7.
+    - [ ] 3.2.2.1: The user interface shall be capable of utilizing and managing windows for display of text and graphics.
+    - [ ] 3.2.2.2: The user interface shall be capable of processing user positioning and input buttons.
+    - [ ] 3.2.2.3: The user interface shall be capable of displaying all programmable parameters for review and modification.
+    - [ ] 3.2.2.4: The user interface shall be capable of visually indicating when the DCM and the device are communicating.
+    - [ ] 3.2.2.7: The user interface shall be capable of visually indicating when a different PACEMAKER device is approached than was previously interrogated.
 - [ ] Develop interfaces for all of the pacing modes mentioned in Part 1.
-- [ ] Make provision for storing programmable parameter data for checking inputs - for the purposes of this assignment the parameters we want specically are: Lower Rate Limit, Upper Rate Limit, Atrial Amplitude, Atrial Pules Width, Ventricular Amplitude, and Ventricular Pulse Width, VRP, ARP. The complete set is in PACEMAKER document on page 28.
+    - [ ] AOO 
+    - [ ] VOO 
+    - [ ] AAI
+    - [ ] VVI
+- [ ] Make provision for storing programmable parameter data for checking inputs - for the purposes of this assignment the parameters we want specifically are: Lower Rate Limit, Upper Rate Limit, Atrial Amplitude, Atrial Pules Width, Ventricular Amplitude, and Ventricular Pulse Width, VRP, ARP. The complete set is in PACEMAKER document on page 28.
+    - [ ] Lower Rate Limit 
+    - [ ] Upper Rate Limit 
+    - [ ] Atrial Amplitude
+    - [ ] Atrial Pules Width 
+    - [ ] Ventricular Amplitude 
+    - [ ] Ventricular Pulse Width
+    - [ ] VRP
+    - [ ] ARP
