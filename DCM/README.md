@@ -54,7 +54,7 @@ link was broken during the transmission of electrograms and then reestablished
         - [ ] For the surface electrocardiogram (ECG), the user shall have the capability
     to select
             - [ ] The gain utilized (0.5X, 1X, or 2X)
-            - [ ] Whether high pass Øltering is on
+            - [ ] Whether high pass filtering is on
         - [ ] For the internal electrogram (EGM), the display gain shall
             - [ ] Be selectable (0.5X, 1X, or 2X)
             - [ ] Apply to all channels
