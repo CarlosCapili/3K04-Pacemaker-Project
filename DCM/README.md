@@ -36,22 +36,28 @@ means of printing combinations of real time data.
 surface ECG.
     - [ ] 3.5.2.5: The printer shall be capable of simultaneously printing up to three real-
 time traces, along with full annotation for display of event markers.
-- [ ] 4.7.1: Electrogram Viewing
-    - [ ] The user shall have the option of viewing the electrograms:
-        - [ ] On the screen
-        - [ ] Through a printed copy
-    - [ ] The user shall have the option of selecting which electrograms are viewed
-and the resolution utilized. Internal electrogram (EGM) options provided are the following:
-        - [ ] An atrial internal electrogram option shall be provided.
-        - [ ] A ventricular internal electrogram option shall be provided.
-        - [ ] An atrial and ventricular internal electrogram option shall be provided.
-    - [ ] For the surface electrocardiogram (ECG), the user shall have the capability
-to select
-        - [ ] The gain utilized (0.5X, 1X, or 2X)
-        - [ ] Whether high pass Øltering is on
-    - [ ] For the internal electrogram (EGM), the display gain shall
-        - [ ] Be selectable (0.5X, 1X, or 2X)
-        - [ ] Apply to all channels
+- [ ] 4.7: Real-time Electrograms
+    - [ ] Real-time internal electrograms shall be made available from
+        - [ ] The atrial and ventricular sense/pace leads.
+        - [ ] A surface electrogram.
+    - [ ] The real-time electrogram transmission shall be re-initiated if the telemetry
+link was broken during the transmission of electrograms and then reestablished
+    - [ ] 4.7.1: Electrogram Viewing
+        - [ ] The user shall have the option of viewing the electrograms:
+            - [ ] On the screen
+            - [ ] Through a printed copy
+        - [ ] The user shall have the option of selecting which electrograms are viewed
+    and the resolution utilized. Internal electrogram (EGM) options provided are the following:
+            - [ ] An atrial internal electrogram option shall be provided.
+            - [ ] A ventricular internal electrogram option shall be provided.
+            - [ ] An atrial and ventricular internal electrogram option shall be provided.
+        - [ ] For the surface electrocardiogram (ECG), the user shall have the capability
+    to select
+            - [ ] The gain utilized (0.5X, 1X, or 2X)
+            - [ ] Whether high pass Øltering is on
+        - [ ] For the internal electrogram (EGM), the display gain shall
+            - [ ] Be selectable (0.5X, 1X, or 2X)
+            - [ ] Apply to all channels
 ___
     
 - [ ] Develop an interface that includes a welcome screen, including the ability to register a new user (name and password), and to login as an existing user. A maximum of 10 users should be allowed to be stored locally.
