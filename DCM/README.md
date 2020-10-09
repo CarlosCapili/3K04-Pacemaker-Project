@@ -4,7 +4,7 @@ ___
 ## To-do list
 DCM (English only, 3.2.2, 3.2.3, 3.2.4 only 1 and 2, for 3.2.5 display egrams without markers)
 ___
-- [ ] 3.2.3 DCM Utility Functions 
+- [ ] 3.2.3: DCM Utility Functions 
     - [ ] 3.2.3.1: The About function displays the following:
         - [ ] Application model number
         - [ ] Application software revision number currently in use
@@ -14,7 +14,7 @@ ___
     - [ ] 3.2.3.3: The New Patient function shall allow a new device to be interrogated without exiting the software application.    
     - [ ] 3.2.3.4: The Quit function shall end a telemetry session.
 ___
-- [ ] 3.2.4 Printed Reports
+- [ ] 3.2.4: Printed Reports
     - [ ] 3.2.4.1: A Bradycardia Parameters Report shall be available.
     - [ ] 3.2.4.2: A Temporary Parameters Report shall be available.
     - [ ] Each report shall contain the following header information:
@@ -25,8 +25,33 @@ ___
         - [ ] Application model and version number
         - [ ] Report name
 ___
-- [ ] 3.2.5 display egrams without markers
-    - [ ] placeholder 
+- [ ] 3.2.5: display egrams without markers
+    - [ ] 3.2.5.1: The DCM shall be capable of displaying real time and surface ECG data,
+which shall be accomplished using the DCM's internal monitor.
+    - [ ] 3.2.5.2: The system shall be capable of displaying up to three Real-Time traces
+(2 Telemetered, 1 Surface ECG), in a scrollable fashion.
+    - [ ] 3.5.2.3: The DCM shall use the DCM's internal strip chart recorder to provide a
+means of printing combinations of real time data.
+    - [ ] 3.5.2.4: The DCM shall be capable of printing real time telemetered data and a
+surface ECG.
+    - [ ] 3.5.2.5: The printer shall be capable of simultaneously printing up to three real-
+time traces, along with full annotation for display of event markers.
+- [ ] 4.7.1: Electrogram Viewing
+    - [ ] The user shall have the option of viewing the electrograms:
+        - [ ] On the screen
+        - [ ] Through a printed copy
+    - [ ] The user shall have the option of selecting which electrograms are viewed
+and the resolution utilized. Internal electrogram (EGM) options provided are the following:
+        - [ ] An atrial internal electrogram option shall be provided.
+        - [ ] A ventricular internal electrogram option shall be provided.
+        - [ ] An atrial and ventricular internal electrogram option shall be provided.
+    - [ ] For the surface electrocardiogram (ECG), the user shall have the capability
+to select
+        - [ ] The gain utilized (0.5X, 1X, or 2X)
+        - [ ] Whether high pass Øltering is on
+    - [ ] For the internal electrogram (EGM), the display gain shall
+        - [ ] Be selectable (0.5X, 1X, or 2X)
+        - [ ] Apply to all channels
 ___
     
 - [ ] Develop an interface that includes a welcome screen, including the ability to register a new user (name and password), and to login as an existing user. A maximum of 10 users should be allowed to be stored locally.
