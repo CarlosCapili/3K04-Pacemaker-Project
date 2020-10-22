@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QPalette
-from PyQt5.QtWidgets import QApplication, QMessageBox, QWidget, QPushButton, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QMessageBox, QPushButton, QVBoxLayout, QWidget
 
 
 def on_button_clicked():
@@ -27,6 +27,7 @@ def main():
     layout.addWidget(QPushButton('Bottom'))
     layout.addWidget(button)
     window.setLayout(layout)
+
     window.show()
     app.exec_()
 

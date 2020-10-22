@@ -4,6 +4,8 @@ Dump DCM stuff here, and update this later
 [MAKE SURE YOU ADD TYPING FOR ALL YOUR VARIABLES AND FUNCTIONS/METHODS](https://docs.python.org/3.7/library/typing.html)
 
 [Qt Designer](https://github.com/pyqt/examples/tree/_/src/05%20Qt%20Designer%20Python)
+
+The files in the `py_ui_files` folder are all auto-generated, do not modify them!
 ___
 ## To-do list
 DCM (English only, 3.2.2, 3.2.3, 3.2.4 only 1 and 2, for 3.2.5 display egrams without markers)
