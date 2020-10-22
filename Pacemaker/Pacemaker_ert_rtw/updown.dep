@@ -1,0 +1,31 @@
+updown.o: D:/school/rtw/c/src/ext_mode/common/updown.c \
+ C:/Users/Udeep/Downloads/3K04-Project-L1-G7-main/3K04-Project-L1-G7-main/Pacemaker/Pacemaker_ert_rtw/rtwtypes.h \
+ D:/school/simulink/include/rtw_extmode.h \
+ D:/school/simulink/include/sysran_types.h \
+ D:/school/rtw/c/src/ext_mode/common/ext_types.h \
+ D:/school/rtw/c/src/ext_mode/common/ext_share.h \
+ D:/school/rtw/c/src/ext_mode/common/ext_svr.h \
+ D:/school/rtw/c/src/ext_mode/common/ext_work.h \
+ D:/school/rtw/c/src/ext_mode/common/updown_util.h \
+ D:/school/rtw/c/src/dt_info.h \
+ D:/school/rtw/c/src/ext_mode/common/upsup_public.h
+
+C:/Users/Udeep/Downloads/3K04-Project-L1-G7-main/3K04-Project-L1-G7-main/Pacemaker/Pacemaker_ert_rtw/rtwtypes.h:
+
+D:/school/simulink/include/rtw_extmode.h:
+
+D:/school/simulink/include/sysran_types.h:
+
+D:/school/rtw/c/src/ext_mode/common/ext_types.h:
+
+D:/school/rtw/c/src/ext_mode/common/ext_share.h:
+
+D:/school/rtw/c/src/ext_mode/common/ext_svr.h:
+
+D:/school/rtw/c/src/ext_mode/common/ext_work.h:
+
+D:/school/rtw/c/src/ext_mode/common/updown_util.h:
+
+D:/school/rtw/c/src/dt_info.h:
+
+D:/school/rtw/c/src/ext_mode/common/upsup_public.h:

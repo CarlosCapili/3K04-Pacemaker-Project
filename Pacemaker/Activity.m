@@ -3,9 +3,9 @@ classdef Activity < Simulink.IntEnumType
     %   Possible choices refer to triggered,inhibited,both or neither
     
     enumeration
-        TRIGGERED(0)
-        INHIBITED(1)
-        DUAL(2)
-        NONE(3)
+        TRIGGERED_A(0)
+        INHIBITED_A(1)
+        DUAL_A(2)
+        NONE_A(3)
     end
 end

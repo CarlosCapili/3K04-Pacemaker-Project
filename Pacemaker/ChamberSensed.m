@@ -3,10 +3,10 @@ classdef ChamberSensed < Simulink.IntEnumType
     %   Possible choices refer to the atrium,ventricle, both or neither
     
     enumeration
-        ATRIUM(0)
-        VENTRICLE(1)
-        DUAL(2)
-        NONE(3)
+        ATRIUM_S(0)
+        VENTRICLE_S(1)
+        DUAL_S(2)
+        NONE_S(3)
     end
 end
 
