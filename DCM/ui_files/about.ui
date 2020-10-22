@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>aboutWindow</class>
+ <widget class="QDialog" name="aboutWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>360</width>
+    <height>130</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>About</string>
+  </property>
+  <widget class="QTableWidget" name="tableWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>361</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <attribute name="horizontalHeaderStretchLastSection">
+    <bool>true</bool>
+   </attribute>
+   <row>
+    <property name="text">
+     <string>Application model</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Software revision</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Serial number</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Institution name</string>
+    </property>
+   </row>
+   <column>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>1</pointsize>
+     </font>
+    </property>
+   </column>
+   <item row="1" column="0">
+    <property name="text">
+     <string/>
+    </property>
+   </item>
+   <item row="3" column="0">
+    <property name="text">
+     <string>McMaster University</string>
+    </property>
+   </item>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
