@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'welcomescreen.ui'
+# Form implementation generated from reading ui file 'ui_files\welcomescreen.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.1
 #
@@ -40,7 +40,7 @@ class Ui_WelcomeScreen(object):
 
     def retranslateUi(self, WelcomeScreen):
         _translate = QtCore.QCoreApplication.translate
-        WelcomeScreen.setWindowTitle(_translate("WelcomeScreen", "Dialog"))
+        WelcomeScreen.setWindowTitle(_translate("WelcomeScreen", "Welcome!"))
         self.label.setText(_translate("WelcomeScreen", "Welcome to the SFWRENG 3K04 DCM Interface"))
         self.registerButton.setText(_translate("WelcomeScreen", "Register a new user"))
         self.loginButton.setText(_translate("WelcomeScreen", "Login as an existing user"))

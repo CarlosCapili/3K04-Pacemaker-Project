@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'register.ui'
+# Form implementation generated from reading ui file 'ui_files\register.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.1
 #
@@ -29,24 +29,24 @@ class Ui_RegisterScreen(object):
         self.gridLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
-        self.plainTextEdit = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
+        self.userTextEdit = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.plainTextEdit.sizePolicy().hasHeightForWidth())
-        self.plainTextEdit.setSizePolicy(sizePolicy)
-        self.plainTextEdit.setMaximumSize(QtCore.QSize(500, 16777215))
-        self.plainTextEdit.setObjectName("plainTextEdit")
-        self.gridLayout.addWidget(self.plainTextEdit, 0, 1, 1, 1)
-        self.plainTextEdit_2 = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
+        sizePolicy.setHeightForWidth(self.userTextEdit.sizePolicy().hasHeightForWidth())
+        self.userTextEdit.setSizePolicy(sizePolicy)
+        self.userTextEdit.setMaximumSize(QtCore.QSize(500, 16777215))
+        self.userTextEdit.setObjectName("userTextEdit")
+        self.gridLayout.addWidget(self.userTextEdit, 0, 1, 1, 1)
+        self.passTextEdit = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.plainTextEdit_2.sizePolicy().hasHeightForWidth())
-        self.plainTextEdit_2.setSizePolicy(sizePolicy)
-        self.plainTextEdit_2.setMaximumSize(QtCore.QSize(500, 16777215))
-        self.plainTextEdit_2.setObjectName("plainTextEdit_2")
-        self.gridLayout.addWidget(self.plainTextEdit_2, 1, 1, 1, 1)
+        sizePolicy.setHeightForWidth(self.passTextEdit.sizePolicy().hasHeightForWidth())
+        self.passTextEdit.setSizePolicy(sizePolicy)
+        self.passTextEdit.setMaximumSize(QtCore.QSize(500, 16777215))
+        self.passTextEdit.setObjectName("passTextEdit")
+        self.gridLayout.addWidget(self.passTextEdit, 1, 1, 1, 1)
         self.label_3 = QtWidgets.QLabel(self.gridLayoutWidget)
         font = QtGui.QFont()
         font.setPointSize(20)
