@@ -1,5 +1,5 @@
 import json
-from typing import Dict
+from typing import Callable, Dict
 
 from PyQt5.QtWidgets import QMessageBox
 
@@ -9,7 +9,7 @@ CREDENTIAL_FILE_PATH = "credentials.json"
 class AuthHandler:
     cred_store: Dict[str, str]
 
-    def __init__(self):
+    def __init__(self, on_success: Callable):
         print("Login handler init")
 
         try:
@@ -18,13 +18,15 @@ class AuthHandler:
         except FileNotFoundError:
             self.cred_store = {}
 
+        self.on_success = on_success
+
     def login(self, username: str, password: str):
         print(f"Login credentials: {username} | {password}")
 
         if username in self.cred_store.keys():
             if password == self.cred_store[username]:
                 print("Welcome back.")
-                # SHOW DCM
+                self.on_success()
             else:
                 print("Incorrect password!")
                 self.show_alert("Incorrect password!")
@@ -48,7 +50,7 @@ class AuthHandler:
                 with open(CREDENTIAL_FILE_PATH, mode='w+') as f:
                     json.dump(self.cred_store, f)
 
-                # SHOW DCM
+                self.on_success()
 
     @staticmethod
     def show_alert(msg: str):

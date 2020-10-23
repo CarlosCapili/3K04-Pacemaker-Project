@@ -6,13 +6,9 @@ from handlers.auth import AuthHandler
 from py_ui_files import (dcm, stackedwelcomescreen)
 
 
-def show_dcm(dcm: QMainWindow):
-    dcm.show()
-
-
 class MainController:
     def __init__(self):
-        self.auth = AuthHandler()
+        self.auth = AuthHandler(self.show_dcm)
 
         self.palette = QPalette()
         self.palette.setColor(QPalette.Window, QColor(53, 53, 53))
@@ -40,6 +36,10 @@ class MainController:
         self.welcome_ui.returnButton_2.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(0))
 
         self.welcome_gui.show()
+
+    def show_dcm(self):
+        self.welcome_gui.close()
+        self.dcm_gui.show()
 
 
 if __name__ == '__main__':
