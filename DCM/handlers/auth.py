@@ -45,7 +45,7 @@ class AuthHandler:
             else:
                 self.cred_store[username] = password
 
-                with open(CREDENTIAL_FILE_PATH, mode='a+') as f:
+                with open(CREDENTIAL_FILE_PATH, mode='w+') as f:
                     json.dump(self.cred_store, f)
 
                 # SHOW DCM

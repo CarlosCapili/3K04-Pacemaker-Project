@@ -15,6 +15,7 @@ class Ui_Welcome(object):
     def setupUi(self, Welcome):
         Welcome.setObjectName("Welcome")
         Welcome.resize(640, 269)
+        Welcome.setInputMethodHints(QtCore.Qt.ImhNone)
         self.welcomeScreen = QtWidgets.QWidget()
         self.welcomeScreen.setObjectName("welcomeScreen")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.welcomeScreen)
@@ -115,6 +116,9 @@ class Ui_Welcome(object):
         self.label_4.setFont(font)
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setObjectName("label_4")
+        self.returnButton = QtWidgets.QPushButton(self.registerScreen)
+        self.returnButton.setGeometry(QtCore.QRect(10, 10, 61, 31))
+        self.returnButton.setObjectName("returnButton")
         Welcome.addWidget(self.registerScreen)
         self.loginScreen = QtWidgets.QWidget()
         self.loginScreen.setObjectName("loginScreen")
@@ -178,6 +182,9 @@ class Ui_Welcome(object):
         self.label_7.setFont(font)
         self.label_7.setObjectName("label_7")
         self.gridLayout_2.addWidget(self.label_7, 0, 0, 1, 1)
+        self.returnButton_2 = QtWidgets.QPushButton(self.loginScreen)
+        self.returnButton_2.setGeometry(QtCore.QRect(10, 10, 61, 31))
+        self.returnButton_2.setObjectName("returnButton_2")
         Welcome.addWidget(self.loginScreen)
 
         self.retranslateUi(Welcome)
@@ -194,10 +201,12 @@ class Ui_Welcome(object):
         self.label_2.setText(_translate("Welcome", "Username:"))
         self.pushButton.setText(_translate("Welcome", "Register"))
         self.label_4.setText(_translate("Welcome", "Register new user"))
+        self.returnButton.setText(_translate("Welcome", "Back"))
         self.pushButton_2.setText(_translate("Welcome", "Login"))
         self.label_5.setText(_translate("Welcome", "Login as an existing user"))
         self.label_6.setText(_translate("Welcome", "Password:"))
         self.label_7.setText(_translate("Welcome", "Username:"))
+        self.returnButton_2.setText(_translate("Welcome", "Back"))
 
 
 if __name__ == "__main__":

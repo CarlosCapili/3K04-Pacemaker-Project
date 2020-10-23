@@ -1,54 +1,50 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QPalette
-from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QWidget
+from PyQt5.QtWidgets import (QApplication, QMainWindow, QStackedWidget)
 
 from handlers.auth import AuthHandler
-from py_ui_files import dcm, login, register, welcomescreen
+from py_ui_files import (dcm, stackedwelcomescreen)
 
 
-def show_dcm(dcm):  # Replace this with lambda: dcm_gui.show()
+def show_dcm(dcm: QMainWindow):
     dcm.show()
 
 
-def main():
-    auth = AuthHandler()
+class MainController:
+    def __init__(self):
+        self.auth = AuthHandler()
 
-    app = QApplication([])
-    app.setStyle('Fusion')
+        self.palette = QPalette()
+        self.palette.setColor(QPalette.Window, QColor(53, 53, 53))
+        self.palette.setColor(QPalette.WindowText, Qt.white)
 
-    palette = QPalette()
-    palette.setColor(QPalette.Window, QColor(53, 53, 53))
-    palette.setColor(QPalette.WindowText, Qt.white)
-    app.setPalette(palette)
+        self.welcome_gui = QStackedWidget()
+        self.welcome_ui = stackedwelcomescreen.Ui_Welcome()
+        self.welcome_ui.setupUi(self.welcome_gui)
 
-    welcome_gui = QWidget()
-    welcome_ui = welcomescreen.Ui_WelcomeScreen()
-    welcome_ui.setupUi(welcome_gui)
+        self.dcm_gui = QMainWindow()
+        self.dcm_ui = dcm.Ui_MainWindow()
+        self.dcm_ui.setupUi(self.dcm_gui)
 
-    register_gui = QDialog()
-    register_ui = register.Ui_RegisterScreen()
-    register_ui.setupUi(register_gui)
+        self.welcome_ui.registerButton.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(1))
+        self.welcome_ui.loginButton.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(2))
 
-    login_gui = QDialog()
-    login_ui = login.Ui_LoginScreen()
-    login_ui.setupUi(login_gui)
+        self.welcome_ui.pushButton.clicked.connect(
+            lambda: self.auth.register(self.welcome_ui.userTextEdit.toPlainText(),
+                                       self.welcome_ui.passTextEdit.toPlainText()))
+        self.welcome_ui.returnButton.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(0))
 
-    dcm_gui = QMainWindow()
-    dcm_ui = dcm.Ui_MainWindow()
-    dcm_ui.setupUi(dcm_gui)
+        self.welcome_ui.pushButton_2.clicked.connect(
+            lambda: self.auth.login(self.welcome_ui.userTextEdit_2.toPlainText(),
+                                    self.welcome_ui.passTextEdit_2.toPlainText()))
+        self.welcome_ui.returnButton_2.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(0))
 
-    welcome_ui.registerButton.clicked.connect(lambda: register_gui.show())
-    welcome_ui.loginButton.clicked.connect(lambda: login_gui.show())
-
-    register_ui.pushButton.clicked.connect(
-        lambda: auth.register(register_ui.userTextEdit.toPlainText(), register_ui.passTextEdit.toPlainText()))
-
-    login_ui.pushButton.clicked.connect(
-        lambda: auth.login(login_ui.userTextEdit.toPlainText(), login_ui.passTextEdit.toPlainText()))
-
-    welcome_gui.show()
-    app.exec_()
+        self.welcome_gui.show()
 
 
 if __name__ == '__main__':
-    main()
+    app = QApplication([])
+    main_controller = MainController()
+    app.setStyle('Fusion')
+    app.setPalette(main_controller.palette)
+    app.exec_()
