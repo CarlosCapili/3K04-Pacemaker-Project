@@ -242,7 +242,7 @@ class Ui_Welcome(object):
         Welcome.addWidget(self.loginScreen)
 
         self.retranslateUi(Welcome)
-        Welcome.setCurrentIndex(2)
+        Welcome.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Welcome)
 
     def retranslateUi(self, Welcome):
