@@ -1,0 +1,38 @@
+k64f_ext_svr.o: \
+ C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/freedomk64f/src/k64f_ext_svr.c \
+ C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker_ert_rtw/rtwtypes.h \
+ C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker_ert_rtw/multiword_types.h \
+ C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker_ert_rtw/rtwtypes.h \
+ D:/school/simulink/include/rtw_extmode.h \
+ D:/school/rtw/c/src/ext_mode/common/ext_types.h \
+ D:/school/rtw/c/src/ext_mode/common/ext_share.h \
+ D:/school/rtw/c/src/ext_mode/common/ext_test.h \
+ D:/school/rtw/c/src/ext_mode/common/ext_svr_transport.h \
+ D:/school/rtw/c/src/ext_mode/common/updown.h \
+ D:/school/rtw/c/src/ext_mode/common/upsup_public.h \
+ D:/school/rtw/c/src/ext_mode/common/updown_util.h \
+ D:/school/rtw/c/src/dt_info.h
+
+C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker_ert_rtw/rtwtypes.h:
+
+C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker_ert_rtw/multiword_types.h:
+
+C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker_ert_rtw/rtwtypes.h:
+
+D:/school/simulink/include/rtw_extmode.h:
+
+D:/school/rtw/c/src/ext_mode/common/ext_types.h:
+
+D:/school/rtw/c/src/ext_mode/common/ext_share.h:
+
+D:/school/rtw/c/src/ext_mode/common/ext_test.h:
+
+D:/school/rtw/c/src/ext_mode/common/ext_svr_transport.h:
+
+D:/school/rtw/c/src/ext_mode/common/updown.h:
+
+D:/school/rtw/c/src/ext_mode/common/upsup_public.h:
+
+D:/school/rtw/c/src/ext_mode/common/updown_util.h:
+
+D:/school/rtw/c/src/dt_info.h:

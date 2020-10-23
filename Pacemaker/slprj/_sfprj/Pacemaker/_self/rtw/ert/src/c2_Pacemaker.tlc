@@ -7,7 +7,7 @@
 %endfunction
 %function ChartDataMap(block, system) void
   %createrecord ChartDataElements {\
-    NumChartData   7 \
+    NumChartData   9 \
     ChartDataDefaults {\
       RecordType   "ChartData"\
       Dimensions   []\
@@ -42,10 +42,24 @@
       SrcLocation  ""\
     }\
     ChartData {\
-      Name         "is_Inhibit"\
+      Name         "is_Default"\
       Description  "StateActiveChild"\
       SFName       ""\
-      Path         "Sense.Inhibit"\
+      Path         "Sense.Default"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_Atrium"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Sense.Atrium"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_Ventricle"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Sense.Ventricle"\
       SrcLocation  ""\
     }\
     ChartData {\

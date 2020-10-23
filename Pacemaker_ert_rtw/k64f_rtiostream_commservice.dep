@@ -1,0 +1,14 @@
+k64f_rtiostream_commservice.o: \
+ C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/freedomk64f/src/k64f_rtiostream_commservice.c \
+ D:/school/extern/include/RTIOStreamTgtAppSvc/RTIOStreamTgtAppSvcCIntrf.h \
+ D:/school/extern/include/RTIOStreamTgtAppSvc/RTIOStreamTgtAppSvc_dll.hpp \
+ D:/school/toolbox/coder/rtiostream/src/rtiostream.h \
+ D:/school/extern/include/tmwtypes.h
+
+D:/school/extern/include/RTIOStreamTgtAppSvc/RTIOStreamTgtAppSvcCIntrf.h:
+
+D:/school/extern/include/RTIOStreamTgtAppSvc/RTIOStreamTgtAppSvc_dll.hpp:
+
+D:/school/toolbox/coder/rtiostream/src/rtiostream.h:
+
+D:/school/extern/include/tmwtypes.h:
