@@ -21,6 +21,8 @@ class MainController:
         self.dcm_gui = QMainWindow()
         self.dcm_ui = dcm.Ui_MainWindow()
         self.dcm_ui.setupUi(self.dcm_gui)
+        self.dcm_ui.statusbar.setStyleSheet(open("stylesheets/dcm_status_bar.css").read())
+        self.dcm_ui.statusbar.showMessage("Not connected")
 
         self.about_gui = QDialog()
         self.about_ui = about.Ui_aboutWindow()
@@ -38,14 +40,12 @@ class MainController:
 
         # Register screen
         self.welcome_ui.pushButton.clicked.connect(
-            lambda: self.auth.register(self.welcome_ui.userTextEdit.toPlainText(),
-                                       self.welcome_ui.passTextEdit.toPlainText()))
+            lambda: self.auth.register(self.welcome_ui.lineEdit.text(), self.welcome_ui.lineEdit_2.text()))
         self.welcome_ui.returnButton.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(0))
 
         # Login screen
         self.welcome_ui.pushButton_2.clicked.connect(
-            lambda: self.auth.login(self.welcome_ui.userTextEdit_2.toPlainText(),
-                                    self.welcome_ui.passTextEdit_2.toPlainText()))
+            lambda: self.auth.login(self.welcome_ui.lineEdit_3.text(), self.welcome_ui.lineEdit_4.text()))
         self.welcome_ui.returnButton_2.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(0))
 
     def link_dcm_buttons(self):
