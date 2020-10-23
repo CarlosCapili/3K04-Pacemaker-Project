@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Pacemaker'.
  *
- * Model version                  : 1.25
+ * Model version                  : 1.26
  * Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
- * C/C++ source code generated on : Fri Oct 23 04:36:20 2020
+ * C/C++ source code generated on : Fri Oct 23 09:09:05 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -44,6 +44,8 @@
 /* Block signals (default storage) */
 typedef struct {
   real_T PACING_REF_PWM;               /* '<Root>/Chart' */
+  boolean_T ATR_CMP_DETECT;            /* '<S2>/ATR_CMP_DETECT' */
+  boolean_T VENT_CMP_DETECT;           /* '<S2>/VENT_CMP_DETECT' */
   boolean_T Z_ATR_CTRL;                /* '<Root>/Chart' */
   boolean_T Z_VENT_CTRL;               /* '<Root>/Chart' */
   boolean_T ATR_PACE_CTRL;             /* '<Root>/Chart' */
@@ -75,6 +77,7 @@ typedef struct {
   freedomk64f_DigitalWrite_Pace_T obj_py;/* '<S3>/B_LEDOUT' */
   freedomk64f_DigitalWrite_Pace_T obj_pu;/* '<S3>/FRONTEND_CTRL1' */
   int32_T sfEvent;                     /* '<Root>/Chart' */
+  uint16_T temporalCounter_i1;         /* '<Root>/Chart' */
   uint8_T is_active_c2_Pacemaker;      /* '<Root>/Chart' */
   uint8_T is_c2_Pacemaker;             /* '<Root>/Chart' */
   uint8_T is_Sense;                    /* '<Root>/Chart' */
@@ -82,7 +85,6 @@ typedef struct {
   uint8_T is_Atrium;                   /* '<Root>/Chart' */
   uint8_T is_Ventricle;                /* '<Root>/Chart' */
   uint8_T is_Pace;                     /* '<Root>/Chart' */
-  uint8_T temporalCounter_i1;          /* '<Root>/Chart' */
 } DW_Pacemaker_T;
 
 /* Parameters (default storage) */
@@ -96,7 +98,7 @@ struct P_Pacemaker_T_ {
   real_T Constant2_Value;              /* Expression: 1
                                         * Referenced by: '<S3>/Constant2'
                                         */
-  Activity Constant_Value;             /* Expression: Activity.NONE_A
+  Activity Constant_Value;             /* Expression: Activity.INHIBITED_A
                                         * Referenced by: '<Root>/Constant'
                                         */
   Adaptive Constant1_Value;            /* Expression: Adaptive.NONE_AD
