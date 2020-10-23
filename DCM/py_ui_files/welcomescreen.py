@@ -11,46 +11,65 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_WelcomeScreen(object):
-    def setupUi(self, WelcomeScreen):
-        WelcomeScreen.setObjectName("WelcomeScreen")
-        WelcomeScreen.resize(640, 269)
-        self.label = QtWidgets.QLabel(WelcomeScreen)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(640, 269)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(10, 10, 621, 61))
         font = QtGui.QFont()
         font.setPointSize(22)
         self.label.setFont(font)
         self.label.setWordWrap(True)
         self.label.setObjectName("label")
-        self.registerButton = QtWidgets.QPushButton(WelcomeScreen)
-        self.registerButton.setGeometry(QtCore.QRect(190, 80, 261, 81))
+        self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(180, 80, 261, 171))
+        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.registerButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.registerButton.sizePolicy().hasHeightForWidth())
+        self.registerButton.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(16)
         self.registerButton.setFont(font)
         self.registerButton.setObjectName("registerButton")
-        self.loginButton = QtWidgets.QPushButton(WelcomeScreen)
-        self.loginButton.setGeometry(QtCore.QRect(190, 170, 261, 81))
+        self.verticalLayout.addWidget(self.registerButton)
+        self.loginButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.loginButton.sizePolicy().hasHeightForWidth())
+        self.loginButton.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(16)
         self.loginButton.setFont(font)
         self.loginButton.setObjectName("loginButton")
+        self.verticalLayout.addWidget(self.loginButton)
+        MainWindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(WelcomeScreen)
-        QtCore.QMetaObject.connectSlotsByName(WelcomeScreen)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, WelcomeScreen):
+    def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        WelcomeScreen.setWindowTitle(_translate("WelcomeScreen", "Welcome!"))
-        self.label.setText(_translate("WelcomeScreen", "Welcome to the SFWRENG 3K04 DCM Interface"))
-        self.registerButton.setText(_translate("WelcomeScreen", "Register a new user"))
-        self.loginButton.setText(_translate("WelcomeScreen", "Login as an existing user"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Welcome!"))
+        self.label.setText(_translate("MainWindow", "Welcome to the SFWRENG 3K04 DCM Interface"))
+        self.registerButton.setText(_translate("MainWindow", "Register a new user"))
+        self.loginButton.setText(_translate("MainWindow", "Login as an existing user"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    WelcomeScreen = QtWidgets.QWidget()
-    ui = Ui_WelcomeScreen()
-    ui.setupUi(WelcomeScreen)
-    WelcomeScreen.show()
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
     sys.exit(app.exec_())

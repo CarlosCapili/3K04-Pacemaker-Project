@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>360</width>
-    <height>130</height>
+    <height>118</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,8 +30,17 @@
    <property name="frameShape">
     <enum>QFrame::NoFrame</enum>
    </property>
+   <attribute name="horizontalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
    <attribute name="horizontalHeaderStretchLastSection">
     <bool>true</bool>
+   </attribute>
+   <attribute name="verticalHeaderVisible">
+    <bool>true</bool>
+   </attribute>
+   <attribute name="verticalHeaderCascadingSectionResizes">
+    <bool>false</bool>
    </attribute>
    <row>
     <property name="text">
@@ -55,22 +64,44 @@
    </row>
    <column>
     <property name="text">
-     <string/>
+     <string>Values</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>1</pointsize>
+      <pointsize>9</pointsize>
      </font>
     </property>
    </column>
+   <item row="0" column="0">
+    <property name="text">
+     <string>1.0</string>
+    </property>
+    <property name="flags">
+     <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+    </property>
+   </item>
    <item row="1" column="0">
     <property name="text">
-     <string/>
+     <string>1.0</string>
+    </property>
+    <property name="flags">
+     <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+    </property>
+   </item>
+   <item row="2" column="0">
+    <property name="text">
+     <string>1</string>
+    </property>
+    <property name="flags">
+     <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
     </property>
    </item>
    <item row="3" column="0">
     <property name="text">
      <string>McMaster University</string>
+    </property>
+    <property name="flags">
+     <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
     </property>
    </item>
   </widget>
