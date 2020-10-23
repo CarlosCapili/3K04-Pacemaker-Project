@@ -1,2 +1,0 @@
-  light_with_sence.c
-
