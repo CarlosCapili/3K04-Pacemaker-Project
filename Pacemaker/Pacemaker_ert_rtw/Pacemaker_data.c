@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Pacemaker'.
  *
- * Model version                  : 1.26
+ * Model version                  : 1.51
  * Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
- * C/C++ source code generated on : Fri Oct 23 09:09:05 2020
+ * C/C++ source code generated on : Sat Oct 24 18:06:56 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -32,15 +32,25 @@ P_Pacemaker_T Pacemaker_P = {
    */
   -1.0,
 
+  /* Expression: 60000
+   * Referenced by: '<S4>/Gain'
+   */
+  60000.0,
+
+  /* Expression: 60000
+   * Referenced by: '<S4>/Gain1'
+   */
+  60000.0,
+
   /* Expression: 1
    * Referenced by: '<S3>/Constant2'
    */
   1.0,
 
-  /* Expression: Activity.INHIBITED_A
+  /* Expression: Activity.NONE_A
    * Referenced by: '<Root>/Constant'
    */
-  INHIBITED_A,
+  NONE_A,
 
   /* Expression: Adaptive.NONE_AD
    * Referenced by: '<Root>/Constant1'
@@ -57,16 +67,6 @@ P_Pacemaker_T Pacemaker_P = {
    */
   VENTRICLE_S,
 
-  /* Computed Parameter: Gain_Gain
-   * Referenced by: '<S4>/Gain'
-   */
-  3932160000U,
-
-  /* Computed Parameter: Gain1_Gain
-   * Referenced by: '<S4>/Gain1'
-   */
-  3932160000U,
-
   /* Computed Parameter: Constant10_Value
    * Referenced by: '<Root>/Constant10'
    */
@@ -75,12 +75,12 @@ P_Pacemaker_T Pacemaker_P = {
   /* Computed Parameter: Constant2_Value_h
    * Referenced by: '<Root>/Constant2'
    */
-  1U,
+  10U,
 
   /* Computed Parameter: Constant3_Value
    * Referenced by: '<Root>/Constant3'
    */
-  1U,
+  5U,
 
   /* Computed Parameter: Constant4_Value
    * Referenced by: '<Root>/Constant4'

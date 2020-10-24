@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Pacemaker'.
  *
- * Model version                  : 1.14
+ * Model version                  : 1.51
  * Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
- * C/C++ source code generated on : Thu Oct 22 20:26:34 2020
+ * C/C++ source code generated on : Sat Oct 24 18:08:40 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -22,80 +22,100 @@
 
 /* Block parameters (default storage) */
 P_Pacemaker_T Pacemaker_P = {
-  /* Expression: SampleTime1
-   * Referenced by: '<S2>/Push Button'
+  /* Expression: SampleTime
+   * Referenced by: '<S2>/VENT_CMP_DETECT'
    */
   -1.0,
 
   /* Expression: SampleTime
-   * Referenced by: '<S2>/Digital Read1'
+   * Referenced by: '<S2>/ATR_CMP_DETECT'
    */
   -1.0,
 
-  /* Expression: SampleTime
-   * Referenced by: '<S2>/Digital Read'
+  /* Expression: 60000
+   * Referenced by: '<S4>/Gain'
    */
-  -1.0,
+  60000.0,
 
-  /* Expression: 60
-   * Referenced by: '<S3>/Constant1'
+  /* Expression: 60000
+   * Referenced by: '<S4>/Gain1'
    */
-  60.0,
+  60000.0,
 
   /* Expression: 1
-   * Referenced by: '<S3>/Constant'
+   * Referenced by: '<S3>/Constant2'
    */
   1.0,
 
-  /* Expression: Activity.INHIBITED_A
-   * Referenced by: '<Root>/Constant2'
-   */
-  INHIBITED_A,
-
-  /* Expression: ChamberPaced.ATRIUM_P
+  /* Expression: Activity.NONE_A
    * Referenced by: '<Root>/Constant'
    */
-  ATRIUM_P,
+  NONE_A,
 
-  /* Expression: ChamberSensed.ATRIUM_S
+  /* Expression: Adaptive.NONE_AD
    * Referenced by: '<Root>/Constant1'
    */
-  ATRIUM_S,
+  NONE_AD,
 
-  /* Computed Parameter: Gain_Gain
-   * Referenced by: '<S4>/Gain'
+  /* Expression: ChamberPaced.VENTRICLE_P
+   * Referenced by: '<Root>/Constant11'
    */
-  3932160000U,
+  VENTRICLE_P,
 
-  /* Computed Parameter: Gain1_Gain
-   * Referenced by: '<S4>/Gain1'
+  /* Expression: ChamberSensed.VENTRICLE_S
+   * Referenced by: '<Root>/Constant9'
    */
-  3932160000U,
+  VENTRICLE_S,
+
+  /* Computed Parameter: Constant10_Value
+   * Referenced by: '<Root>/Constant10'
+   */
+  1U,
+
+  /* Computed Parameter: Constant2_Value_h
+   * Referenced by: '<Root>/Constant2'
+   */
+  10U,
 
   /* Computed Parameter: Constant3_Value
    * Referenced by: '<Root>/Constant3'
    */
-  1U,
+  5U,
 
   /* Computed Parameter: Constant4_Value
    * Referenced by: '<Root>/Constant4'
    */
-  1U,
+  90U,
 
   /* Computed Parameter: Constant5_Value
    * Referenced by: '<Root>/Constant5'
    */
-  1000U,
+  80U,
 
   /* Computed Parameter: Constant6_Value
    * Referenced by: '<Root>/Constant6'
    */
-  500U,
+  1U,
 
   /* Computed Parameter: Constant7_Value
    * Referenced by: '<Root>/Constant7'
    */
-  1U
+  1U,
+
+  /* Computed Parameter: Constant8_Value
+   * Referenced by: '<Root>/Constant8'
+   */
+  1U,
+
+  /* Computed Parameter: Constant12_Value
+   * Referenced by: '<Root>/Constant12'
+   */
+  60U,
+
+  /* Computed Parameter: Constant13_Value
+   * Referenced by: '<Root>/Constant13'
+   */
+  60U
 };
 
 /*

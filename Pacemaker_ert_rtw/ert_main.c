@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Pacemaker'.
  *
- * Model version                  : 1.14
+ * Model version                  : 1.51
  * Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
- * C/C++ source code generated on : Thu Oct 22 20:26:34 2020
+ * C/C++ source code generated on : Sat Oct 24 18:08:40 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -21,6 +21,7 @@
 #include "Pacemaker_private.h"
 #include "rtwtypes.h"
 #include "limits.h"
+#include "rt_nonfinite.h"
 #include "board.h"
 #include "mw_cmsis_rtos.h"
 #define UNUSED(x)                      x = x

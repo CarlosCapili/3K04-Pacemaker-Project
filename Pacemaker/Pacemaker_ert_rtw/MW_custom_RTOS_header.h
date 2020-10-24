@@ -11,6 +11,15 @@ extern void exitFcn(int sig);
 extern void *terminateTask(void *arg);
 extern void *baseRateTask(void *arg);
 extern void *subrateTask(void *arg);
+
+#define MW_NEEDS_BACKGROUND_TASK
+#define MW_BACKGROUNDTASK_PRIORITY     41
+
+extern void *backgroundTask(void *arg);
+extern mw_thread_t backgroundThread;
+
+#define MW_HAS_COMM_SERVICE
+
 extern mw_thread_t schedulerThread;
 extern mw_thread_t baseRateThread;
 extern mw_thread_t subRateThread[];

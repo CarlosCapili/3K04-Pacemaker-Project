@@ -2,7 +2,7 @@ MW_PWM.o: \
  C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/freedomk64f/src/MW_PWM.c \
  C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/freedomk64f/include/MW_PWM.h \
  C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h \
- C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker_ert_rtw/rtwtypes.h \
+ C:/Users/shaqe/Documents/GitHub/3K04-Project-L1-G7/Pacemaker_ert_rtw/rtwtypes.h \
  C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/freedomk64f/include/mw_sdk_interface.h \
  C:/Freescale/KSDK_1.2.0/platform/drivers/inc/fsl_gpio_driver.h \
  C:/Freescale/KSDK_1.2.0/platform/hal/inc/fsl_port_hal.h \
@@ -35,7 +35,7 @@ C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/free
 
 C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h:
 
-C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker_ert_rtw/rtwtypes.h:
+C:/Users/shaqe/Documents/GitHub/3K04-Project-L1-G7/Pacemaker_ert_rtw/rtwtypes.h:
 
 C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/freedomk64f/include/mw_sdk_interface.h:
 

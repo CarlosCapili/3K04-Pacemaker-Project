@@ -7,7 +7,7 @@
 %endfunction
 %function ChartDataMap(block, system) void
   %createrecord ChartDataElements {\
-    NumChartData   9 \
+    NumChartData   10 \
     ChartDataDefaults {\
       RecordType   "ChartData"\
       Dimensions   []\
@@ -23,50 +23,63 @@
     ChartData {\
       Name         "is_active_c2_Pacemaker"\
       Description  "StateIsActive"\
-      SFName       ""\
-      Path         ""\
+      SFName       "is_active_c2_Pacemaker"\
+      Path         "is_active_c2_Pacemaker"\
       SrcLocation  ""\
+      IsTestPoint  1\
     }\
     ChartData {\
       Name         "is_c2_Pacemaker"\
       Description  "StateActiveChild"\
-      SFName       ""\
-      Path         ""\
+      SFName       "is_c2_Pacemaker"\
+      Path         "is_c2_Pacemaker"\
       SrcLocation  ""\
+      IsTestPoint  1\
     }\
     ChartData {\
       Name         "is_Sense"\
       Description  "StateActiveChild"\
-      SFName       ""\
-      Path         "Sense"\
+      SFName       "is_Sense"\
+      Path         "Sense.is_Sense"\
       SrcLocation  ""\
-    }\
-    ChartData {\
-      Name         "is_Default"\
-      Description  "StateActiveChild"\
-      SFName       ""\
-      Path         "Sense.Default"\
-      SrcLocation  ""\
+      IsTestPoint  1\
     }\
     ChartData {\
       Name         "is_Atrium"\
       Description  "StateActiveChild"\
-      SFName       ""\
-      Path         "Sense.Atrium"\
+      SFName       "is_Atrium"\
+      Path         "Sense.Atrium.is_Atrium"\
       SrcLocation  ""\
+      IsTestPoint  1\
     }\
     ChartData {\
       Name         "is_Ventricle"\
       Description  "StateActiveChild"\
-      SFName       ""\
-      Path         "Sense.Ventricle"\
+      SFName       "is_Ventricle"\
+      Path         "Sense.Ventricle.is_Ventricle"\
       SrcLocation  ""\
+      IsTestPoint  1\
     }\
     ChartData {\
       Name         "is_Pace"\
       Description  "StateActiveChild"\
+      SFName       "is_Pace"\
+      Path         "Pace.is_Pace"\
+      SrcLocation  ""\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "ActiveChamber"\
+      Description  "ChartLocal"\
       SFName       ""\
-      Path         "Pace"\
+      Path         "ActiveChamber"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "iniTime"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "iniTime"\
       SrcLocation  ""\
     }\
     ChartData {\

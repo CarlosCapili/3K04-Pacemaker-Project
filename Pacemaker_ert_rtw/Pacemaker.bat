@@ -1,6 +1,6 @@
 cd .
 
-if "%1"=="" ("D:\school\bin\win64\gmake"  -f Pacemaker.mk all) else ("D:\school\bin\win64\gmake"  -f Pacemaker.mk %1)
+if "%1"=="" ("C:\PROGRA~1\MATLAB\R2020a\bin\win64\gmake"  -f Pacemaker.mk all) else ("C:\PROGRA~1\MATLAB\R2020a\bin\win64\gmake"  -f Pacemaker.mk %1)
 @if errorlevel 1 goto error_exit
 
 exit 0

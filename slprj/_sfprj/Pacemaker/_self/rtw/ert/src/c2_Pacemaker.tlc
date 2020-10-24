@@ -7,7 +7,7 @@
 %endfunction
 %function ChartDataMap(block, system) void
   %createrecord ChartDataElements {\
-    NumChartData   7 \
+    NumChartData   10 \
     ChartDataDefaults {\
       RecordType   "ChartData"\
       Dimensions   []\
@@ -45,10 +45,18 @@
       IsTestPoint  1\
     }\
     ChartData {\
-      Name         "is_Inhibit"\
+      Name         "is_Atrium"\
       Description  "StateActiveChild"\
-      SFName       "is_Inhibit"\
-      Path         "Sense.Inhibit.is_Inhibit"\
+      SFName       "is_Atrium"\
+      Path         "Sense.Atrium.is_Atrium"\
+      SrcLocation  ""\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "is_Ventricle"\
+      Description  "StateActiveChild"\
+      SFName       "is_Ventricle"\
+      Path         "Sense.Ventricle.is_Ventricle"\
       SrcLocation  ""\
       IsTestPoint  1\
     }\
@@ -59,6 +67,20 @@
       Path         "Pace.is_Pace"\
       SrcLocation  ""\
       IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "ActiveChamber"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "ActiveChamber"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "iniTime"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "iniTime"\
+      SrcLocation  ""\
     }\
     ChartData {\
       Name         "temporalCounter_i1"\
