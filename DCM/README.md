@@ -5,6 +5,8 @@ Dump DCM stuff here, and update this later
 
 [Qt Designer](https://github.com/pyqt/examples/tree/_/src/05%20Qt%20Designer%20Python)
 
+[pyqtgraph](https://github.com/pyqtgraph/pyqtgraph)
+
 The files in the `py_ui_files` folder are all auto-generated, do not modify them!
 ___
 ## To-do list
