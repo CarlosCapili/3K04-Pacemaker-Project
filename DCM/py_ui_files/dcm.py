@@ -147,6 +147,7 @@ class Ui_MainWindow(object):
         self.setClockButton.setObjectName("setClockButton")
         self.verticalLayout.addWidget(self.setClockButton)
         self.newPatientButton = QtWidgets.QPushButton(self.centralwidget)
+        self.newPatientButton.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
