@@ -37,7 +37,7 @@
   <property name="currentIndex">
    <number>0</number>
   </property>
-  <widget class="QWidget" name="welcomeScreen">
+  <widget class="QWidget" name="welcome_screen">
    <layout class="QGridLayout" name="gridLayout_3">
     <item row="0" column="0">
      <widget class="QLabel" name="label">
@@ -78,7 +78,7 @@
       <item row="0" column="1">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QPushButton" name="registerButton">
+         <widget class="QPushButton" name="register">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -114,7 +114,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="loginButton">
+         <widget class="QPushButton" name="login">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
             <horstretch>0</horstretch>
@@ -165,7 +165,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="registerScreen">
+  <widget class="QWidget" name="register_screen">
    <layout class="QGridLayout" name="gridLayout_4">
     <item row="2" column="0">
      <spacer name="verticalSpacer_3">
@@ -286,7 +286,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit">
+           <widget class="QLineEdit" name="reg_user">
             <property name="inputMethodHints">
              <set>Qt::ImhNone</set>
             </property>
@@ -299,7 +299,7 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEdit_2">
+           <widget class="QLineEdit" name="reg_pass">
             <property name="maxLength">
              <number>15</number>
             </property>
@@ -311,7 +311,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="reg_submit">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
             <horstretch>0</horstretch>
@@ -358,7 +358,7 @@
      </spacer>
     </item>
    </layout>
-   <widget class="QPushButton" name="returnButton">
+   <widget class="QPushButton" name="reg_back">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -372,7 +372,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QWidget" name="loginScreen">
+  <widget class="QWidget" name="login_screen">
    <layout class="QGridLayout" name="gridLayout_5">
     <item row="0" column="0">
      <spacer name="verticalSpacer">
@@ -448,14 +448,14 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit_3">
+           <widget class="QLineEdit" name="log_user">
             <property name="maxLength">
              <number>15</number>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEdit_4">
+           <widget class="QLineEdit" name="log_pass">
             <property name="maxLength">
              <number>15</number>
             </property>
@@ -467,7 +467,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="log_submit">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
             <horstretch>0</horstretch>
@@ -559,7 +559,7 @@
      </spacer>
     </item>
    </layout>
-   <widget class="QPushButton" name="returnButton_2">
+   <widget class="QPushButton" name="log_back">
     <property name="geometry">
      <rect>
       <x>10</x>
