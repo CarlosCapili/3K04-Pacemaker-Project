@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Pacemaker'.
  *
- * Model version                  : 1.51
+ * Model version                  : 1.58
  * Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
- * C/C++ source code generated on : Sat Oct 24 18:08:40 2020
+ * C/C++ source code generated on : Tue Oct 27 04:52:42 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -20,36 +20,19 @@
 #ifndef RTW_HEADER_Pacemaker_h_
 #define RTW_HEADER_Pacemaker_h_
 #include <math.h>
-#include <float.h>
-#include <string.h>
 #include <stddef.h>
 #ifndef Pacemaker_COMMON_INCLUDES_
 # define Pacemaker_COMMON_INCLUDES_
 #include "rtwtypes.h"
-#include "rtw_extmode.h"
-#include "sysran_types.h"
-#include "dt_info.h"
-#include "ext_work.h"
 #include "MW_digitalIO.h"
 #include "MW_PWM.h"
 #endif                                 /* Pacemaker_COMMON_INCLUDES_ */
 
 #include "Pacemaker_types.h"
-
-/* Shared type includes */
-#include "multiword_types.h"
 #include "rt_nonfinite.h"
 #include "rtGetInf.h"
 
 /* Macros for accessing real-time model data structure */
-#ifndef rtmGetFinalTime
-# define rtmGetFinalTime(rtm)          ((rtm)->Timing.tFinal)
-#endif
-
-#ifndef rtmGetRTWExtModeInfo
-# define rtmGetRTWExtModeInfo(rtm)     ((rtm)->extModeInfo)
-#endif
-
 #ifndef rtmGetErrorStatus
 # define rtmGetErrorStatus(rtm)        ((rtm)->errorStatus)
 #endif
@@ -58,49 +41,12 @@
 # define rtmSetErrorStatus(rtm, val)   ((rtm)->errorStatus = (val))
 #endif
 
-#ifndef rtmGetStopRequested
-# define rtmGetStopRequested(rtm)      ((rtm)->Timing.stopRequestedFlag)
-#endif
-
-#ifndef rtmSetStopRequested
-# define rtmSetStopRequested(rtm, val) ((rtm)->Timing.stopRequestedFlag = (val))
-#endif
-
-#ifndef rtmGetStopRequestedPtr
-# define rtmGetStopRequestedPtr(rtm)   (&((rtm)->Timing.stopRequestedFlag))
-#endif
-
-#ifndef rtmGetT
-# define rtmGetT(rtm)                  ((rtm)->Timing.taskTime0)
-#endif
-
-#ifndef rtmGetTFinal
-# define rtmGetTFinal(rtm)             ((rtm)->Timing.tFinal)
-#endif
-
-#ifndef rtmGetTPtr
-# define rtmGetTPtr(rtm)               (&(rtm)->Timing.taskTime0)
-#endif
-
 /* Block signals (default storage) */
 typedef struct {
-  uint32_T Constant10;                 /* '<Root>/Constant10' */
-  uint32_T Constant2;                  /* '<Root>/Constant2' */
-  uint32_T Constant3;                  /* '<Root>/Constant3' */
-  uint32_T Constant4;                  /* '<Root>/Constant4' */
   uint32_T DataTypeConversion1;        /* '<S4>/Data Type Conversion1' */
-  uint32_T Constant5;                  /* '<Root>/Constant5' */
-  uint32_T DataTypeConversion3;        /* '<S4>/Data Type Conversion3' */
-  uint32_T Constant6;                  /* '<Root>/Constant6' */
-  uint32_T Constant7;                  /* '<Root>/Constant7' */
-  uint32_T Constant8;                  /* '<Root>/Constant8' */
   uint32_T PACING_REF_PWM;             /* '<Root>/Chart' */
-  ChamberSensed Constant9;             /* '<Root>/Constant9' */
-  ChamberPaced Constant11;             /* '<Root>/Constant11' */
-  Adaptive Constant1;                  /* '<Root>/Constant1' */
-  Activity Constant;                   /* '<Root>/Constant' */
-  boolean_T DataTypeConversion;        /* '<S2>/Data Type Conversion' */
-  boolean_T DataTypeConversion1_d;     /* '<S2>/Data Type Conversion1' */
+  boolean_T ATR_CMP_DETECT;            /* '<S2>/ATR_CMP_DETECT' */
+  boolean_T VENT_CMP_DETECT;           /* '<S2>/VENT_CMP_DETECT' */
   boolean_T Z_ATR_CTRL;                /* '<Root>/Chart' */
   boolean_T Z_VENT_CTRL;               /* '<Root>/Chart' */
   boolean_T ATR_PACE_CTRL;             /* '<Root>/Chart' */
@@ -132,19 +78,14 @@ typedef struct {
   freedomk64f_DigitalWrite_Pace_T obj_py;/* '<S3>/B_LEDOUT' */
   freedomk64f_DigitalWrite_Pace_T obj_pu;/* '<S3>/FRONTEND_CTRL1' */
   real_T ActiveChamber;                /* '<Root>/Chart' */
-  real_T iniTime;                      /* '<Root>/Chart' */
-  struct {
-    void *LoggedData;
-  } Scope_PWORK;                       /* '<Root>/Scope' */
-
   int32_T sfEvent;                     /* '<Root>/Chart' */
-  uint32_T is_c2_Pacemaker;            /* '<Root>/Chart' */
-  uint32_T is_Sense;                   /* '<Root>/Chart' */
-  uint32_T is_Atrium;                  /* '<Root>/Chart' */
-  uint32_T is_Ventricle;               /* '<Root>/Chart' */
-  uint32_T is_Pace;                    /* '<Root>/Chart' */
   uint32_T temporalCounter_i1;         /* '<Root>/Chart' */
   uint8_T is_active_c2_Pacemaker;      /* '<Root>/Chart' */
+  uint8_T is_c2_Pacemaker;             /* '<Root>/Chart' */
+  uint8_T is_Sense;                    /* '<Root>/Chart' */
+  uint8_T is_Atrium;                   /* '<Root>/Chart' */
+  uint8_T is_Ventricle;                /* '<Root>/Chart' */
+  uint8_T is_Pace;                     /* '<Root>/Chart' */
 } DW_Pacemaker_T;
 
 /* Parameters (default storage) */
@@ -170,10 +111,10 @@ struct P_Pacemaker_T_ {
   Adaptive Constant1_Value;            /* Expression: Adaptive.NONE_AD
                                         * Referenced by: '<Root>/Constant1'
                                         */
-  ChamberPaced Constant11_Value;       /* Expression: ChamberPaced.VENTRICLE_P
+  ChamberPaced Constant11_Value;       /* Expression: ChamberPaced.ATRIUM_P
                                         * Referenced by: '<Root>/Constant11'
                                         */
-  ChamberSensed Constant9_Value;       /* Expression: ChamberSensed.VENTRICLE_S
+  ChamberSensed Constant9_Value;       /* Expression: ChamberSensed.ATRIUM_S
                                         * Referenced by: '<Root>/Constant9'
                                         */
   uint32_T Constant10_Value;           /* Computed Parameter: Constant10_Value
@@ -211,39 +152,6 @@ struct P_Pacemaker_T_ {
 /* Real-time Model Data Structure */
 struct tag_RTM_Pacemaker_T {
   const char_T *errorStatus;
-  RTWExtModeInfo *extModeInfo;
-
-  /*
-   * Sizes:
-   * The following substructure contains sizes information
-   * for many of the model attributes such as inputs, outputs,
-   * dwork, sample times, etc.
-   */
-  struct {
-    uint32_T checksums[4];
-  } Sizes;
-
-  /*
-   * SpecialInfo:
-   * The following substructure contains special information
-   * related to other components that are dependent on RTW.
-   */
-  struct {
-    const void *mappingInfo;
-  } SpecialInfo;
-
-  /*
-   * Timing:
-   * The following substructure contains information regarding
-   * the timing information for the model.
-   */
-  struct {
-    time_T taskTime0;
-    uint32_T clockTick0;
-    time_T stepSize0;
-    time_T tFinal;
-    boolean_T stopRequestedFlag;
-  } Timing;
 };
 
 /* Block parameters (default storage) */
@@ -262,6 +170,13 @@ extern void Pacemaker_terminate(void);
 
 /* Real-time Model object */
 extern RT_MODEL_Pacemaker_T *const Pacemaker_M;
+
+/*-
+ * These blocks were eliminated from the model due to optimizations:
+ *
+ * Block '<S2>/Data Type Conversion' : Eliminate redundant data type conversion
+ * Block '<S2>/Data Type Conversion1' : Eliminate redundant data type conversion
+ */
 
 /*-
  * The generated code includes comments that allow you to trace directly

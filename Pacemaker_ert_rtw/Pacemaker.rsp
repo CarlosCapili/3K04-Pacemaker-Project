@@ -2,21 +2,15 @@ MW_PWM.o
 MW_digitalIO.o
 Pacemaker.o
 Pacemaker_data.o
-Pacemaker_tgtconn.o
 RTX_Conf_CM.o
 board.o
 cmsis_rtos_init.o
 ert_main.o
-ext_work.o
 fsl_edma_irq.o
 fsl_misc_utilities.o
 fsl_uart_irq.o
 hardware_init.o
 irq_stub.o
-k64f_ext_svr.o
-k64f_rtiostream_commservice.o
-k64f_rtiostream_interface.o
-k64f_rtiostream_utils.o
 mw_sdk_interface.o
 mw_semaphore.o
 mw_signal.o
@@ -30,5 +24,3 @@ sbrk.o
 startup.o
 startup_MK64F12.o
 system_MK64F12.o
-tgtSvc_UARTInfo.o
-updown.o

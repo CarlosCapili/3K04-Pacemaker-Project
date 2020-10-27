@@ -7,7 +7,7 @@
 %endfunction
 %function ChartDataMap(block, system) void
   %createrecord ChartDataElements {\
-    NumChartData   10 \
+    NumChartData   9 \
     ChartDataDefaults {\
       RecordType   "ChartData"\
       Dimensions   []\
@@ -23,63 +23,50 @@
     ChartData {\
       Name         "is_active_c2_Pacemaker"\
       Description  "StateIsActive"\
-      SFName       "is_active_c2_Pacemaker"\
-      Path         "is_active_c2_Pacemaker"\
+      SFName       ""\
+      Path         ""\
       SrcLocation  ""\
-      IsTestPoint  1\
     }\
     ChartData {\
       Name         "is_c2_Pacemaker"\
       Description  "StateActiveChild"\
-      SFName       "is_c2_Pacemaker"\
-      Path         "is_c2_Pacemaker"\
+      SFName       ""\
+      Path         ""\
       SrcLocation  ""\
-      IsTestPoint  1\
     }\
     ChartData {\
       Name         "is_Sense"\
       Description  "StateActiveChild"\
-      SFName       "is_Sense"\
-      Path         "Sense.is_Sense"\
+      SFName       ""\
+      Path         "Sense"\
       SrcLocation  ""\
-      IsTestPoint  1\
     }\
     ChartData {\
       Name         "is_Atrium"\
       Description  "StateActiveChild"\
-      SFName       "is_Atrium"\
-      Path         "Sense.Atrium.is_Atrium"\
+      SFName       ""\
+      Path         "Sense.Atrium"\
       SrcLocation  ""\
-      IsTestPoint  1\
     }\
     ChartData {\
       Name         "is_Ventricle"\
       Description  "StateActiveChild"\
-      SFName       "is_Ventricle"\
-      Path         "Sense.Ventricle.is_Ventricle"\
+      SFName       ""\
+      Path         "Sense.Ventricle"\
       SrcLocation  ""\
-      IsTestPoint  1\
     }\
     ChartData {\
       Name         "is_Pace"\
       Description  "StateActiveChild"\
-      SFName       "is_Pace"\
-      Path         "Pace.is_Pace"\
+      SFName       ""\
+      Path         "Pace"\
       SrcLocation  ""\
-      IsTestPoint  1\
     }\
     ChartData {\
       Name         "ActiveChamber"\
       Description  "ChartLocal"\
       SFName       ""\
       Path         "ActiveChamber"\
-      SrcLocation  ""\
-    }\
-    ChartData {\
-      Name         "iniTime"\
-      Description  "ChartLocal"\
-      SFName       ""\
-      Path         "iniTime"\
       SrcLocation  ""\
     }\
     ChartData {\

@@ -7,8 +7,9 @@ ert_main.o: \
  C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker/Pacemaker_ert_rtw/rtwtypes.h \
  C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/freedomk64f/include/MW_PWM.h \
  C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker/Pacemaker_ert_rtw/Pacemaker_types.h \
- C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker/Pacemaker_ert_rtw/multiword_types.h \
  C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h \
+ C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker/Pacemaker_ert_rtw/rt_nonfinite.h \
+ C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker/Pacemaker_ert_rtw/rtGetInf.h \
  C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker/Pacemaker_ert_rtw/Pacemaker_private.h \
  C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/freedomk64f/include/board.h \
  C:/Freescale/KSDK_1.2.0/platform/devices/fsl_device_registers.h \
@@ -52,9 +53,11 @@ C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/free
 
 C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker/Pacemaker_ert_rtw/Pacemaker_types.h:
 
-C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker/Pacemaker_ert_rtw/multiword_types.h:
-
 C:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h:
+
+C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker/Pacemaker_ert_rtw/rt_nonfinite.h:
+
+C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker/Pacemaker_ert_rtw/rtGetInf.h:
 
 C:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker/Pacemaker_ert_rtw/Pacemaker_private.h:
 

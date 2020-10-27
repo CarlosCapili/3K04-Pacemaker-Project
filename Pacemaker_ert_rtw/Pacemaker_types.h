@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Pacemaker'.
  *
- * Model version                  : 1.51
+ * Model version                  : 1.58
  * Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
- * C/C++ source code generated on : Sat Oct 24 18:08:40 2020
+ * C/C++ source code generated on : Tue Oct 27 04:52:42 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -20,7 +20,6 @@
 #ifndef RTW_HEADER_Pacemaker_types_h_
 #define RTW_HEADER_Pacemaker_types_h_
 #include "rtwtypes.h"
-#include "multiword_types.h"
 
 /* Model Code Variants */
 #ifndef DEFINED_TYPEDEF_FOR_Activity_
