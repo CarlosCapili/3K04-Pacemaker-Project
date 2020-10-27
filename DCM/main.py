@@ -3,12 +3,16 @@ from PyQt5.QtGui import QColor, QPalette
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QStackedWidget)
 
 from handlers.auth import AuthHandler
+from handlers.connection import ConnectionHandler
+from handlers.stylesheet import StyleHandler
 from py_ui_files import (about, dcm, stackedwelcomescreen)
 
 
 class MainController:
     def __init__(self):
         self.auth = AuthHandler(self.show_dcm)
+        self.style = StyleHandler()
+        self.conn = ConnectionHandler()
 
         self.palette = QPalette()
         self.palette.setColor(QPalette.Window, QColor(53, 53, 53))
@@ -21,7 +25,7 @@ class MainController:
         self.dcm_gui = QMainWindow()
         self.dcm_ui = dcm.Ui_MainWindow()
         self.dcm_ui.setupUi(self.dcm_gui)
-        self.dcm_ui.statusbar.setStyleSheet(open("stylesheets/dcm_status_bar.css").read())
+        self.dcm_ui.statusbar.setStyleSheet()
         self.dcm_ui.statusbar.showMessage("Not connected")
 
         self.about_gui = QDialog()
