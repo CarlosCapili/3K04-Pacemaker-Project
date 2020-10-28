@@ -131,14 +131,14 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QRadioButton" name="aooButton">
+        <item row="0" column="1">
+         <widget class="QRadioButton" name="vooButton">
           <property name="text">
-           <string>AOO</string>
+           <string>VOO</string>
           </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">pacing_mode_group</string>
+          </attribute>
          </widget>
         </item>
         <item row="1" column="0">
@@ -149,6 +149,22 @@
           <property name="checked">
            <bool>false</bool>
           </property>
+          <attribute name="buttonGroup">
+           <string notr="true">pacing_mode_group</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="aooButton">
+          <property name="text">
+           <string>AOO</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">pacing_mode_group</string>
+          </attribute>
          </widget>
         </item>
         <item row="1" column="1">
@@ -159,13 +175,9 @@
           <property name="checked">
            <bool>false</bool>
           </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QRadioButton" name="vooButton">
-          <property name="text">
-           <string>VOO</string>
-          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">pacing_mode_group</string>
+          </attribute>
          </widget>
         </item>
        </layout>
@@ -401,4 +413,7 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="pacing_mode_group"/>
+ </buttongroups>
 </ui>
