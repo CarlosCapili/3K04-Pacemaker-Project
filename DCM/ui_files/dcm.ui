@@ -100,7 +100,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pace_button">
+       <widget class="QPushButton" name="pace_btn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -132,7 +132,7 @@
       <item>
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="0">
-         <widget class="QRadioButton" name="aoo_button">
+         <widget class="QRadioButton" name="aoo_btn">
           <property name="text">
            <string>AOO</string>
           </property>
@@ -145,7 +145,7 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QRadioButton" name="aai_button">
+         <widget class="QRadioButton" name="aai_btn">
           <property name="text">
            <string>AAI</string>
           </property>
@@ -158,7 +158,7 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QRadioButton" name="vvi_button">
+         <widget class="QRadioButton" name="vvi_btn">
           <property name="text">
            <string>VVI</string>
           </property>
@@ -171,7 +171,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QRadioButton" name="voo_button">
+         <widget class="QRadioButton" name="voo_btn">
           <property name="text">
            <string>VOO</string>
           </property>
@@ -187,7 +187,7 @@
     <item row="2" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QPushButton" name="reports_button">
+       <widget class="QPushButton" name="reports_btn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -217,7 +217,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="parameters_button">
+       <widget class="QPushButton" name="parameters_btn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -247,7 +247,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="about_button">
+       <widget class="QPushButton" name="about_btn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -277,7 +277,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="set_clock_button">
+       <widget class="QPushButton" name="set_clock_btn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -307,7 +307,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="new_patient_button">
+       <widget class="QPushButton" name="new_patient_btn">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -340,7 +340,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="quit_button">
+       <widget class="QPushButton" name="quit_btn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
