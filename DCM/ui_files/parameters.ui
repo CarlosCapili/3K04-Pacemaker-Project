@@ -276,7 +276,7 @@
    <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="reset_button">
+      <widget class="QPushButton" name="reset_btn">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -289,7 +289,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="confirm_button">
+      <widget class="QPushButton" name="confirm_btn">
        <property name="minimumSize">
         <size>
          <width>0</width>
