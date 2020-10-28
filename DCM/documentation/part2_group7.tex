@@ -19,25 +19,54 @@
 
 \section{Requirements}
 \subsection{Welcome Screen}
-\subsubsection{Welcome Screen}
-\subsubsection{Register}
-\subsubsection{Login}
+%Develop an interface that includes a welcome screen, including the ability to register a new user (name and password), and to login as an existing user. A maximum of 10 users should be allowed to be stored locally.
+A welcome screen greets the user when the program is launched, displaying the option to either register a new user or login as an existing user. Users have a username and a password. A maximum of 10 users are stored locally, with the user losing the ability to register new users once this maximum has been reached. The ability to delete existing users may be added in a future revision of the software.
 
 \subsection{User Interface Essential Aspects}
-\subsubsection{About}
-\subsubsection{Set Clock}
-\subsubsection{New Patient}
-\subsubsection{Quit}
+%3.2.2.1: The user interface shall be capable of utilizing and managing windows for display of text and graphics.
+The user interface is a graphical user interface that manages windows that display text and graphics. User interface elements in the windows scale with the size of the window. There are minimum, maximum, and fixed sizes for windows to ensure that user elements are displayed as intended.
+
+%3.2.2.2: The user interface shall be capable of processing user positioning and input buttons.
+User interface elements such as push buttons, radio buttons and text inputs are accesed through the cursor.
+
+%3.2.2.3: The user interface shall be capable of displaying all programmable parameters for review and modification.
+yes
+
+%3.2.2.4: The user interface shall be capable of visually indicating when the DCM and the device are communicating.
+Status bar allocated for visual indication of connecting between DCM and device.
+
+%3.2.2.7: The user interface shall be capable of visually indicating when a different PACEMAKER device is approached than was previously interrogated.
+not implemented currently
 
 \subsection{DCM Utility Functions}
+\subsubsection{About}
+The About function displays the application model number, application software revision, DCM serial number and institution name.
+
+\subsubsection{Set Clock}
+The Set Clock function has been allocated a window that will display the current date and time on the device and allow the user to set a new date and time. This function will likely be removed in a future revision of the software depending on the feasibility of implementing the feature.
+
+\subsubsection{New Patient}
+The New Patient function has been allocated a button on the DCM main window. This function will likely be removed in a future revision of the software depending on the feasibility of implementing the feature.
+
+\subsubsection{Quit}
+The Quit function exits the program.
 
 \subsection{Pacing Mode Interfaces}
+Pacing mode selection
 
 \subsection{Printed Reports}
+Header information: Institution name, date and time, device model and serial number, dcm serial number, application model and version number, report name
+\subsubsection{Bradycardia Parameters}
+Displays programmable parameters relevant to pacing mode in a popup window.
+\subsubsection{Temporary Parameters}
+Allocated a button in the Reports window. This function will likely be removed in a future revision of the software depending on whether a temporary pacing mode is introduced.
 
 \subsection{Programmable Parameters}
+%Make provision for storing programmable parameter data for checking inputs
+Programmable parameters stored locally in file that can be modified through parameters window. 
 
 \subsection{Real-time Electrograms}
+Not implemented yet.
 
 \newpage
 \section{Software}
@@ -45,5 +74,6 @@
 
 \newpage
 \section{Testing}
+\subsection{}
 
 \end{document}
