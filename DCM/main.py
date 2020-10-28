@@ -2,17 +2,17 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QPalette
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QStackedWidget)
 
+from animated_status_bar import AnimatedStatusBar
 from handlers.auth import AuthHandler
 from handlers.connection import ConnectionHandler
-from handlers.stylesheet import StyleHandler
-from py_ui_files import (about, dcm, welcomescreen)  # auto-generated files
+from handlers.parameters import ParametersHandler
+from py_ui_files import (about, dcm, parameters, reports, setclock, welcomescreen)  # auto-generated files
 
 
 class MainController:
     def __init__(self):
-        # Initialize separate handlers for authentication, styles, and pacemaker connection
+        # Initialize separate handlers for authentication and pacemaker connection
         self.auth = AuthHandler(self.show_dcm)
-        self.style = StyleHandler()
         self.conn = ConnectionHandler()
 
         # Set theme to dark mode
@@ -29,13 +29,33 @@ class MainController:
         self.dcm_gui = QMainWindow()
         self.dcm_ui = dcm.Ui_MainWindow()
         self.dcm_ui.setupUi(self.dcm_gui)
-        self.dcm_ui.statusbar.setStyleSheet(self.style.no_conn_status_bar())
+        self.dcm_ui.statusbar = AnimatedStatusBar()
+        self.dcm_gui.setStatusBar(self.dcm_ui.statusbar)
         self.dcm_ui.statusbar.showMessage("Not connected")
+        self.dcm_ui.statusbar.start_no_conn()
 
         # Setup about screen UI from auto-generated file
         self.about_gui = QDialog()
         self.about_ui = about.Ui_aboutWindow()
         self.about_ui.setupUi(self.about_gui)
+
+        # Setup parameter screen UI from auto-generated file
+        self.params_gui = QDialog()
+        self.params_ui = parameters.Ui_parametersWindow()
+        self.params_ui.setupUi(self.params_gui)
+
+        # Initialize handler for parameters
+        self.params = ParametersHandler(self.params_ui.tableWidget)
+
+        # Setup reports screen UI from auto-generated file
+        self.reports_gui = QDialog()
+        self.reports_ui = reports.Ui_ReportsWindow()
+        self.reports_ui.setupUi(self.reports_gui)
+
+        # Setup set-clock screen UI from auto-generated file
+        self.set_clock_gui = QDialog()
+        self.set_clock_ui = setclock.Ui_Dialog()
+        self.set_clock_ui.setupUi(self.set_clock_gui)
 
         # Link buttons to actions
         self.link_welcome_buttons()
@@ -63,8 +83,11 @@ class MainController:
         self.welcome_ui.log_back.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(0))
 
     def link_dcm_buttons(self):
-        self.dcm_ui.quitButton.clicked.connect(self.dcm_gui.close)  # close dcm and quit program when quit is pressed
-        self.dcm_ui.aboutButton.clicked.connect(self.about_gui.show)  # show about screen when about is pressed
+        self.dcm_ui.quit_button.clicked.connect(self.dcm_gui.close)  # close dcm and quit program when quit is pressed
+        self.dcm_ui.about_button.clicked.connect(self.about_gui.show)  # show about screen when about is pressed
+        self.dcm_ui.parameters_button.clicked.connect(self.params_gui.show)  # show params screen when params is pressed
+        self.dcm_ui.reports_button.clicked.connect(self.reports_gui.show)  # show reports screen when reports is pressed
+        self.dcm_ui.set_clock_button.clicked.connect(self.set_clock_gui.show)  # show clock screen when clock is pressed
 
     # Upon successful registration or login, close the welcome screen and show the dcm
     def show_dcm(self):
