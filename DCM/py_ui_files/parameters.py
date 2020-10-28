@@ -127,14 +127,14 @@ class Ui_parametersWindow(object):
         self.gridLayout.addWidget(self.tableWidget, 0, 0, 1, 1)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.pushButton = QtWidgets.QPushButton(parametersWindow)
-        self.pushButton.setMinimumSize(QtCore.QSize(0, 20))
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout.addWidget(self.pushButton)
-        self.pushButton_2 = QtWidgets.QPushButton(parametersWindow)
-        self.pushButton_2.setMinimumSize(QtCore.QSize(0, 20))
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.horizontalLayout.addWidget(self.pushButton_2)
+        self.reset_button = QtWidgets.QPushButton(parametersWindow)
+        self.reset_button.setMinimumSize(QtCore.QSize(0, 20))
+        self.reset_button.setObjectName("reset_button")
+        self.horizontalLayout.addWidget(self.reset_button)
+        self.confirm_button = QtWidgets.QPushButton(parametersWindow)
+        self.confirm_button.setMinimumSize(QtCore.QSize(0, 20))
+        self.confirm_button.setObjectName("confirm_button")
+        self.horizontalLayout.addWidget(self.confirm_button)
         self.gridLayout.addLayout(self.horizontalLayout, 1, 0, 1, 1)
 
         self.retranslateUi(parametersWindow)
@@ -198,8 +198,8 @@ class Ui_parametersWindow(object):
         item = self.tableWidget.item(7, 1)
         item.setText(_translate("parametersWindow", "ms"))
         self.tableWidget.setSortingEnabled(__sortingEnabled)
-        self.pushButton.setText(_translate("parametersWindow", "Reset to defaults"))
-        self.pushButton_2.setText(_translate("parametersWindow", "Confirm changes"))
+        self.reset_button.setText(_translate("parametersWindow", "Reset to defaults"))
+        self.confirm_button.setText(_translate("parametersWindow", "Confirm changes"))
 
 
 if __name__ == "__main__":

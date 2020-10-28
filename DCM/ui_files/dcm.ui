@@ -100,7 +100,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="paceButton">
+       <widget class="QPushButton" name="pace_button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -131,53 +131,41 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="1">
-         <widget class="QRadioButton" name="vooButton">
-          <property name="text">
-           <string>VOO</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">pacing_mode_group</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QRadioButton" name="aaiButton">
-          <property name="text">
-           <string>AAI</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">pacing_mode_group</string>
-          </attribute>
-         </widget>
-        </item>
         <item row="0" column="0">
-         <widget class="QRadioButton" name="aooButton">
+         <widget class="QRadioButton" name="aoo_button">
           <property name="text">
            <string>AOO</string>
           </property>
           <property name="checked">
            <bool>true</bool>
           </property>
-          <attribute name="buttonGroup">
-           <string notr="true">pacing_mode_group</string>
-          </attribute>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="aai_button">
+          <property name="text">
+           <string>AAI</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QRadioButton" name="vviButton">
+         <widget class="QRadioButton" name="vvi_button">
           <property name="text">
            <string>VVI</string>
           </property>
           <property name="checked">
            <bool>false</bool>
           </property>
-          <attribute name="buttonGroup">
-           <string notr="true">pacing_mode_group</string>
-          </attribute>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QRadioButton" name="voo_button">
+          <property name="text">
+           <string>VOO</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -187,7 +175,7 @@
     <item row="2" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QPushButton" name="reportsButton">
+       <widget class="QPushButton" name="reports_button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -217,7 +205,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="parametersButton">
+       <widget class="QPushButton" name="parameters_button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -247,7 +235,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="aboutButton">
+       <widget class="QPushButton" name="about_button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -277,7 +265,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="setClockButton">
+       <widget class="QPushButton" name="set_clock_button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -307,7 +295,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="newPatientButton">
+       <widget class="QPushButton" name="new_patient_button">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -340,7 +328,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="quitButton">
+       <widget class="QPushButton" name="quit_button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -399,7 +387,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionReview">
    <property name="text">
     <string>Review</string>
@@ -413,7 +400,4 @@
  </widget>
  <resources/>
  <connections/>
- <buttongroups>
-  <buttongroup name="pacing_mode_group"/>
- </buttongroups>
 </ui>
