@@ -13,15 +13,18 @@ class ParametersHandler:
     def __init__(self, table: QTableWidget):
         print("Parameters handler init")
 
-        keys = [table.verticalHeaderItem(row).text() for row in range(table.rowCount())]
-        print(keys)
+        self.keys = [table.verticalHeaderItem(row).text() for row in range(table.rowCount())]
+        print(self.keys)
 
-        self.default_params_store = {key: "" for key in keys}
+        self.default_params_store = {key: "" for key in self.keys}
 
         try:
             with open(PARAMETERS_FILE_PATH, mode='r') as f:
                 self.params_store = json.load(f)
         except FileNotFoundError:
-            self.params_store = dict.fromkeys(keys, "")
+            self.params_store = {key: "" for key in self.keys}
 
-    # def confirm(self):
+    def confirm(self):
+        print("Writing values to file")
+        with open(PARAMETERS_FILE_PATH, mode='w+') as f:
+            json.dump(self.params_store, f)
