@@ -1,7 +1,7 @@
-from PyQt5.QtCore import QDateTime, Qt, QTimer
+from PyQt5.QtCore import QDateTime, QTimer, Qt
 from PyQt5.QtWidgets import (QApplication, QCheckBox, QComboBox, QDateTimeEdit, QDial, QDialog, QGridLayout, QGroupBox,
                              QHBoxLayout, QLabel, QLineEdit, QProgressBar, QPushButton, QRadioButton, QScrollBar,
-                             QSizePolicy, QSlider, QSpinBox, QStyleFactory, QTableWidget, QTabWidget, QTextEdit,
+                             QSizePolicy, QSlider, QSpinBox, QStyleFactory, QTabWidget, QTableWidget, QTextEdit,
                              QVBoxLayout, QWidget)
 
 
@@ -70,7 +70,6 @@ class WidgetGallery(QDialog):
 
     def advance_progress_bar(self):
         cur_val = self.progressBar.value()
-        print(cur_val)
         max_val = self.progressBar.maximum()
         self.progressBar.setValue(cur_val + (max_val - cur_val) // 100 + 1)
 
