@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>410</width>
-    <height>320</height>
+    <height>325</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,13 +19,13 @@
   <property name="minimumSize">
    <size>
     <width>410</width>
-    <height>320</height>
+    <height>325</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>410</width>
-    <height>320</height>
+    <width>500</width>
+    <height>500</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -35,6 +35,36 @@
    <bool>false</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="reset_btn">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Reset to defaults</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="confirm_btn">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Confirm changes</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="0" column="0">
     <widget class="QTableWidget" name="tableWidget">
      <property name="enabled">
@@ -76,7 +106,7 @@
       <number>1</number>
      </property>
      <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustIgnored</enum>
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
      </property>
      <property name="dragEnabled">
       <bool>false</bool>
@@ -102,6 +132,9 @@
      <attribute name="horizontalHeaderCascadingSectionResizes">
       <bool>false</bool>
      </attribute>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>80</number>
+     </attribute>
      <attribute name="horizontalHeaderHighlightSections">
       <bool>true</bool>
      </attribute>
@@ -109,7 +142,7 @@
       <bool>false</bool>
      </attribute>
      <attribute name="horizontalHeaderStretchLastSection">
-      <bool>false</bool>
+      <bool>true</bool>
      </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>true</bool>
@@ -117,8 +150,14 @@
      <attribute name="verticalHeaderCascadingSectionResizes">
       <bool>false</bool>
      </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>30</number>
+     </attribute>
      <attribute name="verticalHeaderHighlightSections">
       <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderStretchLastSection">
+      <bool>true</bool>
      </attribute>
      <row>
       <property name="text">
@@ -159,6 +198,9 @@
       <property name="text">
        <string>ARP</string>
       </property>
+      <property name="textAlignment">
+       <set>AlignLeading|AlignTop</set>
+      </property>
      </row>
      <column>
       <property name="text">
@@ -173,6 +215,9 @@
      <item row="0" column="0">
       <property name="text">
        <string>60</string>
+      </property>
+      <property name="textAlignment">
+       <set>AlignLeading|AlignTop</set>
       </property>
      </item>
      <item row="0" column="1">
@@ -265,46 +310,22 @@
       <property name="text">
        <string>250</string>
       </property>
+      <property name="textAlignment">
+       <set>AlignLeading|AlignTop</set>
+      </property>
      </item>
      <item row="7" column="1">
       <property name="text">
        <string>ms</string>
+      </property>
+      <property name="textAlignment">
+       <set>AlignLeading|AlignTop</set>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>
      </item>
     </widget>
-   </item>
-   <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="reset_btn">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Reset to defaults</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="confirm_btn">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Confirm changes</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
   </layout>
  </widget>
