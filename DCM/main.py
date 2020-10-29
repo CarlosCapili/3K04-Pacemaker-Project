@@ -65,6 +65,9 @@ class MainController:
         self.link_reports_buttons()
         self.link_params_buttons()
 
+        # Start connection thread
+        self.conn.start()
+
         # Show welcome screen GUI
         self.welcome_gui.show()
 
@@ -99,14 +102,15 @@ class MainController:
         self.reports_ui.temp_btn.clicked.connect(lambda: self.reports.generate_temp(self.get_pace_mode_params()))
 
     def link_params_buttons(self):
-        self.params_ui.confirm_btn.clicked.connect(self.params.confirm)
-        self.params_ui.reset_btn.clicked.connect(self.params.reset)
+        self.params_ui.confirm_btn.clicked.connect(self.params.confirm)  # update stored params and write them to a file
+        self.params_ui.reset_btn.clicked.connect(self.params.reset)  # reset stored and shown params to GUI defaults
 
     # Upon successful registration or login, close the welcome screen and show the dcm
     def show_dcm(self):
         self.welcome_gui.close()
         self.dcm_gui.show()
 
+    # Get only the parameters required for the current pacing mode
     def get_pace_mode_params(self):
         return self.params.filter_params(self.dcm_ui.pacing_mode_group.checkedButton().text())
 
@@ -117,4 +121,5 @@ if __name__ == '__main__':
     main_controller = MainController()
     app.setStyle('Fusion')
     app.setPalette(main_controller.palette)
+    app.aboutToQuit.connect(main_controller.conn.stop)
     app.exec_()  # run event loop

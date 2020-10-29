@@ -18,7 +18,6 @@ class ReportsHandler:
     def generate_brady(self, params: Dict[str, str]):
         print("generating brady report")
         report = "{0}{1}".format(self.header, self.format_params(params))
-        print(report)
         self.show_report(report)
 
     def generate_temp(self, params: Dict[str, str]):
