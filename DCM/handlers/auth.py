@@ -22,8 +22,6 @@ class AuthHandler:
         self.on_success = on_success
 
     def login(self, username: str, password: str):
-        print(f"Login credentials: {username} | {password}")
-
         if username in self.cred_store.keys():
             if password == self.cred_store[username]:
                 print("Welcome back.")
@@ -36,8 +34,6 @@ class AuthHandler:
             self.show_alert("Username does not exist, please register instead!")
 
     def register(self, username: str, password: str):
-        print(f"Register credentials: {username} | {password}")
-
         if username in self.cred_store.keys():
             print("Username already exists, please login instead!")
             self.show_alert("Username already exists, please login instead!")

@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QStackedWidget)
 from animated_status_bar import AnimatedStatusBar
 from handlers.auth import AuthHandler
 from handlers.connection import ConnectionHandler
+from handlers.graphs import GraphsHandler
 from handlers.parameters import ParametersHandler
 from handlers.reports import ReportsHandler
 from py_ui_files import (about, dcm, parameters, reports, setclock, welcomescreen)  # auto-generated files
@@ -12,10 +13,6 @@ from py_ui_files import (about, dcm, parameters, reports, setclock, welcomescree
 
 class MainController:
     def __init__(self):
-        # Initialize separate handlers for authentication and pacemaker connection
-        self.auth = AuthHandler(self.show_dcm)
-        self.conn = ConnectionHandler()
-
         # Set theme to dark mode
         self.palette = QPalette()
         self.palette.setColor(QPalette.Window, QColor(53, 53, 53))
@@ -45,10 +42,6 @@ class MainController:
         self.params_ui = parameters.Ui_parametersWindow()
         self.params_ui.setupUi(self.params_gui)
 
-        # Initialize separate handlers for parameters and reports
-        self.params = ParametersHandler(self.params_ui.tableWidget)
-        self.reports = ReportsHandler(self.params)
-
         # Setup reports screen UI from auto-generated file
         self.reports_gui = QDialog()
         self.reports_ui = reports.Ui_ReportsWindow()
@@ -59,9 +52,18 @@ class MainController:
         self.set_clock_ui = setclock.Ui_Dialog()
         self.set_clock_ui.setupUi(self.set_clock_gui)
 
+        # Initialize separate handlers for authentication, pacemaker connection, parameters and reports
+        self.auth = AuthHandler(self.show_dcm)
+        self.conn = ConnectionHandler()
+        self.params = ParametersHandler(self.params_ui.tableWidget)
+        self.reports = ReportsHandler(self.about_ui.tableWidget)
+        self.graphs = GraphsHandler()
+
         # Link buttons to actions
         self.link_welcome_buttons()
         self.link_dcm_buttons()
+        self.link_reports_buttons()
+        self.link_params_buttons()
 
         # Show welcome screen GUI
         self.welcome_gui.show()
@@ -86,30 +88,33 @@ class MainController:
 
     def link_dcm_buttons(self):
         self.dcm_ui.quit_btn.clicked.connect(self.dcm_gui.close)  # close dcm and quit program when quit is pressed
-        self.dcm_ui.about_btn.clicked.connect(self.about_gui.show)  # show about screen when about is pressed
-        self.dcm_ui.parameters_btn.clicked.connect(self.params_gui.show)  # show params screen when params is pressed
-        self.dcm_ui.reports_btn.clicked.connect(self.reports_gui.show)  # show reports screen when reports is pressed
-        self.dcm_ui.set_clock_btn.clicked.connect(self.set_clock_gui.show)  # show clock screen when clock is pressed
+        self.dcm_ui.about_btn.clicked.connect(self.about_gui.exec_)  # show about screen when about is pressed
+        self.dcm_ui.parameters_btn.clicked.connect(self.params_gui.exec_)  # show params screen when params is pressed
+        self.dcm_ui.reports_btn.clicked.connect(self.reports_gui.exec_)  # show reports screen when reports is pressed
+        self.dcm_ui.set_clock_btn.clicked.connect(self.set_clock_gui.exec_)  # show clock screen when clock is pressed
 
     def link_reports_buttons(self):
-        self.reports_ui.egram_btn.clicked.connect()
-        self.reports_ui.brady_btn.clicked.connect()
-        self.reports_ui.temp_btn.clicked.connect()
+        self.reports_ui.egram_btn.clicked.connect(lambda: self.reports.generate_egram(self.get_pace_mode_params()))
+        self.reports_ui.brady_btn.clicked.connect(lambda: self.reports.generate_brady(self.get_pace_mode_params()))
+        self.reports_ui.temp_btn.clicked.connect(lambda: self.reports.generate_temp(self.get_pace_mode_params()))
 
     def link_params_buttons(self):
-        self.params_ui.confirm_btn.clicked.connect()
-        self.params_ui.reset_btn.clicked.connect()
+        self.params_ui.confirm_btn.clicked.connect(self.params.confirm)
+        self.params_ui.reset_btn.clicked.connect(self.params.reset)
 
     # Upon successful registration or login, close the welcome screen and show the dcm
     def show_dcm(self):
         self.welcome_gui.close()
         self.dcm_gui.show()
 
+    def get_pace_mode_params(self):
+        return self.params.filter_params(self.dcm_ui.pacing_mode_group.checkedButton().text())
+
 
 if __name__ == '__main__':
     # Initialize PyQt5 application
     app = QApplication([])
     main_controller = MainController()
-    # app.setStyle('Fusion')
+    app.setStyle('Fusion')
     app.setPalette(main_controller.palette)
     app.exec_()  # run event loop

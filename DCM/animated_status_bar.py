@@ -6,21 +6,22 @@ from PyQt5.QtWidgets import (QApplication, QStatusBar)
 class AnimatedStatusBar(QStatusBar):
     def __init__(self, parent=None):
         QStatusBar.__init__(self, parent)
+        self.setAutoFillBackground(True)
 
         red = QColor(255, 0, 0)
         transparent = QColor(255, 0, 0, alpha=0)
 
-        self.color_anim_1 = QPropertyAnimation(self, b"zcolor")
+        self.color_anim_1 = QPropertyAnimation(self, b"back_color")
         self.color_anim_1.setStartValue(red)
         self.color_anim_1.setEndValue(transparent)
         self.color_anim_1.setDuration(2000)
 
-        self.color_anim_2 = QPropertyAnimation(self, b"zcolor")
+        self.color_anim_2 = QPropertyAnimation(self, b"back_color")
         self.color_anim_2.setStartValue(transparent)
         self.color_anim_2.setEndValue(red)
         self.color_anim_2.setDuration(2000)
 
-        self.color_anim_3 = QPropertyAnimation(self, b"zcolor")
+        self.color_anim_3 = QPropertyAnimation(self, b"back_color")
         self.color_anim_3.setStartValue(red)
         self.color_anim_3.setEndValue(red)
         self.color_anim_3.setDuration(1000)
@@ -35,23 +36,14 @@ class AnimatedStatusBar(QStatusBar):
         self.color_anim_ok.start()
 
     def get_back_color(self):
-        return self.palette().color(QPalette.Window)
+        return self.palette().color(self.backgroundRole())
 
     def set_back_color(self, color: QColor):
-        # get = self.get_back_color()
-        # print("set ", color.red(), color.green(), color.blue(), color.alpha(), " get ", get.red(), get.green(),
-        #       get.blue(), get.alpha())
-        self.pal.setColor(QPalette.Window, color)
-        self.pal.setColor(QPalette.Base, color)
-        self.pal.setColor(QPalette.WindowText, color)
-        self.pal.setColor(QPalette.AlternateBase, color)
-        self.pal.setColor(QPalette.PlaceholderText, color)
-        self.pal.setColor(QPalette.Text, color)
-        self.pal.setColor(QPalette.BrightText, color)
+        self.pal.setColor(self.backgroundRole(), color)
         self.setPalette(self.pal)
 
     pal = QPalette()
-    zcolor = pyqtProperty(QColor, get_back_color, set_back_color)
+    back_color = pyqtProperty(QColor, get_back_color, set_back_color)
 
 
 if __name__ == "__main__":
