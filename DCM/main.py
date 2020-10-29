@@ -1,10 +1,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QPalette
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QStackedWidget)
-from pyqtgraph import QtCore
-import numpy as np
 
-from animated_status_bar import AnimatedStatusBar
 from handlers.auth import AuthHandler
 from handlers.connection import ConnectionHandler
 from handlers.graphs import GraphsHandler
@@ -29,10 +26,6 @@ class MainController:
         self.dcm_gui = QMainWindow()
         self.dcm_ui = dcm.Ui_MainWindow()
         self.dcm_ui.setupUi(self.dcm_gui)
-        self.dcm_ui.statusbar = AnimatedStatusBar()
-        self.dcm_gui.setStatusBar(self.dcm_ui.statusbar)
-        self.dcm_ui.statusbar.showMessage("Not connected to pacemaker 6")
-        self.dcm_ui.statusbar.start_no_conn()
 
         # Setup about screen UI from auto-generated file
         self.about_gui = QDialog()
@@ -59,7 +52,7 @@ class MainController:
         self.conn = ConnectionHandler()
         self.params = ParametersHandler(self.params_ui.tableWidget)
         self.reports = ReportsHandler(self.about_ui.tableWidget)
-        self.graphs = GraphsHandler()
+        self.graphs = GraphsHandler(self.dcm_ui.atrialPlots, self.dcm_ui.ventricularPlots)
 
         # Link buttons to actions
         self.link_welcome_buttons()
@@ -110,12 +103,9 @@ class MainController:
     # Upon successful registration or login, close the welcome screen and show the dcm
     def show_dcm(self):
         self.welcome_gui.close()
+        self.dcm_ui.statusbar.start_no_conn_anim()
         self.dcm_gui.show()
-        # Plot graphs
-        data1 = np.random.normal(size=300)
-        data2 = np.random.normal(size=300)
-        plot1 = self.dcm_ui.atrialPlots.plot(np.random.normal(data1))
-        plot2 = self.dcm_ui.ventricularPlots.plot(np.random.normal(data2))
+        self.graphs.plot()
 
     # Get only the parameters required for the current pacing mode
     def get_pace_mode_params(self):

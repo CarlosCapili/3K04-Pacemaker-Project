@@ -1,10 +1,18 @@
 import numpy as np
-import pyqtgraph as pg
+from PyQt5.QtCore import QThread
 
 
-class GraphsHandler:
-    def __init__(self):
+class GraphsHandler(QThread):
+    def __init__(self, atri_plot, vent_plot):
+        super().__init__()
         print("Graphs handler init")
 
-    def plot(self, data):
-        self.graphWidget.plot(data)
+        self.atri_data = np.random.normal(size=300)
+        self.vent_data = np.random.normal(size=300)
+
+        self.atri_plot = atri_plot
+        self.vent_plot = vent_plot
+
+    def plot(self):
+        self.atri_plot.plot(self.atri_data)
+        self.vent_plot.plot(self.vent_data)

@@ -32,7 +32,10 @@ class AnimatedStatusBar(QStatusBar):
         self.color_anim_ok.addAnimation(self.color_anim_3)
         self.color_anim_ok.setLoopCount(-1)
 
-    def start_no_conn(self):
+    def start_no_conn_anim(self):
+        self.color_anim_ok.start()
+
+    def start_conn_anim(self):
         self.color_anim_ok.start()
 
     def get_back_color(self):
@@ -52,6 +55,6 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     status_bar = AnimatedStatusBar()
     status_bar.show()
-    status_bar.start_no_conn()
+    status_bar.start_no_conn_anim()
 
     app.exec_()
