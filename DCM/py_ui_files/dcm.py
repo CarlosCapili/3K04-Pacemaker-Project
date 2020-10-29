@@ -187,6 +187,9 @@ class Ui_MainWindow(object):
         self.menubar.setGeometry(QtCore.QRect(0, 0, 967, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
+        self.statusbar = AnimatedStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
         self.actionReview = QtWidgets.QAction(MainWindow)
         self.actionReview.setObjectName("actionReview")
         self.actionModify = QtWidgets.QAction(MainWindow)
@@ -214,6 +217,7 @@ class Ui_MainWindow(object):
         self.quit_btn.setText(_translate("MainWindow", "Quit"))
         self.actionReview.setText(_translate("MainWindow", "Review"))
         self.actionModify.setText(_translate("MainWindow", "Modify"))
+from animated_status_bar import AnimatedStatusBar
 from pyqtgraph import PlotWidget
 
 
