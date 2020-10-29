@@ -34,5 +34,6 @@ class ReportsHandler:
     @staticmethod
     def show_report(report: str):
         qm = QMessageBox(text=report)
+        qm.setWindowTitle("Reports")
         qm.setFont(QFont("Consolas", 10))
         qm.exec_()
