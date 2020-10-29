@@ -1,6 +1,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QPalette
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QStackedWidget)
+from pyqtgraph import QtCore
+import numpy as np
 
 from animated_status_bar import AnimatedStatusBar
 from handlers.auth import AuthHandler
@@ -109,6 +111,11 @@ class MainController:
     def show_dcm(self):
         self.welcome_gui.close()
         self.dcm_gui.show()
+        # Plot graphs
+        data1 = np.random.normal(size=300)
+        data2 = np.random.normal(size=300)
+        plot1 = self.dcm_ui.atrialPlots.plot(np.random.normal(data1))
+        plot2 = self.dcm_ui.ventricularPlots.plot(np.random.normal(data2))
 
     # Get only the parameters required for the current pacing mode
     def get_pace_mode_params(self):

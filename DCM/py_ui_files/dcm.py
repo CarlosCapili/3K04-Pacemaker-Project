@@ -41,9 +41,9 @@ class Ui_MainWindow(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout_2.addWidget(self.label)
-        self.atrialGraphics = QtWidgets.QGraphicsView(self.centralwidget)
-        self.atrialGraphics.setObjectName("atrialGraphics")
-        self.verticalLayout_2.addWidget(self.atrialGraphics)
+        self.atrialPlots = PlotWidget(self.centralwidget)
+        self.atrialPlots.setObjectName("atrialPlots")
+        self.verticalLayout_2.addWidget(self.atrialPlots)
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -51,9 +51,9 @@ class Ui_MainWindow(object):
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.verticalLayout_2.addWidget(self.label_2)
-        self.ventricularGraphics = QtWidgets.QGraphicsView(self.centralwidget)
-        self.ventricularGraphics.setObjectName("ventricularGraphics")
-        self.verticalLayout_2.addWidget(self.ventricularGraphics)
+        self.ventricularPlots = PlotWidget(self.centralwidget)
+        self.ventricularPlots.setObjectName("ventricularPlots")
+        self.verticalLayout_2.addWidget(self.ventricularPlots)
         self.verticalLayout_3.addLayout(self.verticalLayout_2)
         self.gridLayout_2.addLayout(self.verticalLayout_3, 0, 1, 3, 1)
         self.verticalLayout_5 = QtWidgets.QVBoxLayout()
@@ -184,7 +184,7 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addItem(spacerItem1, 1, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 967, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 967, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.actionReview = QtWidgets.QAction(MainWindow)
@@ -214,6 +214,7 @@ class Ui_MainWindow(object):
         self.quit_btn.setText(_translate("MainWindow", "Quit"))
         self.actionReview.setText(_translate("MainWindow", "Review"))
         self.actionModify.setText(_translate("MainWindow", "Modify"))
+from pyqtgraph import PlotWidget
 
 
 if __name__ == "__main__":
