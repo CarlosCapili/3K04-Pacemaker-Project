@@ -1,6 +1,5 @@
 import time
 
-import serial
 from PyQt5.QtCore import QThread
 from serial.tools import list_ports
 
@@ -10,25 +9,24 @@ class ConnectionHandler(QThread):
         super().__init__()
         print("Connection handler init")
 
-        self.conn = serial.Serial()
-        self.devices = self.old_devices = self.enumerate_serial_devices()
+        # self.conn = serial.Serial()
+        self.devices = self.old_devices = list_ports.comports()
         self.running = False
 
     def run(self):
         self.running = True
         while self.running:
-            # print("com ports", list_ports.comports())
             self.check_new_devices()
             time.sleep(1)
 
-    @staticmethod
-    def enumerate_serial_devices() -> set:
-        return set([item for item in list_ports.comports()])
-
     def check_new_devices(self):
-        self.devices = self.enumerate_serial_devices()
-        added = self.devices.difference(self.old_devices)
-        removed = self.old_devices.difference(self.devices)
+        self.devices = list_ports.comports()
+        added = [
+            f"info:{dev.usb_info()} dev:{dev.device} int:{dev.interface} man:{dev.manufacturer} prod:{dev.product} desc:{dev.description}"
+            for dev in self.devices if dev not in self.old_devices]  # difference between new and old
+        removed = [
+            f"info:{dev.usb_info()} dev:{dev.device} int:{dev.interface} man:{dev.manufacturer} prod:{dev.product} desc:{dev.description}"
+            for dev in self.old_devices if dev not in self.devices]  # difference between old and new
         if added:
             print(f'added: {added}')
         if removed:
