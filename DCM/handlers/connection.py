@@ -21,12 +21,10 @@ class ConnectionHandler(QThread):
 
     def check_new_devices(self):
         self.devices = list_ports.comports()
-        added = [
-            f"info:{dev.usb_info()} dev:{dev.device} int:{dev.interface} man:{dev.manufacturer} prod:{dev.product} desc:{dev.description}"
-            for dev in self.devices if dev not in self.old_devices]  # difference between new and old
-        removed = [
-            f"info:{dev.usb_info()} dev:{dev.device} int:{dev.interface} man:{dev.manufacturer} prod:{dev.product} desc:{dev.description}"
-            for dev in self.old_devices if dev not in self.devices]  # difference between old and new
+        added = [f"info:{dev.usb_info()} vid:{dev.vid} pid:{dev.pid}" for dev in self.devices if
+                 dev not in self.old_devices]  # difference between new and old
+        removed = [f"info:{dev.usb_info()} vid:{dev.vid} pid:{dev.pid}" for dev in self.old_devices if
+                   dev not in self.devices]  # difference between old and new
         if added:
             print(f'added: {added}')
         if removed:

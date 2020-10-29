@@ -29,7 +29,7 @@ class MainController:
         self.dcm_ui.setupUi(self.dcm_gui)
         self.dcm_ui.statusbar = AnimatedStatusBar()
         self.dcm_gui.setStatusBar(self.dcm_ui.statusbar)
-        self.dcm_ui.statusbar.showMessage("Not connected to pacemaker 0")
+        self.dcm_ui.statusbar.showMessage("Not connected to pacemaker 6")
         self.dcm_ui.statusbar.start_no_conn()
 
         # Setup about screen UI from auto-generated file
