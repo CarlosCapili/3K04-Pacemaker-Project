@@ -61,6 +61,7 @@ class MainController:
         self.link_params_buttons()
 
         # Start connection thread
+        self.conn.connectStatusChange.connect(self.dcm_ui.statusbar.handle_conn_anim)
         self.conn.start()
 
         # Show welcome screen GUI
@@ -103,7 +104,6 @@ class MainController:
     # Upon successful registration or login, close the welcome screen and show the dcm
     def show_dcm(self):
         self.welcome_gui.close()
-        self.dcm_ui.statusbar.start_no_conn_anim()
         self.dcm_gui.show()
         self.graphs.plot()
 
