@@ -51,5 +51,5 @@ class AuthHandler:
 
     @staticmethod
     def show_alert(msg: str):
-        alert = QMessageBox(text=msg)
-        alert.exec_()
+        qm = QMessageBox()
+        QMessageBox.critical(qm, 'Auth', msg, QMessageBox.Ok, QMessageBox.Ok)

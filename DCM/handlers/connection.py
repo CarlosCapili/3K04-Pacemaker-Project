@@ -4,6 +4,7 @@ from time import sleep
 from typing import List
 
 from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtWidgets import QMessageBox
 from serial import Serial
 from serial.tools import list_ports
 from serial.tools.list_ports_common import ListPortInfo
@@ -17,7 +18,7 @@ class PacemakerState(Enum):
 
 
 # https://github.com/pyserial/pyserial/issues/216#issuecomment-369414522
-class SerialHandler(QThread):
+class _SerialHandler(QThread):
     def __init__(self):
         super().__init__()
         print("Serial handler init")
@@ -37,6 +38,9 @@ class SerialHandler(QThread):
                 self.in_q.put(line)
             else:
                 sleep(1)
+
+    def stop(self):
+        self.running = False
 
     def start_serial_comm(self, port: str):
         print("opening serial port with pacemaker")
@@ -65,54 +69,79 @@ class SerialHandler(QThread):
 
 
 class ConnectionHandler(QThread):
+    serial: _SerialHandler
+    device: ListPortInfo
     conn: Serial
-    reg_serial_num: str
+    registered_serial_num: str
     running: bool
     old_devices: List[ListPortInfo]
     devices: List[ListPortInfo]
 
-    connectStatusChange: pyqtSignal = pyqtSignal(PacemakerState, str)  # (not conn, conn, reg), serial number
+    connectStatusChange: pyqtSignal = pyqtSignal(PacemakerState, str)  # (not conn, conn, reg), (serial_num and/or msg)
 
     def __init__(self):
         super().__init__()
         print("Connection handler init")
 
         self.running = False
+
+        self.device = ListPortInfo()
         self.devices = self.old_devices = self.filter_devices(list_ports.comports())
-        self.reg_serial_num = ""
-        self.serial = SerialHandler()
 
-        if len(self.devices) > 0:
-            device = self.devices[0]
-            self.reg_serial_num = device.serial_number
-            self.serial.start_serial_comm(device.device)
-            self.connectStatusChange.emit(PacemakerState.REGISTERED, device.serial_number)
-        else:
-            self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, "")
+        self.registered_serial_num = ""
 
+        self.serial = _SerialHandler()
+        self.serial.start()
+
+    # Gets called when the thread starts
     def run(self):
         self.running = True
 
+        if len(self.devices) > 0:
+            self.device = self.devices[0]
+            self.register_device()
+        else:
+            self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, "")
+
         while self.running:
             self.check_new_pacemakers()
-            sleep(0.5)
+            sleep(0.01)
 
     def stop(self):
         self.running = False
+        self.serial.stop()
 
     def check_new_pacemakers(self):
         self.devices = self.filter_devices(list_ports.comports())
+
         added = [dev for dev in self.devices if dev not in self.old_devices]  # difference between new and old
         removed = [dev for dev in self.old_devices if dev not in self.devices]  # difference between old and new
 
         if len(added) > 0:
-            self.connectStatusChange.emit(PacemakerState.CONNECTED, added[0].serial_number)
-            print(f'added: {[f"info:{dev.usb_info()}" for dev in added]}')
+            self.device = added[0]
+
+            if self.registered_serial_num == "":
+                self.register_device()
+            else:
+                self.connectStatusChange.emit(PacemakerState.CONNECTED, f"{self.device.serial_number}, press New "
+                                                                        f"Patient to register")
+                print(f'added: {[f"info:{dev.usb_info()}" for dev in added]}')
+
         if len(removed) > 0:
             self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, removed[0].serial_number)
             print(f'removed: {[f"info:{dev.usb_info()}" for dev in removed]}')
 
         self.old_devices = self.devices
+
+    def register_device(self):
+        if self.registered_serial_num == self.device.serial_number:
+            qm = QMessageBox()
+            QMessageBox.information(qm, "Connection", "Already registered this pacemaker!", QMessageBox.Ok,
+                                    QMessageBox.Ok)
+        else:
+            self.registered_serial_num = self.device.serial_number
+            self.serial.start_serial_comm(self.device.device)
+            self.connectStatusChange.emit(PacemakerState.REGISTERED, self.device.serial_number)
 
     @staticmethod
     def filter_devices(data: List[ListPortInfo]) -> List[ListPortInfo]:

@@ -91,10 +91,11 @@ class MainController:
         self.dcm_ui.parameters_btn.clicked.connect(self.params_gui.exec_)  # show params screen when params is pressed
         self.dcm_ui.reports_btn.clicked.connect(self.reports_gui.exec_)  # show reports screen when reports is pressed
         self.dcm_ui.set_clock_btn.clicked.connect(self.set_clock_gui.exec_)  # show clock screen when clock is pressed
+        self.dcm_ui.new_patient_btn.clicked.connect(self.conn.register_device)
         self.dcm_ui.pace_box.stateChanged.connect(
-            lambda: self.graphs.pace_plot() if self.dcm_ui.pace_box.isChecked() else self.graphs.pace_clear())
+            lambda: self.graphs.pace_show() if self.dcm_ui.pace_box.isChecked() else self.graphs.pace_hide())
         self.dcm_ui.sense_box.stateChanged.connect(
-            lambda: self.graphs.sense_plot() if self.dcm_ui.sense_box.isChecked() else self.graphs.sense_clear())
+            lambda: self.graphs.sense_show() if self.dcm_ui.sense_box.isChecked() else self.graphs.sense_hide())
 
     def link_reports_buttons(self):
         self.reports_ui.egram_btn.clicked.connect(lambda: self.reports.generate_egram(self.get_pace_mode_params()))
@@ -105,7 +106,7 @@ class MainController:
         self.params_ui.confirm_btn.clicked.connect(self.params.confirm)  # update stored params and write them to a file
         self.params_ui.reset_btn.clicked.connect(self.params.reset)  # reset stored and shown params to GUI defaults
 
-    # Upon successful registration or login, close the welcome screen and show the dcm
+    # Upon successful user registration or login, close the welcome screen and show the dcm
     def show_dcm(self):
         self.welcome_gui.close()
         self.dcm_gui.show()
