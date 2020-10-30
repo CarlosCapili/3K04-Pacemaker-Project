@@ -151,15 +151,14 @@ class ConnectionHandler(QThread):
                 self.connectStatusChange.emit(PacemakerState.CONNECTED, f"{self.device.serial_number}, press New "
                                                                         f"Patient to register")
 
+            self.handle_removed_device(removed)
+
         elif self.current_state == PacemakerState.REGISTERED:
             if self.prev_state == PacemakerState.NOT_CONNECTED or self.prev_state == PacemakerState.CONNECTED:
                 self.serial.start_serial_comm(self.device.device)
                 self.connectStatusChange.emit(PacemakerState.REGISTERED, self.device.serial_number)
 
-            if len(removed) > 0 and self.device.serial_number == removed[0].serial_number:
-                self.wanted_state = PacemakerState.NOT_CONNECTED
-                self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, removed[0].serial_number)
-                self.device = ListPortInfo()
+            self.handle_removed_device(removed)
 
         self.old_devices = self.devices
         self.prev_state = self.current_state
@@ -173,6 +172,12 @@ class ConnectionHandler(QThread):
             self.show_alert("Please unplug and replug the pacemaker you want to connect to!")
         else:
             self.show_alert("Please plug in a pacemaker!")
+
+    def handle_removed_device(self, removed: List[ListPortInfo]):
+        if len(removed) > 0 and self.device.serial_number == removed[0].serial_number:
+            self.wanted_state = PacemakerState.NOT_CONNECTED
+            self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, removed[0].serial_number)
+            self.device = ListPortInfo()
 
     @staticmethod
     def show_alert(msg: str):
