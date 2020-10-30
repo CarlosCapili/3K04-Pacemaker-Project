@@ -65,7 +65,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QCheckBox" name="paceBox">
+             <widget class="QCheckBox" name="pace_box">
               <property name="text">
                <string>Pace Leads</string>
               </property>
@@ -81,7 +81,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="senseBox">
+             <widget class="QCheckBox" name="sense_box">
               <property name="text">
                <string>Sense Leads</string>
               </property>

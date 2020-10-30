@@ -80,14 +80,15 @@ class ConnectionHandler(QThread):
         self.running = False
         self.devices = self.old_devices = self.filter_devices(list_ports.comports())
         self.reg_serial_num = ""
+        self.serial = SerialHandler()
 
         if len(self.devices) > 0:
             device = self.devices[0]
             self.reg_serial_num = device.serial_number
-
+            self.serial.start_serial_comm(device.device)
             self.connectStatusChange.emit(PacemakerState.REGISTERED, device.serial_number)
         else:
-            self.connectStatusChange.emit(False, self.devices[0].serial_number)
+            self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, "")
 
     def run(self):
         self.running = True
@@ -105,10 +106,10 @@ class ConnectionHandler(QThread):
         removed = [dev for dev in self.old_devices if dev not in self.devices]  # difference between old and new
 
         if len(added) > 0:
-            self.connectStatusChange.emit(True, added[0].serial_number)
+            self.connectStatusChange.emit(PacemakerState.CONNECTED, added[0].serial_number)
             print(f'added: {[f"info:{dev.usb_info()}" for dev in added]}')
         if len(removed) > 0:
-            self.connectStatusChange.emit(False, removed[0].serial_number)
+            self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, removed[0].serial_number)
             print(f'removed: {[f"info:{dev.usb_info()}" for dev in removed]}')
 
         self.old_devices = self.devices
