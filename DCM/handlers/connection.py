@@ -1,11 +1,12 @@
 import queue
 from enum import Enum, unique
+from queue import Queue
 from time import sleep
-from typing import List
+from typing import List, Optional
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
-from serial import Serial
+from serial import Serial, SerialException
 from serial.tools import list_ports
 from serial.tools.list_ports_common import ListPortInfo
 
@@ -19,13 +20,18 @@ class PacemakerState(Enum):
 
 # https://github.com/pyserial/pyserial/issues/216#issuecomment-369414522
 class _SerialHandler(QThread):
+    running: bool
+    buf: bytearray
+    conn: Serial
+    in_q: Queue[str]
+
     def __init__(self):
         super().__init__()
         print("Serial handler init")
 
         self.running = False
         self.buf = bytearray()
-        self.conn = Serial(baudrate=1152000)
+        self.conn = Serial(baudrate=1152000, timeout=1)
         self.in_q = queue.Queue()
 
     def run(self):
@@ -33,9 +39,11 @@ class _SerialHandler(QThread):
 
         while self.running:
             if self.conn.is_open:
-                line = self.readline().decode().split(", ")  # read one line
+                # try:
+                line = self.readline().decode()  # read one line
                 print(f"received from pacemaker: {line}")
                 self.in_q.put(line)
+                # except
             else:
                 sleep(1)
 
@@ -43,12 +51,15 @@ class _SerialHandler(QThread):
         self.running = False
 
     def start_serial_comm(self, port: str):
-        print("opening serial port with pacemaker")
+        print(f"opening serial port {port} with pacemaker")
         self.conn.port = port
-        # self.conn.open()
+        try:
+            self.conn.open()
+        except SerialException as e:
+            raise e
 
     def readline(self):
-        i = self.buf.find(b"\n")
+        i: int = self.buf.find(b"\n")
 
         if i >= 0:
             r = self.buf[:i + 1]
@@ -57,7 +68,7 @@ class _SerialHandler(QThread):
 
         while self.running:
             i = max(1, min(2048, self.conn.in_waiting))
-            data = self.conn.read(i)
+            data: Optional[bytes] = self.conn.read(i)
             i = data.find(b"\n")
 
             if i >= 0:
@@ -69,13 +80,15 @@ class _SerialHandler(QThread):
 
 
 class ConnectionHandler(QThread):
-    serial: _SerialHandler
-    device: ListPortInfo
-    conn: Serial
-    registered_serial_num: str
     running: bool
-    old_devices: List[ListPortInfo]
+    device: ListPortInfo
     devices: List[ListPortInfo]
+    old_devices: List[ListPortInfo]
+    first_serial_num: str
+    wanted_state: PacemakerState
+    prev_state: PacemakerState
+    current_state: PacemakerState
+    serial: _SerialHandler
 
     connectStatusChange: pyqtSignal = pyqtSignal(PacemakerState, str)  # (not conn, conn, reg), (serial_num and/or msg)
 
@@ -86,9 +99,11 @@ class ConnectionHandler(QThread):
         self.running = False
 
         self.device = ListPortInfo()
-        self.devices = self.old_devices = self.filter_devices(list_ports.comports())
+        self.devices = self.old_devices = []
 
-        self.registered_serial_num = ""
+        self.first_serial_num = ""
+
+        self.current_state = self.prev_state = self.wanted_state = PacemakerState.NOT_CONNECTED
 
         self.serial = _SerialHandler()
         self.serial.start()
@@ -96,52 +111,73 @@ class ConnectionHandler(QThread):
     # Gets called when the thread starts
     def run(self):
         self.running = True
-
-        if len(self.devices) > 0:
-            self.device = self.devices[0]
-            self.register_device()
-        else:
-            self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, "")
+        self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, "")
 
         while self.running:
-            self.check_new_pacemakers()
+            self.update_state()
             sleep(0.01)
 
     def stop(self):
         self.running = False
         self.serial.stop()
 
-    def check_new_pacemakers(self):
+    # State machine for pacemaker connection state. It was implemented like this because it offers us many benefits
+    # such as cleaner, easier to read code, ensuring that a pacemaker gets registered only once, handling multiple
+    # pacemakers being plugged into the same computer, and handling the New Patient btn presses in a much simpler way.
+    def update_state(self):
         self.devices = self.filter_devices(list_ports.comports())
 
         added = [dev for dev in self.devices if dev not in self.old_devices]  # difference between new and old
         removed = [dev for dev in self.old_devices if dev not in self.devices]  # difference between old and new
 
-        if len(added) > 0:
-            self.device = added[0]
+        if self.current_state != self.wanted_state:
+            self.current_state = self.wanted_state
 
-            if self.registered_serial_num == "":
-                self.register_device()
-            else:
+        if self.current_state == PacemakerState.NOT_CONNECTED:
+            if len(added) > 0:
+                self.device = added[0]
+
+                if self.first_serial_num == "":
+                    self.first_serial_num = self.device.serial_number
+                    self.wanted_state = PacemakerState.REGISTERED
+                elif self.first_serial_num == self.device.serial_number:
+                    self.wanted_state = PacemakerState.REGISTERED
+                else:
+                    self.wanted_state = PacemakerState.CONNECTED
+
+        elif self.current_state == PacemakerState.CONNECTED:
+            # The only way to go from CONNECTED to REGISTERED is if the New Patient btn is pressed
+            if self.prev_state == PacemakerState.NOT_CONNECTED:
                 self.connectStatusChange.emit(PacemakerState.CONNECTED, f"{self.device.serial_number}, press New "
                                                                         f"Patient to register")
-                print(f'added: {[f"info:{dev.usb_info()}" for dev in added]}')
 
-        if len(removed) > 0:
-            self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, removed[0].serial_number)
-            print(f'removed: {[f"info:{dev.usb_info()}" for dev in removed]}')
+        elif self.current_state == PacemakerState.REGISTERED:
+            if self.prev_state == PacemakerState.NOT_CONNECTED or self.prev_state == PacemakerState.CONNECTED:
+                self.serial.start_serial_comm(self.device.device)
+                self.connectStatusChange.emit(PacemakerState.REGISTERED, self.device.serial_number)
+
+            if len(removed) > 0 and self.device.serial_number == removed[0].serial_number:
+                self.wanted_state = PacemakerState.NOT_CONNECTED
+                self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, removed[0].serial_number)
+                self.device = ListPortInfo()
 
         self.old_devices = self.devices
+        self.prev_state = self.current_state
 
     def register_device(self):
-        if self.registered_serial_num == self.device.serial_number:
-            qm = QMessageBox()
-            QMessageBox.information(qm, "Connection", "Already registered this pacemaker!", QMessageBox.Ok,
-                                    QMessageBox.Ok)
+        if self.current_state == PacemakerState.CONNECTED:
+            self.wanted_state = PacemakerState.REGISTERED
+        elif self.device.serial_number:
+            self.show_alert("Already registered this pacemaker!")
+        elif len(self.devices) > 0:
+            self.show_alert("Please unplug and replug the pacemaker you want to connect to!")
         else:
-            self.registered_serial_num = self.device.serial_number
-            self.serial.start_serial_comm(self.device.device)
-            self.connectStatusChange.emit(PacemakerState.REGISTERED, self.device.serial_number)
+            self.show_alert("Please plug in a pacemaker!")
+
+    @staticmethod
+    def show_alert(msg: str):
+        qm = QMessageBox()
+        QMessageBox.information(qm, "Connection", msg, QMessageBox.Ok, QMessageBox.Ok)
 
     @staticmethod
     def filter_devices(data: List[ListPortInfo]) -> List[ListPortInfo]:

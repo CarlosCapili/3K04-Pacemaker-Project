@@ -91,7 +91,7 @@ class MainController:
         self.dcm_ui.parameters_btn.clicked.connect(self.params_gui.exec_)  # show params screen when params is pressed
         self.dcm_ui.reports_btn.clicked.connect(self.reports_gui.exec_)  # show reports screen when reports is pressed
         self.dcm_ui.set_clock_btn.clicked.connect(self.set_clock_gui.exec_)  # show clock screen when clock is pressed
-        self.dcm_ui.new_patient_btn.clicked.connect(self.conn.register_device)
+        self.dcm_ui.new_patient_btn.clicked.connect(self.conn.register_device)  # register pacemaker when btn is pressed
         self.dcm_ui.pace_box.stateChanged.connect(
             lambda: self.graphs.pace_show() if self.dcm_ui.pace_box.isChecked() else self.graphs.pace_hide())
         self.dcm_ui.sense_box.stateChanged.connect(
