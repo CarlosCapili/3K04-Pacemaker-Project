@@ -100,12 +100,19 @@ class MainController:
         self.params_ui.confirm_btn.clicked.connect(self.params.confirm)  # update stored params and write them to a file
         self.params_ui.reset_btn.clicked.connect(self.params.reset)  # reset stored and shown params to GUI defaults
 
+    def leads_checkboxes(self):
+        self.dcm_ui.paceBox.stateChanged.connect(self.pace_lead)
+
+    def pace_lead(self):
+        print("hi")
+
     # Upon successful registration or login, close the welcome screen and show the dcm
     def show_dcm(self):
         self.welcome_gui.close()
         self.dcm_ui.statusbar.start_no_conn_anim()
         self.dcm_gui.show()
-        self.graphs.plot()
+        self.graphs.pace_plot()
+        self.graphs.sense_plot()
 
     # Get only the parameters required for the current pacing mode
     def get_pace_mode_params(self):
