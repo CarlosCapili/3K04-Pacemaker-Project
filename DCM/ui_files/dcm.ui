@@ -22,6 +22,19 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
            <widget class="QLabel" name="EGRAMLabel">
             <property name="font">
              <font>
@@ -35,6 +48,49 @@
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="pace_box">
+              <property name="text">
+               <string>Pace Leads</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <property name="autoRepeat">
+               <bool>false</bool>
+              </property>
+              <property name="tristate">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="sense_box">
+              <property name="text">
+               <string>Sense Leads</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
@@ -57,7 +113,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QGraphicsView" name="atrialGraphics"/>
+         <widget class="PlotWidget" name="atrialPlots"/>
         </item>
         <item>
          <widget class="QLabel" name="label_2">
@@ -75,7 +131,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QGraphicsView" name="ventricularGraphics"/>
+         <widget class="PlotWidget" name="ventricularPlots"/>
         </item>
        </layout>
       </item>
@@ -309,7 +365,7 @@
       <item>
        <widget class="QPushButton" name="new_patient_btn">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -395,10 +451,11 @@
      <x>0</x>
      <y>0</y>
      <width>967</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
+  <widget class="AnimatedStatusBar" name="statusbar"/>
   <action name="actionReview">
    <property name="text">
     <string>Review</string>
@@ -410,6 +467,18 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AnimatedStatusBar</class>
+   <extends>QStatusBar</extends>
+   <header>animated_status_bar</header>
+  </customwidget>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QGraphicsView</extends>
+   <header>pyqtgraph</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
  <buttongroups>

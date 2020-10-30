@@ -2,9 +2,11 @@
 \usepackage[letterpaper, margin=1in]{geometry}
 \usepackage{titling} \predate{} \postdate{}
 \usepackage{parskip}
+\usepackage{multirow}
 
-\title{SFWRENG 3K04 Assignment 1 Part 2 Documentation}
+\title{SFWRENG 3K04 \\ Assignment 1 Part 2 \\ Documentation}
 \author{
+    Lab 1 Group 7 \\
     Carlos Capili \\
     Raeed Hassan \\
     Shaqeeb Momen \\
@@ -30,7 +32,7 @@ The user interface is a graphical user interface that manages windows that displ
 User interface elements such as push buttons, radio buttons and text inputs are accesed through the cursor.
 
 %3.2.2.3: The user interface shall be capable of displaying all programmable parameters for review and modification.
-yes
+All required programmable parameters avaiable for review and modification in parameters window.
 
 %3.2.2.4: The user interface shall be capable of visually indicating when the DCM and the device are communicating.
 Status bar allocated for visual indication of connecting between DCM and device.
@@ -63,10 +65,25 @@ Allocated a button in the Reports window. This function will likely be removed i
 
 \subsection{Programmable Parameters}
 %Make provision for storing programmable parameter data for checking inputs
-Programmable parameters stored locally in file that can be modified through parameters window. 
+Programmable parameters stored locally in file that can be modified through parameters window. Only parameters relevant to assignment were allocated. A table of programmable parameters present in the current revision of the DCM and parameters that will likely be added in future revisions is shown in Table \ref{tab:ProgrammableParams}.
+\begin{table}[!ht]
+\centering
+\begin{tabular}{| l | l |} \hline
+    Current Revision & Future Revision \\\hline
+    Lower Rate Limit & \\
+    Upper Rate Limit & \\
+    Atrial Amplitude & \\
+    Atrial Pulse Width & \\
+    Ventricular Amplitude & \\
+    Ventricular Pulse Width & \\
+    VRP & \\
+    ARP & \\\hline
+\end{tabular}
+\caption{\label{tab:ProgrammableParams}Programmable Paramters}
+\end{table}
 
 \subsection{Real-time Electrograms}
-Not implemented yet.
+Space has been in the DCM and Report windows for the real-time electrograms and electrogram reports.
 
 \newpage
 \section{Software}
