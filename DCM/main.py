@@ -54,9 +54,9 @@ class MainController:
         self.reports = ReportsHandler(self.about_ui.tableWidget)
         self.graphs = GraphsHandler(self.dcm_ui.atrialPlots, self.dcm_ui.ventricularPlots)
 
-        # Link buttons to actions
+        # Link elements to actions
         self.link_welcome_buttons()
-        self.link_dcm_buttons()
+        self.link_dcm_elements()
         self.link_reports_buttons()
         self.link_params_buttons()
 
@@ -85,19 +85,25 @@ class MainController:
             lambda: self.auth.login(self.welcome_ui.log_user.text(), self.welcome_ui.log_pass.text()))
         self.welcome_ui.log_back_btn.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(0))
 
-    def link_dcm_buttons(self):
+    def link_dcm_elements(self):
+        # Buttons
         self.dcm_ui.quit_btn.clicked.connect(self.dcm_gui.close)  # close dcm and quit program when quit is pressed
         self.dcm_ui.about_btn.clicked.connect(self.about_gui.exec_)  # show about screen when about is pressed
         self.dcm_ui.parameters_btn.clicked.connect(self.params_gui.exec_)  # show params screen when params is pressed
         self.dcm_ui.reports_btn.clicked.connect(self.reports_gui.exec_)  # show reports screen when reports is pressed
         self.dcm_ui.set_clock_btn.clicked.connect(self.set_clock_gui.exec_)  # show clock screen when clock is pressed
         self.dcm_ui.new_patient_btn.clicked.connect(self.conn.register_device)  # register pacemaker when btn is pressed
+
+        # Checkboxes
+        # show or hide the pace plots, depending on whether or not the checkbox is checked, when it changes state
         self.dcm_ui.pace_box.stateChanged.connect(
             lambda: self.graphs.pace_show() if self.dcm_ui.pace_box.isChecked() else self.graphs.pace_hide())
+        # show or hide the sense plots, depending on whether or not the checkbox is checked, when it changes state
         self.dcm_ui.sense_box.stateChanged.connect(
             lambda: self.graphs.sense_show() if self.dcm_ui.sense_box.isChecked() else self.graphs.sense_hide())
 
     def link_reports_buttons(self):
+        # Get the params based on the pacing mode, and then generate the respective report based on the pressed btn
         self.reports_ui.egram_btn.clicked.connect(lambda: self.reports.generate_egram(self.get_pace_mode_params()))
         self.reports_ui.brady_btn.clicked.connect(lambda: self.reports.generate_brady(self.get_pace_mode_params()))
         self.reports_ui.temp_btn.clicked.connect(lambda: self.reports.generate_temp(self.get_pace_mode_params()))

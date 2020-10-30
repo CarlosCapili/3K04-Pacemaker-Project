@@ -6,7 +6,7 @@ from typing import List, Optional
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
-from serial import Serial, SerialException
+from serial import Serial
 from serial.tools import list_ports
 from serial.tools.list_ports_common import ListPortInfo
 
@@ -53,10 +53,10 @@ class _SerialHandler(QThread):
     def start_serial_comm(self, port: str):
         print(f"opening serial port {port} with pacemaker")
         self.conn.port = port
-        try:
-            self.conn.open()
-        except SerialException as e:
-            raise e
+        # try:
+        #     self.conn.open()
+        # except SerialException as e:
+        #     raise e
 
     def readline(self):
         i: int = self.buf.find(b"\n")
