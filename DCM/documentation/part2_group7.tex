@@ -3,6 +3,12 @@
 \usepackage{titling} \predate{} \postdate{}
 \usepackage{parskip}
 \usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}
+\long\def\/*#1*/{}
+\usepackage{hhline}
+\usepackage{booktabs}
 
 \title{SFWRENG 3K04 \\ Assignment 1 Part 2 \\ Documentation}
 \author{
@@ -15,11 +21,15 @@
 }
 \date{}
 
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+
 \begin{document}
 \maketitle \newpage
 \tableofcontents \newpage
 
 \section{Requirements}
+
 \subsection{Welcome Screen}
 %Develop an interface that includes a welcome screen, including the ability to register a new user (name and password), and to login as an existing user. A maximum of 10 users should be allowed to be stored locally.
 A welcome screen greets the user when the program is launched, displaying the option to either register a new user or login as an existing user. Users have a username and a password. A maximum of 10 users are stored locally, with the user losing the ability to register new users once this maximum has been reached. The ability to delete existing users may be added in a future revision of the software.
@@ -40,18 +50,35 @@ Status bar allocated for visual indication of connecting between DCM and device.
 %3.2.2.7: The user interface shall be capable of visually indicating when a different PACEMAKER device is approached than was previously interrogated.
 not implemented currently
 
+\newpage
 \subsection{DCM Utility Functions}
 \subsubsection{About}
-The About function displays the application model number, application software revision, DCM serial number and institution name.
+The About function displays the application model number, application software revision, DCM serial number and institution name. These are all present in the current revision of the DCM.
 
 \subsubsection{Set Clock}
 The Set Clock function has been allocated a window that will display the current date and time on the device and allow the user to set a new date and time. This function will likely be removed in a future revision of the software depending on the feasibility of implementing the feature.
 
 \subsubsection{New Patient}
-The New Patient function has been allocated a button on the DCM main window. This function will likely be removed in a future revision of the software depending on the feasibility of implementing the feature.
+Presnent in current revision.
 
 \subsubsection{Quit}
-The Quit function exits the program.
+The Quit function exits the program. Present in current revision.
+
+\begin{table}[ht]
+    \centering
+    \resizebox{\textwidth}{!}{\begin{tabular}{ccccc}
+    \cmidrule{4-5}\morecmidrules\cmidrule{4-5}
+    \multicolumn{3}{c}{Condition}                                                                                                                                         & \multicolumn{1}{||c|}{Current Revision} & \multicolumn{1}{c||}{Future Revisions} \\ \hline
+    \multicolumn{1}{|c|}{\multirow{7}{*}{DCM Utility Functions}} & \multicolumn{1}{c|}{\multirow{4}{*}{About}} & \multicolumn{1}{c}{Application model number}             & \multicolumn{1}{||c|}{\cmark}            & \multicolumn{1}{c||}{\cmark}            \\ \cline{3-5}
+    \multicolumn{1}{|c|}{}                                       & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c}{Application software revision number} & \multicolumn{1}{||c|}{\cmark}            & \multicolumn{1}{c||}{\cmark}            \\ \cline{3-5} 
+    \multicolumn{1}{|c|}{}                                       & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c}{DCM serial number}                    & \multicolumn{1}{||c|}{\cmark}            & \multicolumn{1}{c||}{\cmark}            \\ \cline{3-5} 
+    \multicolumn{1}{|c|}{}                                       & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c}{Institution name}                     & \multicolumn{1}{||c|}{\cmark}            & \multicolumn{1}{c||}{\cmark}            \\ \cline{2-5} 
+    \multicolumn{1}{|c|}{}                                       & \multicolumn{2}{c}{Set Clock}                                                                          & \multicolumn{1}{||c|}{\cmark}            & \multicolumn{1}{c||}{\cmark}            \\ \cline{2-5} 
+    \multicolumn{1}{|c|}{}                                       & \multicolumn{2}{c}{New Patient}                                                                        & \multicolumn{1}{||c|}{\cmark}            & \multicolumn{1}{c||}{\cmark}            \\ \cline{2-5} 
+    \multicolumn{1}{|c|}{}                                       & \multicolumn{2}{c}{Quit}                                                                               & \multicolumn{1}{||c|}{\cmark}            & \multicolumn{1}{c||}{\cmark}            \\ \cmidrule{1-5}\morecmidrules\cmidrule{4-5} %\hhline{---==}
+    \end{tabular}}
+    \caption{\label{tab:requirements}DCM Utility Functions}
+\end{table}
 
 \subsection{Pacing Mode Interfaces}
 Pacing mode selection
@@ -84,6 +111,7 @@ Programmable parameters stored locally in file that can be modified through para
 
 \subsection{Real-time Electrograms}
 Space has been in the DCM and Report windows for the real-time electrograms and electrogram reports.
+
 
 \newpage
 \section{Software}
