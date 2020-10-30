@@ -28,8 +28,8 @@ class GraphsHandler(QThread):
         self.vent_sense_plot.setData(self.atri_data_sense)
 
     def pace_show(self):
-        self.atri_sense_plot.show()
-        self.vent_sense_plot.show()
+        self.atri_pace_plot.show()
+        self.vent_pace_plot.show()
 
     def sense_show(self):
         self.atri_sense_plot.show()
