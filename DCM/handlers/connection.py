@@ -23,7 +23,7 @@ class _SerialHandler(QThread):
     running: bool
     buf: bytearray
     conn: Serial
-    in_q: Queue[str]
+    in_q: Queue
 
     def __init__(self):
         super().__init__()
