@@ -82,7 +82,22 @@ The New Patient function is implemented in the current software revision. The fu
 The Quit function is implemented in the current software revision. The function will remain in future software revisions.
 
 \subsection{Pacing Mode Interfaces}
-Interfaces for pacing modes and pacing mode selection are implemented in the current software revision. The feature will remain in future software revisions. 
+Interfaces for pacing modes and pacing mode selection for the following pacing modes are implemented in the current software revision:
+\begin{itemize}
+    \item AOO
+    \item AAI
+    \item VOO
+    \item VVI
+\end{itemize} 
+Additional pacing modes will be added to the requirements and implemented in future software revisions including:
+\begin{itemize}
+    \item DOO
+    \item AOOR
+    \item VOOR
+    \item AAIR
+    \item VVIR
+    \item DOOR
+\end{itemize}
 
 \subsection{Printed Reports}
 All common requirements for printed reports are implemented in the current software revision:
@@ -138,6 +153,17 @@ Requirements that will be implemented in future software revisions include:
 \end{itemize}
 
 Requirements that involve the surface ECG will not be implemented in future requirements due to the lack of a surface ECG on the pacemaker.
+
+\subsection{Future Requirements}
+Future requirements that will be implemented include:
+\begin{itemize}
+    \item Serial communication between DCM and Pacemaker
+    \begin{itemize}
+        \item Sending programmable parameters to Pacemaker
+        \item Receiving telemetry data from Pacemaker
+    \end{itemize}
+    \item Input validation for safety critical Pacemaker systems operated by DCM
+\end{itemize}
 
 \newpage
 \section{Software}
