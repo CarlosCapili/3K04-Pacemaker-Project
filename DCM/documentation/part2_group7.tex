@@ -7,6 +7,7 @@
 \usepackage{graphicx}
 \usepackage{pifont}
 \usepackage{tikz}
+\usepackage{hyperref}
 
 \usetikzlibrary{calc}
 \newcommand{\cmark}{\ding{51}}
@@ -33,6 +34,16 @@
 
 \setlength{\aboverulesep}{0pt}
 \setlength{\belowrulesep}{0pt}
+
+\usepackage{titlesec}
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 \begin{document}
 \maketitle \newpage
@@ -169,8 +180,10 @@ Future requirements that will be implemented include:
 \section{Software}
 \subsection{General Design Decisions}
 
-\subsection{Welcome Screen}
-\subsubsection{Welcome}
+\subsection{GUI}
+\subsubsection{Welcome Screen}
+
+\paragraph{Welcome}
 \begin{table}[ht]
 \centering
 \setlength{\aboverulesep}{0pt}
@@ -184,7 +197,7 @@ Future requirements that will be implemented include:
 \DrawBox[thin, black]{topleft}{bottomright}
 \end{table}
 
-\subsubsection{Register}
+\paragraph{Register}
 \begin{table}[ht]
     \centering
     \setlength{\aboverulesep}{0pt}
@@ -198,7 +211,7 @@ Future requirements that will be implemented include:
     \DrawBox[thin, black]{topleft}{bottomright}
     \end{table}
 
-\subsubsection{Login}
+\paragraph{Login}
 \begin{table}[ht]
     \centering
     \setlength{\aboverulesep}{0pt}
@@ -212,8 +225,9 @@ Future requirements that will be implemented include:
     \DrawBox[thin, black]{topleft}{bottomright}
     \end{table}
 
-\subsection{DCM Main Window}
-\subsubsection{Electrograms}
+\subsubsection{DCM Main Window}
+
+\paragraph{Electrograms}
 
 \begin{table}[ht]
     \centering
@@ -236,7 +250,7 @@ Future requirements that will be implemented include:
     \DrawBox[thin, black]{topleft}{bottomright}
 \end{table}
     
-\subsubsection{Reports}
+\paragraph{Reports}
 \begin{table}[ht]
     \centering
     \setlength{\aboverulesep}{0pt}
@@ -252,13 +266,15 @@ Future requirements that will be implemented include:
 \end{table}
     
 
-\subsubsection{Parameters}
+\paragraph{Parameters}
 
-\subsubsection{About}
+\paragraph{About}
 
-\subsubsection{New Patient}
+\paragraph{New Patient}
 
-\subsubsection{Quit}
+\paragraph{Quit}
+
+\subsection{Handlers}
 
 \newpage
 \section{Testing}
