@@ -1,14 +1,24 @@
 \documentclass[12pt]{article}
+
 \usepackage[letterpaper, margin=1in]{geometry}
 \usepackage{titling} \predate{} \postdate{}
 \usepackage{parskip}
 \usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{pifont}
+\usepackage{tikz}
+
+\usetikzlibrary{calc}
 \newcommand{\cmark}{\ding{51}}
 \long\def\/*#1*/{}
-\usepackage{hhline}
 \usepackage{booktabs}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+\newcommand{\DrawBox}[3][]{%
+    \tikz[overlay,remember picture]{
+    \draw[black,#1]
+      ($(#2)+(-0.65em,2.3ex)$) rectangle
+      ($(#3)+(0.65em,-1.2ex)$);}
+}
 
 \title{SFWRENG 3K04 \\ Assignment 1 Part 2 \\ Documentation}
 \author{
@@ -104,14 +114,92 @@ Provisions for storing programmable parameter data have been implemented in the 
     \item Ventricular Pulse Width
     \item Ventricular Refractory Period (VRP)
 \end{itemize}
-These programmable parameters will remain in future software revisions. 
+These programmable parameters will remain in future software revisions. Additional programmable parameters will be implemented in future software revisions which will depend on future requirements. 
 
 \subsection{Real-time Electrograms}
-stuff
+The following requirements of real-time electrograms and the displaying of electrograms have been implemented in the current software revision:
+\begin{itemize}
+    \item Real-time internal electrograms shall be made available from atrial and ventricular sense/pace leads
+    \item Electrogram viewing
+    \begin{itemize}
+        \item The user shall have the option of viewing electrograms on the screen
+        \item The user shall have the option of selecting which electrograms are viewed
+    \end{itemize}
+    \item The system is capable of displaying real-time traces in a scrollable fashion
+\end{itemize}
+These features will remain in future software revisions. 
+
+Requirements that will be implemented in future software revisions include:
+\begin{itemize}
+    \item The DCM shall be capable of printing real time telemetered data
+    \begin{itemize}
+        \item will be implemented after serial communication with pacemaker for telemetry has been implemented
+    \end{itemize}
+\end{itemize}
+
+Requirements that involve the surface ECG will not be implemented in future requirements due to the lack of a surface ECG on the pacemaker.
 
 \newpage
 \section{Software}
-\subsection{}
+\subsection{Welcome Screen}
+\begin{table}[ht]
+\centering
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+\begin{tabular}{cc} \cmidrule{2-2}
+    Push Button & \multicolumn{1}{|c|}{\tikzmark{topleft}\hfill Function\hfill\null} \\ \hline
+    \multicolumn{1}{|c}{welcome\_ui.reg\_btn} & \multicolumn{1}{|c|}{welcome\_gui.setCurrentIndex(1)} \\ \hline
+    \multicolumn{1}{|c}{welcome\_ui.log\_btn} & \multicolumn{1}{|c|}{welcome\_gui.setCurrentIndex(2) \tikzmark{bottomright}}  \\ \cmidrule{1-2}
+\end{tabular}
+\caption{\label{tab:DCM_WelcomeScreen}Welcome Screen}
+\DrawBox[thin, black]{topleft}{bottomright}
+\end{table}
+
+\subsection{DCM Main Window}
+\begin{table}[ht]
+    \centering
+    \setlength{\aboverulesep}{0pt}
+    \setlength{\belowrulesep}{0pt}
+    \begin{tabular}{ccc} \cmidrule{3-3}
+        \multicolumn{2}{c}{UI Element} & \multicolumn{1}{|c|}{\tikzmark{topleft}\hfill Function\hfill\null}  \\ \hline
+        \multicolumn{2}{|c}{dcm\_ui.about\_btn} & \multicolumn{1}{|c|}{about\_gui.exec\_} \\ \hline
+        \multicolumn{2}{|c}{dcm\_ui.parameters\_btn} & \multicolumn{1}{|c|}{params\_gui.exec\_} \\ \hline
+        \multicolumn{2}{|c}{dcm\_ui.reports\_btn} & \multicolumn{1}{|c|}{reports\_gui.exec\_} \\ \hline 
+        \multicolumn{2}{|c}{dcm\_ui.set\_clock\_btn} & \multicolumn{1}{|c|}{set\_clock\_gui.exec\_} \\ \hline 
+        \multicolumn{2}{|c}{dcm\_ui.new\_patient\_btn} & \multicolumn{1}{|c|}{conn.register\_device} \\ \hline 
+        \multicolumn{2}{|c}{dcm\_ui.quit\_btn} & \multicolumn{1}{|c|}{dcm\_gui.close} \\ \hline
+        \multicolumn{1}{|c}{\multirow{2}{*}{dcm\_ui.pace\_box}} & \multicolumn{1}{|c}{isChecked()} & \multicolumn{1}{|c|}{graphs.pace\_show()} \\ \cmidrule{2-3}
+        \multicolumn{1}{|c}{} & \multicolumn{1}{|c}{!isChecked()} & \multicolumn{1}{|c|}{graphs.pace\_hide()} \\ \hline
+        \multicolumn{1}{|c}{\multirow{2}{*}{dcm\_ui.sense\_box}} & \multicolumn{1}{|c}{isChecked()} & \multicolumn{1}{|c|}{graphs.sense\_show()} \\ \cmidrule{2-3}
+        \multicolumn{1}{|c}{} & \multicolumn{1}{|c}{!isChecked()} & \multicolumn{1}{|c|}{graphs.sense\_hide() \tikzmark{bottomright}} \\ \cmidrule{1-3}
+    \end{tabular}
+    \caption{\label{tab:DCM_MainWindow}DCM Main Window}
+    \DrawBox[thin, black]{topleft}{bottomright}
+\end{table}
+    
+\subsection{Reports}
+\begin{table}[ht]
+    \centering
+    \setlength{\aboverulesep}{0pt}
+    \setlength{\belowrulesep}{0pt}
+    \begin{tabular}{cc} \cmidrule{2-2}
+        Push Button & \multicolumn{1}{|c|}{\tikzmark{topleft}\hfill Function\hfill\null} \\ \hline
+        \multicolumn{1}{|c}{reports\_ui.egram\_btn} & \multicolumn{1}{|c|}{reports.generate\_egram(get\_pace\_mode\_params())} \\ \hline
+        \multicolumn{1}{|c}{reports\_ui.brady\_btn} & \multicolumn{1}{|c|}{reports.generate\_brady(get\_pace\_mode\_params())} \\ \hline
+        \multicolumn{1}{|c}{reports\_ui.temp\_btn} & \multicolumn{1}{|c|}{reports.generate\_temp(get\_pace\_mode\_params())\quad\tikzmark{bottomright}} \\ \cmidrule{1-2}
+    \end{tabular}
+    \caption{\label{tab:DCM_Reports}DCM Reports}
+    \DrawBox[thin, black]{topleft}{bottomright}
+\end{table}
+    
+
+\subsection{Paramters}
+
+\subsection{About}
+
+\subsection{New Patient}
+
+\subsection{Quit}
 
 \newpage
 \section{Testing}
