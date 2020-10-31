@@ -168,6 +168,7 @@ Future requirements that will be implemented include:
 \newpage
 \section{Software}
 \subsection{Welcome Screen}
+\subsubsection{Welcome}
 \begin{table}[ht]
 \centering
 \setlength{\aboverulesep}{0pt}
@@ -175,11 +176,39 @@ Future requirements that will be implemented include:
 \begin{tabular}{cc} \cmidrule{2-2}
     Push Button & \multicolumn{1}{|c|}{\tikzmark{topleft}\hfill Function\hfill\null} \\ \hline
     \multicolumn{1}{|c}{welcome\_ui.reg\_btn} & \multicolumn{1}{|c|}{welcome\_gui.setCurrentIndex(1)} \\ \hline
-    \multicolumn{1}{|c}{welcome\_ui.log\_btn} & \multicolumn{1}{|c|}{welcome\_gui.setCurrentIndex(2) \tikzmark{bottomright}}  \\ \cmidrule{1-2}
+    \multicolumn{1}{|c}{welcome\_ui.log\_btn} & \multicolumn{1}{|c|}{welcome\_gui.setCurrentIndex(2)\hfill\null\tikzmark{bottomright}}  \\ \cmidrule{1-2}
 \end{tabular}
 \caption{\label{tab:DCM_WelcomeScreen}Welcome Screen}
 \DrawBox[thin, black]{topleft}{bottomright}
 \end{table}
+
+\subsubsection{Register}
+\begin{table}[ht]
+    \centering
+    \setlength{\aboverulesep}{0pt}
+    \setlength{\belowrulesep}{0pt}
+    \begin{tabular}{cc} \cmidrule{2-2}
+        Push Button & \multicolumn{1}{|c|}{\tikzmark{topleft}\hfill Function\hfill\null} \\ \hline
+        \multicolumn{1}{|c}{welcome\_ui.reg\_back\_btn} & \multicolumn{1}{|c|}{welcome\_gui.setCurrentIndex(0)} \\ \hline
+        \multicolumn{1}{|c}{welcome\_ui.reg\_submit\_btn} & \multicolumn{1}{|c|}{\hfill auth.register\hfill\null\tikzmark{bottomright}}  \\ \cmidrule{1-2}
+    \end{tabular}
+    \caption{\label{tab:DCM_Register}Register}
+    \DrawBox[thin, black]{topleft}{bottomright}
+    \end{table}
+
+\subsubsection{Login}
+\begin{table}[ht]
+    \centering
+    \setlength{\aboverulesep}{0pt}
+    \setlength{\belowrulesep}{0pt}
+    \begin{tabular}{cc} \cmidrule{2-2}
+        Push Button & \multicolumn{1}{|c|}{\tikzmark{topleft}\hfill Function\hfill\null} \\ \hline
+        \multicolumn{1}{|c}{welcome\_ui.log\_back\_btn} & \multicolumn{1}{|c|}{welcome\_gui.setCurrentIndex(0)} \\ \hline
+        \multicolumn{1}{|c}{welcome\_ui.log\_submit\_btn} & \multicolumn{1}{|c|}{\hfill auth.login\hfill\null\tikzmark{bottomright}}  \\ \cmidrule{1-2}
+    \end{tabular}
+    \caption{\label{tab:DCM_Login}Login}
+    \DrawBox[thin, black]{topleft}{bottomright}
+    \end{table}
 
 \subsection{DCM Main Window}
 \begin{table}[ht]
@@ -197,7 +226,7 @@ Future requirements that will be implemented include:
         \multicolumn{1}{|c}{\multirow{2}{*}{dcm\_ui.pace\_box}} & \multicolumn{1}{|c}{isChecked()} & \multicolumn{1}{|c|}{graphs.pace\_show()} \\ \cmidrule{2-3}
         \multicolumn{1}{|c}{} & \multicolumn{1}{|c}{!isChecked()} & \multicolumn{1}{|c|}{graphs.pace\_hide()} \\ \hline
         \multicolumn{1}{|c}{\multirow{2}{*}{dcm\_ui.sense\_box}} & \multicolumn{1}{|c}{isChecked()} & \multicolumn{1}{|c|}{graphs.sense\_show()} \\ \cmidrule{2-3}
-        \multicolumn{1}{|c}{} & \multicolumn{1}{|c}{!isChecked()} & \multicolumn{1}{|c|}{graphs.sense\_hide() \tikzmark{bottomright}} \\ \cmidrule{1-3}
+        \multicolumn{1}{|c}{} & \multicolumn{1}{|c}{!isChecked()} & \multicolumn{1}{|c|}{graphs.sense\_hide()\hfill\null\tikzmark{bottomright}} \\ \cmidrule{1-3}
     \end{tabular}
     \caption{\label{tab:DCM_MainWindow}DCM Main Window}
     \DrawBox[thin, black]{topleft}{bottomright}
@@ -212,7 +241,7 @@ Future requirements that will be implemented include:
         Push Button & \multicolumn{1}{|c|}{\tikzmark{topleft}\hfill Function\hfill\null} \\ \hline
         \multicolumn{1}{|c}{reports\_ui.egram\_btn} & \multicolumn{1}{|c|}{reports.generate\_egram(get\_pace\_mode\_params())} \\ \hline
         \multicolumn{1}{|c}{reports\_ui.brady\_btn} & \multicolumn{1}{|c|}{reports.generate\_brady(get\_pace\_mode\_params())} \\ \hline
-        \multicolumn{1}{|c}{reports\_ui.temp\_btn} & \multicolumn{1}{|c|}{reports.generate\_temp(get\_pace\_mode\_params())\quad\tikzmark{bottomright}} \\ \cmidrule{1-2}
+        \multicolumn{1}{|c}{reports\_ui.temp\_btn} & \multicolumn{1}{|c|}{reports.generate\_temp(get\_pace\_mode\_params())\hfill\null\tikzmark{bottomright}} \\ \cmidrule{1-2}
     \end{tabular}
     \caption{\label{tab:DCM_Reports}DCM Reports}
     \DrawBox[thin, black]{topleft}{bottomright}
