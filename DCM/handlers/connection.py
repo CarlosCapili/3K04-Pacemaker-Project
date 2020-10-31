@@ -181,7 +181,7 @@ class ConnectionHandler(QThread):
 
     def send_data_to_pacemaker(self):
         if self.current_state == PacemakerState.REGISTERED:
-            print()
+            print("sending data to pacemaker")
         elif self.current_state == PacemakerState.CONNECTED:
             self.show_alert("Please register the pacemaker first!")
         else:
