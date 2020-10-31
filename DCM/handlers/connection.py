@@ -179,6 +179,14 @@ class ConnectionHandler(QThread):
             self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, removed[0].serial_number)
             self.device = ListPortInfo()
 
+    def send_data_to_pacemaker(self):
+        if self.current_state == PacemakerState.REGISTERED:
+            print()
+        elif self.current_state == PacemakerState.CONNECTED:
+            self.show_alert("Please register the pacemaker first!")
+        else:
+            self.show_alert("Please plug in a pacemaker!")
+
     @staticmethod
     def show_alert(msg: str):
         qm = QMessageBox()
