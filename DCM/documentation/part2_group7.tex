@@ -8,6 +8,7 @@
 \usepackage{pifont}
 \usepackage{tikz}
 \usepackage{hyperref}
+\usepackage{listings}
 
 \usetikzlibrary{calc}
 \newcommand{\cmark}{\ding{51}}
@@ -179,17 +180,17 @@ Future requirements that will be implemented include:
 \newpage
 \section{Software}
 \subsection{General Design Decisions}
-The DCM and all its modules were programmed in Python 3. The decision to use Python was largely due to the programmers' familiarity with Python's pyserial library, which would handle serial communication between pacemaker and DCM. The release of Python decided was \href{https://www.python.org/downloads/release/python-379/}{Python 3.7.9}; an earlier release was selected to ensure compatibility with potential libraries.
+The DCM and all its modules were programmed in Python 3. The decision to use Python was largely due to the programmers' familiarity with the Python language and Python libraries that could be used to handle different DCM systems. The release of Python decided was \href{https://www.python.org/downloads/release/python-379/}{Python 3.7.9}; an earlier release was selected to ensure compatibility with potential libraries.
 
-The GUI was designed using \href{https://www.qt.io/}{Qt}, a widget-toolkit for designing and creating graphical user interfaces. It was initially decided that Python's native \href{https://docs.python.org/3/library/tkinter.html}{Tkinter} package and it's associated tools would be used, however it was later decided that a tool that would allow us to create our user interface graphically instead of programmatically would ease our workflow. The \href{https://riverbankcomputing.com/software/pyqt/intro}{PyQt} library was ultimately decided upon due to the ability to automatically generate the code for the graphical user interface from design files created using \href{https://doc.qt.io/qt-5/qtdesigner-manual.html}{Qt Designer}, a tool to graphically design GUI elements for Qt.
+The GUI was designed using \href{https://riverbankcomputing.com/software/pyqt/intro}{PyQt}, a Python library for \href{https://www.qt.io/}{Qt}, a widget-toolkit for designing and creating graphical user interfaces. It was initially decided that Python's standard \href{https://docs.python.org/3/library/tkinter.html}{Tkinter} package and it's associated tools would be used, however it was later decided that a tool that would allow us to create our user interface graphically instead of programmatically would ease our workflow. The \href{https://pypi.org/project/PyQt5/}{PyQt5} library was ultimately decided upon due to the ability to automatically generate the code for the graphical user interface from design files created using \href{https://doc.qt.io/qt-5/qtdesigner-manual.html}{Qt Designer}, a tool to graphically design GUI elements for Qt.
 
-Serial communcation between the DCM and Pacemaker is handled by the \href{https://pypi.org/project/pyserial/}{pyserial} library due to the programmers' familiarity with the library.
+Serial communcation between the DCM and Pacemaker and device recognition is handled by the \href{https://pypi.org/project/pyserial/}{pyserial} library due to the programmers' familiarity with the library.
 
 Graphs in the DCM are handled by the \href{http://www.pyqtgraph.org/}{PyQtGraph} library. The library was chosen due to it's straightforward integration with the PyQt library and it's ability to easily create interactive plots.
 
 \subsection{GUI}
 \subsubsection{Welcome Screen}
-The Welcome Screen is a QStackedWidget, lets us easily switch between widgets in the same window (welcome, register and login). On different widgets so they can't interact with each other directly.
+The Welcome Screen is a QStackedWidget, 
 
 \paragraph{Welcome}
 QWidget, can't access register/login
@@ -341,6 +342,7 @@ Other functions of the main window could not be accessed while the About window 
 The New Patient functions could not be tested in its current implementation due the testers only having access to one pacemaker.
 
 \subsection{Handlers}
+
 \subsubsection{Authentication}
 \subsubsection{Connection}
 \subsubsection{Graphs}
