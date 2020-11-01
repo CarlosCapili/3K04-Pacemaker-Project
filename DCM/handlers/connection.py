@@ -11,6 +11,7 @@ from serial.tools import list_ports
 from serial.tools.list_ports_common import ListPortInfo
 
 
+# Enum for pacemaker connection states
 @unique
 class PacemakerState(Enum):
     NOT_CONNECTED = 1
@@ -18,6 +19,8 @@ class PacemakerState(Enum):
     REGISTERED = 3
 
 
+# This class is a private class that handles the serial communication with the pacemaker
+# It is just a placeholder and not fully implemented, because that happens in Assignment 2
 # https://github.com/pyserial/pyserial/issues/216#issuecomment-369414522
 class _SerialHandler(QThread):
     running: bool
@@ -34,10 +37,12 @@ class _SerialHandler(QThread):
         self.conn = Serial(baudrate=1152000, timeout=1)
         self.in_q = queue.Queue()
 
+    # Gets called when the thread starts, overrides method in QThread
     def run(self):
         self.running = True
 
         while self.running:
+            # Check if the serial connection is open with the pacemaker
             if self.conn.is_open:
                 # try:
                 line = self.readline().decode()  # read one line
@@ -47,17 +52,20 @@ class _SerialHandler(QThread):
             else:
                 sleep(1)
 
-    def stop(self):
+    # Stops the thread
+    def stop(self) -> None:
         self.running = False
 
-    def start_serial_comm(self, port: str):
-        print(f"opening serial port {port} with pacemaker")
+    # Open the serial connection with the pacemaker on the specified port
+    def start_serial_comm(self, port: str) -> None:
+        print(f"opening serial port {port} with pacemaker (PLACEHOLDER)")
         self.conn.port = port
         # try:
         #     self.conn.open()
         # except SerialException as e:
         #     raise e
 
+    # Read the input stream from the pacemaker until a newline is reached
     def readline(self):
         i: int = self.buf.find(b"\n")
 
@@ -91,6 +99,7 @@ class ConnectionHandler(QThread):
     wanted_state: PacemakerState
     serial: _SerialHandler
 
+    # A signal that's emitted every time we change state
     connectStatusChange: pyqtSignal = pyqtSignal(PacemakerState, str)  # (not conn, conn, reg), (serial_num and/or msg)
 
     def __init__(self):
@@ -106,10 +115,11 @@ class ConnectionHandler(QThread):
 
         self.current_state = self.prev_state = self.wanted_state = PacemakerState.NOT_CONNECTED
 
+        # Initialize and start the serial connection handler
         self.serial = _SerialHandler()
         self.serial.start()
 
-    # Gets called when the thread starts
+    # Gets called when the thread starts, overrides method in QThread
     def run(self):
         self.running = True
         self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, "")
@@ -118,71 +128,83 @@ class ConnectionHandler(QThread):
             self.update_state()
             sleep(0.01)
 
-    def stop(self):
+    # Stops the thread and stops the serial conn thread
+    def stop(self) -> None:
         self.running = False
         self.serial.stop()
 
     # State machine for pacemaker connection state. It was implemented like this because it offers us many benefits
     # such as cleaner, easier to read code, ensuring that a pacemaker gets registered only once, handling multiple
     # pacemakers being plugged into the same computer, and handling the New Patient btn presses in a much simpler way.
-    def update_state(self):
+    def update_state(self) -> None:
+        # Get list of connected COM port devices
         self.devices = self.filter_devices(list_ports.comports())
 
         added = [dev for dev in self.devices if dev not in self.old_devices]  # difference between new and old
         removed = [dev for dev in self.old_devices if dev not in self.devices]  # difference between old and new
 
+        # Update the current state if its not aligned with the state we want to be in
         if self.current_state != self.wanted_state:
             self.current_state = self.wanted_state
 
+        # We're not connected to any pacemaker
         if self.current_state == PacemakerState.NOT_CONNECTED:
-            if len(added) > 0:
+            if len(added) > 0:  # if there is a new device added
                 self.device = added[0]
 
-                if self.first_serial_num == "":
+                if self.first_serial_num == "":  # if this is the first device connected, auto-register
                     self.first_serial_num = self.device.serial_number
                     self.wanted_state = PacemakerState.REGISTERED
-                elif self.first_serial_num == self.device.serial_number:
+                elif self.first_serial_num == self.device.serial_number:  # if the first device was replugged in
                     self.wanted_state = PacemakerState.REGISTERED
-                else:
+                else:  # another device is plugged in
                     self.wanted_state = PacemakerState.CONNECTED
 
+        # We're connected to an unregistered pacemaker
         elif self.current_state == PacemakerState.CONNECTED:
             # The only way to go from CONNECTED to REGISTERED is if the New Patient btn is pressed
             if self.prev_state == PacemakerState.NOT_CONNECTED:
                 self.connectStatusChange.emit(PacemakerState.CONNECTED, f"{self.device.serial_number}, press New "
                                                                         f"Patient to register")
-
+            # Handle a device being removed
             self.handle_removed_device(removed)
 
+        # We're connected to a registered pacemaker
         elif self.current_state == PacemakerState.REGISTERED:
+            # If we've just transitioned to REGISTERED, open the serial communication link
             if self.prev_state == PacemakerState.NOT_CONNECTED or self.prev_state == PacemakerState.CONNECTED:
                 self.serial.start_serial_comm(self.device.device)
                 self.connectStatusChange.emit(PacemakerState.REGISTERED, self.device.serial_number)
 
+            # Handle a device being removed
             self.handle_removed_device(removed)
 
+        # Update variables that store previous cycle information
         self.old_devices = self.devices
         self.prev_state = self.current_state
 
-    def register_device(self):
+    # Called when the New Patient button is pressed
+    def register_device(self) -> None:
         if self.current_state == PacemakerState.CONNECTED:
             self.wanted_state = PacemakerState.REGISTERED
-        elif self.device.serial_number:
+        elif self.device.serial_number:  # at this point, we've already registered the device
             self.show_alert("Already registered this pacemaker!")
-        elif len(self.devices) > 0:
+        elif len(self.devices) > 0:  # we only connect to 1 device at a time, so the rest are ignored
             self.show_alert("Please unplug and replug the pacemaker you want to connect to!")
         else:
             self.show_alert("Please plug in a pacemaker!")
 
-    def handle_removed_device(self, removed: List[ListPortInfo]):
+    # Handles the transition to NOT_CONNECTED if the pacemaker we're connected to is unplugged
+    def handle_removed_device(self, removed: List[ListPortInfo]) -> None:
         if len(removed) > 0 and self.device.serial_number == removed[0].serial_number:
             self.wanted_state = PacemakerState.NOT_CONNECTED
             self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, removed[0].serial_number)
             self.device = ListPortInfo()
 
-    def send_data_to_pacemaker(self):
+    # Called when the Pace Now button is pressed, not fully implemented because of no serial communication
+    def send_data_to_pacemaker(self) -> None:
         if self.current_state == PacemakerState.REGISTERED:
-            print("sending data to pacemaker")
+            print("sending data to pacemaker (PLACEHOLDER)")
         elif self.current_state == PacemakerState.CONNECTED:
             self.show_alert("Please register the pacemaker first!")
         else:
