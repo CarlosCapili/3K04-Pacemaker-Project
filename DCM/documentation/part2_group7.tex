@@ -240,7 +240,7 @@ The login screen can only be navigated to from the welcome screen. The login scr
 \subsubsection{DCM Main Window}
 The main window is the window which contains all the DCM functions. The main window has three main functions: presenting important information about the pacemaker (DCM's connection status with the pacemaker, the pacemaker's pacing mode, graphical telemetry data from the pacemaker), provides the user the ability to change pacing modes, and allows the user to access the DCM's functions. The main window is a QMainWindow, a Qt class intended for main window management. The class was chosen due to it's ability to add status bars, which will be used to display information about the DCM's connection with the pacemaker. The main window consists of three main sections: real-time electrograms, pacing mode interfaces, and DCM functions. While there are some interactions between these sections (particularly the pacing mode interfaces and the modules in the DCM functions), they are largely contained in their own modules that can function independently from each other. Future modules can be added to any section without affecting implemented modules (with the expection of modules that do not have any defined behaviour for additional pacing modes).
 
-The real-time electrograms show real-time telemetry data from the pace and sense leads on the pacemaker. The graphs use the PlotWidget class from PyQtGraph, a QGraphicsWidget with additional functions for plotting. Checkboxes for pace/sense leads will show and hide the pace/sense plots. The expected behaviour of the checkboxes are shown in Table \ref{tab:DCM_MainWindow}.
+The real-time electrograms show real-time telemetry data from the pace and sense leads on the pacemaker. Checkboxes for pace/sense leads will show and hide the pace/sense plots. The expected behaviour of the checkboxes are shown in Table \ref{tab:DCM_MainWindow}.
 
 The pacing mode interfaces allow the user to select the operating pacing mode of the pacemaker. Pacing mode selection is implemented using the QRadioGroup class, containing instances of the QRadioButton class for each pacing mode. The QRadioGroup class only allows one radio button to be switched on at a time, ensuring only a single pacing mode is selected at all times. Functions in other modules that rely on the pacing mode can rely on the functions of the QRadioGroup class, ensuring that the individual radio buttons cannot be altered.
 
@@ -268,7 +268,7 @@ The DCM's functions are operated through push buttons on the main window. The pu
 \end{table}
 \newpage
 \paragraph{Electrograms}
-stuff
+The graphs use the PlotWidget class from PyQtGraph, a QGraphicsWidget with additional functions for plotting. The l
 
 \paragraph{Reports}
 \begin{table}[ht]
@@ -306,7 +306,7 @@ The Quit push button closes the DCM GUI and exits the program.
 \subsection{GUI}
 All testing for the GUI was done manually. Tests for all modules confirmed that their functions were behaving as intended.
 
-\subsubsection{Welcome Screen}
+\subsubsection{Welcome Screen}\label{Testing:WelcomeScreen}
 The push buttons were tested to check if they led to the appropriate GUI elements and called the correct functions. 
 
 In the Welcome window, the register and login buttons were pressed, and they lead to the register and login screens respectively. 
@@ -315,21 +315,21 @@ In the register screen, the back button led the user back to the welcome screen.
 
 In the login screen, the back button led the user back to the welcome screen. The text fields allowed user input up to 15 characters with the password field being masked with bullet points. The submit button sent the user to the DCM main window when the user's credentials were present in the credentials file. The submit button displayed a popup message instructing the user to register the account if the user did not exist in the credentials file. The submit button displayed a popup message telling the user that the password is incorrect if the username existed in the credentials file but the passwords did not match.
 
-\subsubsection{DCM Main Window}
+\subsubsection{DCM Main Window}\label{Testing:DCMMainWindow}
 The push buttons, check boxes, graphs and radio buttons were tested to see if they led to the appropriate GUI elements and called the correct functions.
 
 The pace electrograms were no longer displayed when the pace leads checkbox was unchecked. The pace electrograms were displayed again when the pace leads checkbox was checked. The sense electrograms were no longer displayed when the sense leads checkbox was unchecked. The sense electrograms were displayed again when the sense leads checkbox was checked. The electrogram graphs were scrollable.
 
 The Reports window was opened when the reports button was pressed. The Parameters window was opened when the parameters button was pressed. The About window was opened when the about button was pressed. The Set Clock window was opened when the set clock window was pressed. The new patient button could not be tested in its current implementation as the testers only had access to one pacemaker. The program was exitted when the quit button was pressed.
 
-\subsubsection{Reports}
+\subsubsection{Reports}\label{Testing:Reports}
 The push buttons were tested to check if they called the correct functions.
 
 The "Electrogram" and "Temporary Parameters" buttons did not display anything. The "Bradycardia Parameters" button displayed a popup window showing the necessary header information. The pacing mode selected in the DCM main window and the relevant programmable parameters for the pacing mode were displayed following the header information. 
 
 Other functions of the main window could not be accessed while the Reports window was active.
 
-\subsubsection{Parameters}
+\subsubsection{Parameters}\label{Testing:Parameters}
 The push buttons and the data table were tested to check if they called the correct functions and displayed the intended behaviour.
 
 The only values displayed that could be changed were the ones listed under the "Values" column. All other text could not be modified. Changing the values in the column did not immediately update the parameters file. 
@@ -349,11 +349,23 @@ Other functions of the main window could not be accessed while the About window 
 The New Patient functions could not be tested in its current implementation due the testers only having access to one pacemaker.
 
 \subsection{Handlers}
+The handlers were largely tested alongside the GUI as most handler functions are called from within the GUI. Tests for all modules confirmed that their functions were behaving as intended. 
 
 \subsubsection{Authentication}
+The authentication handler and its functions were tested in the register and login widgets in Section \ref{Testing:WelcomeScreen}. 
+
 \subsubsection{Connection}
+The status bar showed the message "Not connected to pacemaker" when the DCM main window was reached with no pacemaker connected. The status bar showed "Registered pacemaker 7" when a pacemaker was connected. When the pacemaker was disconnected, the status bar showed "Not connected to pacemaker 7". There was no testing done on functions that relied on an unregistered pacemaker to be connected, as the testing could only be done with a single pacemaker.
+
 \subsubsection{Graphs}
-\subsubsection{Parameters}
+The graphs handler and its functions were tested with the DCM main window electrograms in Section \ref{Testing:DCMMainWindow}
+
 \subsubsection{Reports}
+The reports handler and its functions were tested with the reports window in section \ref{Testing:Reports}.
+
+\subsubsection{Parameters}
+The parameters handler and its functions were tested in the parameters window in Section \ref{Testing:Parameters}.
+
+
 
 \end{document}
