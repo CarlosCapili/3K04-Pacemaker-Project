@@ -71,7 +71,7 @@ class ParametersHandler:
         for row in range(self.table.rowCount()):
             self.table.item(row, 0).setText(self.params_store[self.table.verticalHeaderItem(row).text()])
 
-    # Return a list of parameters with the names, values and units for the specified pacing mode
+    # Return a pacing mode dependent dict of parameters with the names as keys, and param values with units as values
     def filter_params(self, pacing_mode: str) -> Dict[str, str]:
         mode_params = {key: f"{self.params_store[key]}{self.units[key]}" for key in self.params_per_mode[pacing_mode]}
         mode_params["Pacing Mode"] = pacing_mode

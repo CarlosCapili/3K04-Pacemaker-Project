@@ -89,7 +89,7 @@ class MainController:
         self.link_params_buttons()
 
         # Start connection thread
-        self.conn.connectStatusChange.connect(self.dcm_ui.statusbar.handle_conn_anim)
+        self.conn.connect_status_change.connect(self.dcm_ui.statusbar.handle_conn_anim)
         self.conn.start()
 
         # Show welcome screen GUI

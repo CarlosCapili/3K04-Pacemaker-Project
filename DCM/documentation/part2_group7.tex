@@ -304,7 +304,7 @@ The New Patient push button calls the \texttt{register\_device()} in the connect
 The Quit push button closes the DCM GUI and exits the program.
 
 \paragraph{Animated Status Bar}
-The animated status bar is a status bar for displaying the connection status between the DCM and the pacemaker with some integrated animations that depend on the connection status. The animated status bar is an AnimatedStatusBar, a class that extends the QStatusBar class from Qt with additional functions that interact with the connection handler. The AnimatedStatusBar's handle\_conn\_anim function is called by the connection handler whenever the status bar should be updated, and the function will display a programmed message and animation depending on the connection state received from the connection handler. 
+The animated status bar is a status bar for displaying the connection status between the DCM and the pacemaker with some integrated animations that depend on the connection status. The animated status bar is an AnimatedStatusBar, a class that extends the QStatusBar class from Qt with additional functions that interact with the connection handler. The AnimatedStatusBar's handle\_conn\_anim function is called by the connection handler whenever the status bar should be updated, and the function will display a programmed message and animation depending on the connection state received from the connection handler.
 
 \subsection{Handlers}
 The handlers are the backend of the program, where all the actions from the GUI are implemented.
@@ -323,21 +323,25 @@ The function checks if the username exists or if there are already 10 users, and
 The state variables for the auth module are the credential store, which is a dictionary of strings where the keys are the usernames and the values are the passwords, and the \texttt{on\_success} function.
 The private function of the module is the \texttt{\_show\_alert(msg: str)} function which takes in a message as a string and displays that on an error alert box that appears on top of the current window.
 
-\subsubsection{Connection} MOSTLY COPY-PASTED PLS FIX \\
-The connections handler handles STUFF.
-The 6 public functions are the constructor, run, stop, \_update\_state, register\_device, and \_handle\_removed\_device.
+\subsubsection{Connection}
+The connections handler handles the pacemaker connection for the DCM and extends the PyQt5 QThread class to allow for multithreading.
+There is also the \_SerialHandler class which is a private class that handles the serial communication with the pacemaker, but it is just a placeholder and not fully implemented, because that is for Assignment 2.
+It is still commented, but will not be talked about in this document, for the aforementioned reasons.
 
-The constructor takes in a PyQt5 TableWidget named table, which is used to generate the header for each report.
-The generate\_egram method is not implemented yet because we don't have actual electrogram data, and generate\_temp will most likely get removed.
-The generate\_brady method takes in a dictionary of strings named params, which are all the parameters for the current pacing mode.
-It then joins the header string and all the parameters as strings on new lines, before displaying the report in a custom message box.
-The state variable for the report module is just the header string, which contains each "About" property on a new line.
-The two private functions in the module are \texttt{\_format\_params(params: Dict[str, str])} and \texttt{\_show\_report(report: str)}.
-Format\_params just takes in a dictionary of parameters as strings, and then returns a string with each param aligned to the colon and each parameter name/value on a new line.
-Show\_report takes in a report as a string and shows a customized message box with the specified text.
+In the connections handler, the 5 public functions are the constructor, run, stop, register\_device, and send\_data\_to\_pacemaker.
+The constructor only initializes the state variables to default values, and starts the serial handler thread.
+The run method is called when the thread starts and overrides the method in QThread.
+It sets its running variable to True, emits an initial state change signal and then loops until the program is closed, calling the \_update\_state method every 10ms approximately.
+The stop method is used to stop the thread and stop the serial conn thread.
+The register\_device method is called when the New Patient button is pressed and it registers the pacemaker if the current state is CONNECTED, otherwise it displays an alert depending on other conditions.
+For example, it will display "Please plug in a pacemaker!" when the New Patient button is pressed and there are no pacemakers plugged into the PC.
+The send\_data\_to\_pacemaker method takes in a dictionary of strings, named params and is not fully implemented because of no serial communication, so its just a placeholder.
+The state variables for the connection module are running, which is just a bool that controls the while loop in the thread, device, devices, old\_devices, first\_serial\_num, current\_state, prev\_state, wanted\_state, serial, and connect\_status\_change.
+
+The 4 private functions in the module are \_update\_params\_file, which just writes the params\_store to file, creating a new one if it doesn't exist, and \_update\_params\_gui which just updates the params GUI table with the values from the params\_store.
 
 \subsubsection{Graphs}
-The graphs handler handles the drawing and updating of the graphs in the DCM window.
+The graphs handler handles the drawing and updating of the graphs in the DCM window and extends the PyQt5 QThread class to allow for future multithreading.
 The 7 public functions are the constructor, pace/sense\_plot, pace/sense\_show, and pace/sense\_hide.
 The constructor takes in two PyQtGraph PlotWidgets named atri/vent\_plot, for the atrial and ventricular plots, which are used to generate the plot data items.
 It also generates some random sample data for right now, so that we can show something on the graphs.
@@ -346,18 +350,23 @@ The pace/sense\_show methods show the corresponding plot data item on the graphs
 The state variables for the graph module are atri/vent\_data\_pace and atri/vent\_data\_sense, which store the pace and sense lead data as 1D arrays, and atri/vent\_pace\_plot and atri/vent\_sense\_plot which are the PlotDataItems for the graphs.
 There are no private functions in the module.
 
-\subsubsection{Parameters} MOSTLY COPY-PASTED PLS FIX \\
-The parameters handler handles STUFF.
-The 6 public functions are the constructor, confirm, reset, \_update\_params\_file, \_update\_params\_gui and filter\_params.
-
-The constructor takes in a PyQt5 TableWidget named table, which is used to generate the header for each report.
-The generate\_egram method is not implemented yet because we don't have actual electrogram data, and generate\_temp will most likely get removed.
-The generate\_brady method takes in a dictionary of strings named params, which are all the parameters for the current pacing mode.
-It then joins the header string and all the parameters as strings on new lines, before displaying the report in a custom message box.
-The state variable for the report module is just the header string, which contains each "About" property on a new line.
-The two private functions in the module are \texttt{\_format\_params(params: Dict[str, str])} and \texttt{\_show\_report(report: str)}.
-Format\_params just takes in a dictionary of parameters as strings, and then returns a string with each param aligned to the colon and each parameter name/value on a new line.
-Show\_report takes in a report as a string and shows a customized message box with the specified text.
+\subsubsection{Parameters}
+The parameters handler handles storing and updating the parameters for the DCM.
+The 4 public functions are the constructor, confirm, reset, and filter\_params.
+The constructor takes in a PyQt5 TableWidget named table, which is used to retrieve and update values from the GUI, so they are only hard-coded once.
+It also creates a dictionary of parameters per pacing mode, and it initializes the default\_params, the units and the params\_store dictionaries.
+If the params\_store file already exists, it will load the params from there and then update the GUI to display those values instead.
+The confirm method is used to update the params\_store dict from the params GUI table and write the new values to file, creating the file if it doesn't exist.
+The reset method is used to reset the param values to the defaults hard-coded into the params GUI table.
+It prompts the user if they are sure they want to reset all the values, and then optionally loads the GUI defaults and updates the file and params GUI table to reflect those changes.
+The filter\_params method takes in a string named pacing\_mode which is used to get a dictionary that contains only the parameters for the specified pacing mode.
+It returns a dictionary with the param names as keys, and the param value with units as values.
+The state variables for the params module are table, which is just the params GUI table, params\_per\_mode, default\_params\_store, units, and params\_store.
+Params\_per\_mode is a dictionary that maps the pacing mode as a string, specified as the keys, to the programmable parameters for that mode as a list of strings, specified as the value.
+This mapping was found in Table 6 of the PACEMAKER System Specification document.
+The default\_params\_store and units variables are simply dictionaries of strings with the parameter names as keys and the parameter values and units, as values respectively.
+The params\_store is the exact same data structure as default\_params\_store, but it stores the most recent values of the params GUI table.
+The two private functions in the module are \_update\_params\_file, which just writes the params\_store to file, creating a new one if it doesn't exist, and \_update\_params\_gui which just updates the params GUI table with the values from the params\_store.
 
 \subsubsection{Reports}
 The reports handler handles generating and displaying all the reports for the DCM window.

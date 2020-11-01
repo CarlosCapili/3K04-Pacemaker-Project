@@ -104,7 +104,7 @@ class ConnectionHandler(QThread):
     serial: _SerialHandler
 
     # A signal that's emitted every time we change state
-    connectStatusChange: pyqtSignal = pyqtSignal(PacemakerState, str)  # (not conn, conn, reg), (serial_num and/or msg)
+    connect_status_change: pyqtSignal = pyqtSignal(PacemakerState, str)  # the str is the serial_num and/or a msg
 
     def __init__(self):
         super().__init__()
@@ -126,7 +126,7 @@ class ConnectionHandler(QThread):
     # Gets called when the thread starts, overrides method in QThread
     def run(self):
         self.running = True
-        self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, "")
+        self.connect_status_change.emit(PacemakerState.NOT_CONNECTED, "")
 
         while self.running:
             self._update_state()
@@ -168,7 +168,7 @@ class ConnectionHandler(QThread):
         elif self.current_state == PacemakerState.CONNECTED:
             # The only way to go from CONNECTED to REGISTERED is if the New Patient btn is pressed
             if self.prev_state == PacemakerState.NOT_CONNECTED:
-                self.connectStatusChange.emit(PacemakerState.CONNECTED, f"{self.device.serial_number}, press New "
+                self.connect_status_change.emit(PacemakerState.CONNECTED, f"{self.device.serial_number}, press New "
                                                                         f"Patient to register")
             # Handle a device being removed
             self._handle_removed_device(removed)
@@ -178,7 +178,7 @@ class ConnectionHandler(QThread):
             # If we've just transitioned to REGISTERED, open the serial communication link
             if self.prev_state == PacemakerState.NOT_CONNECTED or self.prev_state == PacemakerState.CONNECTED:
                 self.serial.start_serial_comm(self.device.device)
-                self.connectStatusChange.emit(PacemakerState.REGISTERED, self.device.serial_number)
+                self.connect_status_change.emit(PacemakerState.REGISTERED, self.device.serial_number)
 
             # Handle a device being removed
             self._handle_removed_device(removed)
@@ -202,7 +202,7 @@ class ConnectionHandler(QThread):
     def _handle_removed_device(self, removed: List[ListPortInfo]) -> None:
         if len(removed) > 0 and self.device.serial_number == removed[0].serial_number:
             self.wanted_state = PacemakerState.NOT_CONNECTED
-            self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, removed[0].serial_number)
+            self.connect_status_change.emit(PacemakerState.NOT_CONNECTED, removed[0].serial_number)
             self.device = ListPortInfo()
 
     # Called when the Pace Now button is pressed, not fully implemented because of no serial communication
