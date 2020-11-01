@@ -323,24 +323,24 @@ It essentially compares the username and password to the existing entries in the
 The register method also takes in a username and password as strings, which are used to create a new user.
 The function checks if the username exists or if there are already 10 users, and if none of those are true it updates the credential store, writes it to a file and calls the \verb|on_success| function.
 The state variables for the auth module are the credential store, which is a dictionary of strings where the keys are the usernames and the values are the passwords, and the \verb|on_success| function.
-The private function of the module is the \verb|_show\alert(msg: str)| function which takes in a message as a string and displays that on an error alert box that appears on top of the current window.
+The private function of the module is the \verb|_show_alert(msg: str)| function which takes in a message as a string and displays that on an error alert box that appears on top of the current window.
 
 \subsubsection{Connection}
 The connections handler handles the pacemaker connection for the DCM and extends the PyQt5 QThread class to allow for multithreading.
-There is also the \_SerialHandler class which is a private class that handles the serial communication with the pacemaker, but it is just a placeholder and not fully implemented, because that is for Assignment 2.
+There is also the \verb|_SerialHandler| class which is a private class that handles the serial communication with the pacemaker, but it is just a placeholder and not fully implemented, because that is for Assignment 2.
 It is still commented, but will not be talked about in this document, for the aforementioned reasons.
 
-In the connections handler, the 5 public functions are the constructor, run, stop, register\_device, and send\_data\_to\_pacemaker.
+In the connections handler, the 5 public functions are the constructor, \verb|run|, \verb|stop|, \\ \verb|register_device|, and \verb|send_data_to_pacemaker|.
 The constructor only initializes the state variables to default values, and starts the serial handler thread.
 The run method is called when the thread starts and overrides the method in QThread.
-It sets its running variable to True, emits an initial state change signal and then loops until the program is closed, calling the \_update\_state method every 10ms approximately.
+It sets its running variable to True, emits an initial state change signal and then loops until the program is closed, calling the \verb|_update_state| method every 10ms approximately.
 The stop method is used to stop the thread and stop the serial conn thread.
-The register\_device method is called when the New Patient button is pressed and it registers the pacemaker if the current state is CONNECTED, otherwise it displays an alert depending on other conditions.
+The \verb|register_device| method is called when the New Patient button is pressed and it registers the pacemaker if the current state is CONNECTED, otherwise it displays an alert depending on other conditions.
 For example, it will display "Please plug in a pacemaker!" when the New Patient button is pressed and there are no pacemakers plugged into the PC.
-The send\_data\_to\_pacemaker method takes in a dictionary of strings, named params and is not fully implemented because of no serial communication, so its just a placeholder.
-The state variables for the connection module are running, which is just a bool that controls the while loop in the thread, device, devices, old\_devices, first\_serial\_num, current\_state, prev\_state, wanted\_state, serial, and connect\_status\_change.
+The \verb|send_data_to_pacemaker| method takes in a dictionary of strings, named params and is not fully implemented because of no serial communication, so its just a placeholder.
+The state variables for the connection module are running, which is just a bool that controls the while loop in the \verb|thread|, \verb|device|, \verb|devices|, \verb|old_devices|, \verb|first_serial_num|, \verb|current_state|, \verb|prev_state|, \verb|wanted_state|, \verb|serial|, and \verb|connect_status_change|.
 
-The 4 private functions in the module are \_update\_params\_file, which just writes the params\_store to file, creating a new one if it doesn't exist, and \_update\_params\_gui which just updates the params GUI table with the values from the params\_store.
+The 4 private functions in the module are \verb|_update_params_file|, which just writes the \verb|params_store| to file, creating a new one if it doesn't exist, and \verb|_update_params_gui| which just updates the params GUI table with the values from the \verb|params_store|.
 
 \begin{table}[ht]
     \begin{adjustbox}{max width=\textwidth}
@@ -353,12 +353,12 @@ The 4 private functions in the module are \_update\_params\_file, which just wri
             \multicolumn{1}{c|}{CONNECTED} &
             \multicolumn{1}{c|}{REGISTERED} \\ \hline
         \multicolumn{1}{|c|}{\multirow{2}{*}{\_update\_state}} &
-            \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}len (added) \textgreater 0 and\\ ((first\_serial\_num ==\\ device\_serial\_num)  or\\ (first\_serial\_num == ""))\end{tabular}} &
+            \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}len (added) \textgreater 0 and\\ ((first\_serial\_num == "") or \\ (first\_serial\_num ==\\ device\_serial\_num))\end{tabular}} &
             \multicolumn{1}{c|}{REGISTERED} &
             \multicolumn{1}{c|}{-} &
             \multicolumn{1}{c|}{-} \\ \cline{2-5} 
         \multicolumn{1}{|c|}{} &
-            \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}len(added) \textgreater{}\textgreater and\\ !((first\_serial\_num ==\\ device\_serial\_num) or\\ (first\_serial\_num == ""))\end{tabular}} &
+            \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}len(added) \textgreater 0 and\\ !((first\_serial\_num == "") or \\ (first\_serial\_num ==\\ device\_serial\_num))\end{tabular}} &
             \multicolumn{1}{c|}{CONNECTED} &
             \multicolumn{1}{c|}{-} &
             \multicolumn{1}{c|}{-} \\ \hline
@@ -369,7 +369,7 @@ The 4 private functions in the module are \_update\_params\_file, which just wri
             \multicolumn{1}{c|}{-} \\ \hline
         \multicolumn{1}{|c|}{\_handle\_removed\_device} &
             \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}len(removed) \textgreater 0 and\\ (self.device.serial\_number ==\\ removed{[}0{]}.serial\_number)\end{tabular}} &
-            \multicolumn{1}{c|}{NOT\_CONNECTED} &
+            \multicolumn{1}{c|}{-} &
             \multicolumn{1}{c|}{NOT\_CONNECTED} &
             \multicolumn{1}{c|}{NOT\_CONNECTED} \\ \hline
         \end{tabular}
@@ -380,43 +380,43 @@ The 4 private functions in the module are \_update\_params\_file, which just wri
 
 \subsubsection{Graphs}
 The graphs handler handles the drawing and updating of the graphs in the DCM window and extends the PyQt5 QThread class to allow for future multithreading.
-The 7 public functions are the constructor, pace/sense\_plot, pace/sense\_show, and pace/sense\_hide.
-The constructor takes in two PyQtGraph PlotWidgets named atri/vent\_plot, for the atrial and ventricular plots, which are used to generate the plot data items.
+The 7 public functions are the constructor, \verb|pace/sense_plot|, \verb|pace/sense_show|, and \verb|pace/sense_hide|.
+The constructor takes in two PyQtGraph PlotWidgets named \verb|atri/vent_plot|, for the atrial and ventricular plots, which are used to generate the plot data items.
 It also generates some random sample data for right now, so that we can show something on the graphs.
-The pace/sense\_plot methods set the data of the plot data items to their corresponding sample data set, and then show the data on the graphs as well.
-The pace/sense\_show methods show the corresponding plot data item on the graphs, while the pace/sense\_hide methods hide them.
-The state variables for the graph module are atri/vent\_data\_pace and atri/vent\_data\_sense, which store the pace and sense lead data as 1D arrays, and atri/vent\_pace\_plot and atri/vent\_sense\_plot which are the PlotDataItems for the graphs.
+The \verb|pace/sense_plot| methods set the data of the plot data items to their corresponding sample data set, and then show the data on the graphs as well.
+The \verb|pace/sense_show| methods show the corresponding plot data item on the graphs, while the \verb|pace/sense_hide| methods hide them.
+The state variables for the graph module are \verb|atri/vent_data_pace| and \verb|atri/vent_data_sense|, which store the pace and sense lead data as 1D arrays, and \verb|atri/vent_pace_plot| and \verb|atri/vent_sense_plot| which are the PlotDataItems for the graphs.
 There are no private functions in the module.
 
 \subsubsection{Parameters}
 The parameters handler handles storing and updating the parameters for the DCM.
 The 4 public functions are the constructor, confirm, reset, and filter\_params.
 The constructor takes in a PyQt5 TableWidget named table, which is used to retrieve and update values from the GUI, so they are only hard-coded once.
-It also creates a dictionary of parameters per pacing mode, and it initializes the default\_params, the units and the params\_store dictionaries.
-If the params\_store file already exists, it will load the params from there and then update the GUI to display those values instead.
-The confirm method is used to update the params\_store dict from the params GUI table and write the new values to file, creating the file if it doesn't exist.
+It also creates a dictionary of parameters per pacing mode, and it initializes the \verb|default_params|, the units and the \verb|params_store| dictionaries.
+If the \verb|params_store| file already exists, it will load the params from there and then update the GUI to display those values instead.
+The confirm method is used to update the \verb|params_store| dict from the params GUI table and write the new values to file, creating the file if it doesn't exist.
 The reset method is used to reset the param values to the defaults hard-coded into the params GUI table.
 It prompts the user if they are sure they want to reset all the values, and then optionally loads the GUI defaults and updates the file and params GUI table to reflect those changes.
-The filter\_params method takes in a string named pacing\_mode which is used to get a dictionary that contains only the parameters for the specified pacing mode.
+The \verb|filter_params| method takes in a string named \verb|pacing_mode| which is used to get a dictionary that contains only the parameters for the specified pacing mode.
 It returns a dictionary with the param names as keys, and the param value with units as values.
-The state variables for the params module are table, which is just the params GUI table, params\_per\_mode, default\_params\_store, units, and params\_store.
-Params\_per\_mode is a dictionary that maps the pacing mode as a string, specified as the keys, to the programmable parameters for that mode as a list of strings, specified as the value.
+The state variables for the params module are table, which is just the params GUI table, \verb|params_per_mode|, \verb|default_params_store|, units, and \verb|params_store|.
+\verb|Params_per_mode| is a dictionary that maps the pacing mode as a string, specified as the keys, to the programmable parameters for that mode as a list of strings, specified as the value.
 This mapping was found in Table 6 of the PACEMAKER System Specification document.
-The default\_params\_store and units variables are simply dictionaries of strings with the parameter names as keys and the parameter values and units, as values respectively.
-The params\_store is the exact same data structure as default\_params\_store, but it stores the most recent values of the params GUI table.
-The two private functions in the module are \_update\_params\_file, which just writes the params\_store to file, creating a new one if it doesn't exist, and \_update\_params\_gui which just updates the params GUI table with the values from the params\_store.
+The \verb|default_params_store| and units variables are simply dictionaries of strings with the parameter names as keys and the parameter values and units, as values respectively.
+The \verb|params_store| is the exact same data structure as \verb|default_params_store|, but it stores the most recent values of the params GUI table.
+The two private functions in the module are \verb|_update_params_file|, which just writes the \verb|params_store to file|, creating a new one if it doesn't exist, and \verb|_update_params_gui| which just updates the params GUI table with the values from the \verb|params_store|.
 
 \subsubsection{Reports}
 The reports handler handles generating and displaying all the reports for the DCM window.
-The 4 public functions are the constructor, generate\_egram, generate\_brady, and generate\_temp.
+The 4 public functions are the constructor, \verb|generate_egram|, \verb|generate_brady|, and \verb|generate_temp|.
 The constructor takes in a PyQt5 TableWidget named table, which is used to generate the header for each report.
-The generate\_egram method is not implemented yet because we don't have actual electrogram data, and generate\_temp will most likely get removed.
-The generate\_brady method takes in a dictionary of strings named params, which are all the parameters for the current pacing mode.
+The \verb|generate_egram| method is not implemented yet because we don't have actual electrogram data, and \verb|generate_temp| will most likely get removed.
+The \verb|generate_brady| method takes in a dictionary of strings named params, which are all the parameters for the current pacing mode.
 It then joins the header string and all the parameters as strings on new lines, before displaying the report in a custom message box.
 The state variable for the report module is just the header string, which contains each "About" property on a new line.
-The two private functions in the module are \verb|_format_params(params: Dict[str, str])| and \verb|_show_report(report: str)|.
-Format\_params just takes in a dictionary of parameters as strings, and then returns a string with each param aligned to the colon and each parameter name/value on a new line.
-Show\_report takes in a report as a string and shows a customized message box with the specified text.
+The two private functions in the module are \verb|_format_params(params: Dict[str, str])| and \verb|_show_report(report: str)|. \\
+\verb|Format_params| just takes in a dictionary of parameters as strings, and then returns a string with each param aligned to the colon and each parameter name/value on a new line.
+\verb|Show_report| takes in a report as a string and shows a customized message box with the specified text.
 
 \newpage
 \section{Testing}
