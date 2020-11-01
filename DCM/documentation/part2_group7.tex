@@ -4,11 +4,13 @@
 \usepackage{titling} \predate{} \postdate{}
 \usepackage{parskip}
 \usepackage{multirow}
+\usepackage{adjustbox}
 \usepackage{graphicx}
 \usepackage{pifont}
 \usepackage{tikz}
 \usepackage{hyperref}
 \usepackage{listings}
+\usepackage{verbatim}
 
 \usetikzlibrary{calc}
 \newcommand{\cmark}{\ding{51}}
@@ -298,7 +300,7 @@ Modules that rely on the programmable parameters will retrieve them from the par
 The about window displays the application model number, application software revision, DCM serial number and institution name. The about window contains a QTableWidget. The headers and cells of the table are set to the appropriate values and made unselectable, making the user unable to modify the cells' values. The widget only shows pre-programmed values and does not interact with any other modules in the DCM.
 
 \paragraph{New Patient}
-The New Patient push button calls the \texttt{register\_device()} in the connection handler. The connection handler will generate a popup message depending on the results of the function.
+The New Patient push button calls the \verb|register_device()| in the connection handler. The connection handler will generate a popup message depending on the results of the function.
 
 \paragraph{Quit}
 The Quit push button closes the DCM GUI and exits the program.
@@ -314,14 +316,14 @@ For example with the reports and parameters handlers, the reports are generated 
 \subsubsection{Authentication}
 The authentication handler handles the authentication process for the user.
 The three main public functions are the constructor, login and register.
-The constructor takes in a Python callable named \texttt{on\_success}, which gets called when the login or registration process is successful.
+The constructor takes in a Python callable named \verb|on_success|, which gets called when the login or registration process is successful.
 It also initializes the credential store, which stores the user credentials while the program is running.
 The login method takes in a username and password as strings, which are used to authenticate the user.
-It essentially compares the username and password to the existing entries in the credential store, and if they match it calls the \texttt{on\_success} function.
+It essentially compares the username and password to the existing entries in the credential store, and if they match it calls the \verb|on_success| function.
 The register method also takes in a username and password as strings, which are used to create a new user.
-The function checks if the username exists or if there are already 10 users, and if none of those are true it updates the credential store, writes it to a file and calls the \texttt{on\_success} function.
-The state variables for the auth module are the credential store, which is a dictionary of strings where the keys are the usernames and the values are the passwords, and the \texttt{on\_success} function.
-The private function of the module is the \texttt{\_show\_alert(msg: str)} function which takes in a message as a string and displays that on an error alert box that appears on top of the current window.
+The function checks if the username exists or if there are already 10 users, and if none of those are true it updates the credential store, writes it to a file and calls the \verb|on_success| function.
+The state variables for the auth module are the credential store, which is a dictionary of strings where the keys are the usernames and the values are the passwords, and the \verb|on_success| function.
+The private function of the module is the \verb|_show\alert(msg: str)| function which takes in a message as a string and displays that on an error alert box that appears on top of the current window.
 
 \subsubsection{Connection}
 The connections handler handles the pacemaker connection for the DCM and extends the PyQt5 QThread class to allow for multithreading.
@@ -339,6 +341,42 @@ The send\_data\_to\_pacemaker method takes in a dictionary of strings, named par
 The state variables for the connection module are running, which is just a bool that controls the while loop in the thread, device, devices, old\_devices, first\_serial\_num, current\_state, prev\_state, wanted\_state, serial, and connect\_status\_change.
 
 The 4 private functions in the module are \_update\_params\_file, which just writes the params\_store to file, creating a new one if it doesn't exist, and \_update\_params\_gui which just updates the params GUI table with the values from the params\_store.
+
+\begin{table}[ht]
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{ccccc}
+        \multicolumn{2}{l}{} &
+            \multicolumn{3}{c}{PREVIOUS STATE} \\ \cline{3-5} 
+        Event &
+            \multicolumn{1}{c|}{Condition} &
+            \multicolumn{1}{c|}{NOT\_CONNECTED} &
+            \multicolumn{1}{c|}{CONNECTED} &
+            \multicolumn{1}{c|}{REGISTERED} \\ \hline
+        \multicolumn{1}{|c|}{\multirow{2}{*}{\_update\_state}} &
+            \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}len (added) \textgreater 0 and\\ ((first\_serial\_num ==\\ device\_serial\_num)  or\\ (first\_serial\_num == ""))\end{tabular}} &
+            \multicolumn{1}{c|}{REGISTERED} &
+            \multicolumn{1}{c|}{-} &
+            \multicolumn{1}{c|}{-} \\ \cline{2-5} 
+        \multicolumn{1}{|c|}{} &
+            \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}len(added) \textgreater{}\textgreater and\\ !((first\_serial\_num ==\\ device\_serial\_num) or\\ (first\_serial\_num == ""))\end{tabular}} &
+            \multicolumn{1}{c|}{CONNECTED} &
+            \multicolumn{1}{c|}{-} &
+            \multicolumn{1}{c|}{-} \\ \hline
+        \multicolumn{1}{|c|}{register\_device} &
+            \multicolumn{1}{c|}{-} &
+            \multicolumn{1}{c|}{-} &
+            \multicolumn{1}{c|}{REGISTERED} &
+            \multicolumn{1}{c|}{-} \\ \hline
+        \multicolumn{1}{|c|}{\_handle\_removed\_device} &
+            \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}len(removed) \textgreater 0 and\\ (self.device.serial\_number ==\\ removed{[}0{]}.serial\_number)\end{tabular}} &
+            \multicolumn{1}{c|}{NOT\_CONNECTED} &
+            \multicolumn{1}{c|}{NOT\_CONNECTED} &
+            \multicolumn{1}{c|}{NOT\_CONNECTED} \\ \hline
+        \end{tabular}
+    \end{adjustbox}
+    %\DrawBox[thin, black]{topleft}{bottomright}
+    \caption{\label{tab:ReportsHandlerStateflow}Reports Handler Stateflow}
+\end{table}
 
 \subsubsection{Graphs}
 The graphs handler handles the drawing and updating of the graphs in the DCM window and extends the PyQt5 QThread class to allow for future multithreading.
@@ -376,7 +414,7 @@ The generate\_egram method is not implemented yet because we don't have actual e
 The generate\_brady method takes in a dictionary of strings named params, which are all the parameters for the current pacing mode.
 It then joins the header string and all the parameters as strings on new lines, before displaying the report in a custom message box.
 The state variable for the report module is just the header string, which contains each "About" property on a new line.
-The two private functions in the module are \texttt{\_format\_params(params: Dict[str, str])} and \texttt{\_show\_report(report: str)}.
+The two private functions in the module are \verb|_format_params(params: Dict[str, str])| and \verb|_show_report(report: str)|.
 Format\_params just takes in a dictionary of parameters as strings, and then returns a string with each param aligned to the colon and each parameter name/value on a new line.
 Show\_report takes in a report as a string and shows a customized message box with the specified text.
 
