@@ -190,10 +190,10 @@ Graphs in the DCM are handled by the \href{http://www.pyqtgraph.org/}{PyQtGraph}
 
 \subsection{GUI}
 \subsubsection{Welcome Screen}
-The Welcome Screen is a QStackedWidget, 
+The welcome window is the window the user is greeted by when the DCM program is launched, allowing the user to register users or login into the DCM. The Welcome Screen is a QStackedWidget, a Qt class that contains multiple widgets but only displays one at a time. The QStackedWidget class was chosen to allow all modules of the welcome screen to be accessible in a single window, while still allowing individual modules to behave independently. Additional modules can easily be added as new widgets without affecting implemented modules. The UI 
 
 \paragraph{Welcome}
-QWidget, can't access register/login
+The welcome screen is the first widget in the welcome window that is displayed when the window is launched. The widget gives the user the option to register a new user or login as an existing user through push buttons displayed in the widget. The welcome widget is a QWidget with internal functions that cannot be accessed by the other widgets. The widget's only functions are to direct the user to another widget when a push button is pressed. The register button will lead the user to the register widget and the login button will lead the user to the login widget. A tabular expression detailing the expected behaviour of the widget's functions are shown in Table \ref{tab:DCM_Welcome}.
 \begin{table}[ht]
 \centering
 \setlength{\aboverulesep}{0pt}
@@ -203,12 +203,12 @@ QWidget, can't access register/login
     \multicolumn{1}{|c}{welcome\_ui.reg\_btn} & \multicolumn{1}{|c|}{welcome\_gui.setCurrentIndex(1)} \\ \hline
     \multicolumn{1}{|c}{welcome\_ui.log\_btn} & \multicolumn{1}{|c|}{welcome\_gui.setCurrentIndex(2)\hfill\null\tikzmark{bottomright}}  \\ \cmidrule{1-2}
 \end{tabular}
-\caption{\label{tab:DCM_WelcomeScreen}Welcome Screen}
+\caption{\label{tab:DCM_Welcome}Welcome Screen}
 \DrawBox[thin, black]{topleft}{bottomright}
 \end{table}
 
 \paragraph{Register}
-QWidget, can't access login
+The register screen can only be navigated to from the welcome screen. The register screens gives the user the ability to register a new user using a username and password, or return to the welcome screen. The register widget is a QWidget with internal functions that cannot be accessed by the other widgets. The widget's functions are accepting user inputs in the username and password fields, authorizing the user inputs, or directing the user to another widget. The register button will call the authentication handler's register funnction with the text in the username and password fields as inputs. The back button will return the user to the welcome screen. A tabular expression detailing the expected behaviour of the widget's functions are shown in Table \ref{tab:DCM_Register}.
 \begin{table}[ht]
     \centering
     \setlength{\aboverulesep}{0pt}
@@ -223,7 +223,7 @@ QWidget, can't access login
     \end{table}
 
 \paragraph{Login}
-QWidget, can't access register
+The login screen can only be navigated to from the welcome screen. The login screens gives the user the ability to login as an existing user using a username and password, or return to the welcome screen. The login widget is a QWidget with internal functions that cannot be accessed by the other widgets. The widget's functions are accepting user inputs in the username and password fields, authorizing the user inputs, or directing the user to another widget. The login button will call the authentication handler's login funnction with the text in the username and password fields as inputs. The back button will return the user to the welcome screen. A tabular expression detailing the expected behaviour of the widget's functions are shown in Table \ref{tab:DCM_Login}.
 \begin{table}[ht]
     \centering
     \setlength{\aboverulesep}{0pt}
@@ -238,9 +238,13 @@ QWidget, can't access register
     \end{table}
 
 \subsubsection{DCM Main Window}
+The main window is the window which contains all the DCM functions. The main window has three main functions: presenting important information about the pacemaker (DCM's connection status with the pacemaker, the pacemaker's pacing mode, graphical telemetry data from the pacemaker), provides the user the ability to change pacing modes, and allows the user to access the DCM's functions. The main window is a QMainWindow, a Qt class intended for main window management. The class was chosen due to it's ability to add status bars, which will be used to display information about the DCM's connection with the pacemaker. The main window consists of three main sections: real-time electrograms, pacing mode interfaces, and DCM functions. While there are some interactions between these sections (particularly the pacing mode interfaces and the modules in the DCM functions), they are largely contained in their own modules that can function independently from each other. Future modules can be added to any section without affecting implemented modules (with the expection of modules that do not have any defined behaviour for additional pacing modes).
 
-\paragraph{Electrograms}
+The real-time electrograms show real-time telemetry data from the pace and sense leads on the pacemaker. The graphs use the PlotWidget class from PyQtGraph, a QGraphicsWidget with additional functions for plotting. Checkboxes for pace/sense leads will show and hide the pace/sense plots. The expected behaviour of the checkboxes are shown in Table \ref{tab:DCM_MainWindow}.
 
+The pacing mode interfaces allow the user to select the operating pacing mode of the pacemaker. Pacing mode selection is implemented using the QRadioGroup class, containing instances of the QRadioButton class for each pacing mode. The QRadioGroup class only allows one radio button to be switched on at a time, ensuring only a single pacing mode is selected at all times. Functions in other modules that rely on the pacing mode can rely on the functions of the QRadioGroup class, ensuring that the individual radio buttons cannot be altered.
+
+The DCM's functions are operated through push buttons on the main window. The push buttons will either call a function from a handler (new patient), or direct the user to another window. Relevant handler functions are called in these new windows depending on user selected options presented in these windows. The expected behaviour of the push buttons to access DCM functions are shown in Table \ref{tab:DCM_MainWindow}.
 
 \begin{table}[ht]
     \centering
@@ -262,7 +266,10 @@ QWidget, can't access register
     \caption{\label{tab:DCM_MainWindow}DCM Main Window}
     \DrawBox[thin, black]{topleft}{bottomright}
 \end{table}
-    
+\newpage
+\paragraph{Electrograms}
+stuff
+
 \paragraph{Reports}
 \begin{table}[ht]
     \centering
