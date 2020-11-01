@@ -39,13 +39,12 @@ class ParametersHandler:
         except (FileNotFoundError, JSONDecodeError):
             self.params_store = self.default_params_store
 
-    def confirm(self):
+    def confirm(self) -> None:
         self.params_store = {self.table.verticalHeaderItem(row).text(): self.table.item(row, 0).text() for row in
                              range(self.table.rowCount())}
         self.update_params_file()
 
-    def reset(self):
-        print("resetting params maybe")
+    def reset(self) -> None:
         qm = QMessageBox()
         ret = QMessageBox.question(qm, "Parameters", "Are you sure you want to reset all the values?",
                                    QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
@@ -54,11 +53,11 @@ class ParametersHandler:
             self.update_params_file()
             self.update_params_gui()
 
-    def update_params_file(self):
+    def update_params_file(self) -> None:
         with open(PARAMETERS_FILE_PATH, mode='w+') as f:
             json.dump(self.params_store, f)
 
-    def update_params_gui(self):
+    def update_params_gui(self) -> None:
         for row in range(self.table.rowCount()):
             self.table.item(row, 0).setText(self.params_store[self.table.verticalHeaderItem(row).text()])
 

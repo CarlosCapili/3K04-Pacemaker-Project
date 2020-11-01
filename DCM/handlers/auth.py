@@ -1,7 +1,6 @@
 import json
-from collections import Callable
 from json import JSONDecodeError
-from typing import Dict
+from typing import Callable, Dict
 
 from PyQt5.QtWidgets import QMessageBox
 

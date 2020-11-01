@@ -95,6 +95,7 @@ class MainController:
         # Show welcome screen GUI
         self.welcome_gui.show()
 
+    # Link welcome screen ui elements to their respective functions
     def link_welcome_buttons(self) -> None:
         # Welcome screen
         # show register and login screens when those buttons are pressed, respectively
@@ -113,6 +114,7 @@ class MainController:
             lambda: self.auth.login(self.welcome_ui.log_user.text(), self.welcome_ui.log_pass.text()))
         self.welcome_ui.log_back_btn.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(0))
 
+    # Link dcm ui elements to their respective functions
     def link_dcm_elements(self) -> None:
         # Buttons
         self.dcm_ui.quit_btn.clicked.connect(self.dcm_gui.close)  # close dcm and quit program when quit is pressed
@@ -130,12 +132,14 @@ class MainController:
         self.dcm_ui.sense_box.stateChanged.connect(
             lambda: self.graphs.sense_show() if self.dcm_ui.sense_box.isChecked() else self.graphs.sense_hide())
 
-    # Get the params based on the pacing mode, and then generate the respective report based on the pressed btn
+    # Link reports ui elements to their respective functions
     def link_reports_buttons(self) -> None:
+        # Get the params based on the pacing mode, and then generate the respective report based on the pressed btn
         self.reports_ui.egram_btn.clicked.connect(lambda: self.reports.generate_egram(self.get_pace_mode_params()))
         self.reports_ui.brady_btn.clicked.connect(lambda: self.reports.generate_brady(self.get_pace_mode_params()))
         self.reports_ui.temp_btn.clicked.connect(lambda: self.reports.generate_temp(self.get_pace_mode_params()))
 
+    # Link parameters ui elements to their respective functions
     def link_params_buttons(self) -> None:
         self.params_ui.confirm_btn.clicked.connect(self.params.confirm)  # update stored params and write them to a file
         self.params_ui.reset_btn.clicked.connect(self.params.reset)  # reset stored and shown params to GUI defaults
