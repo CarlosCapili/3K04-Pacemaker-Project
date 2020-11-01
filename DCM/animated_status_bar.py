@@ -5,8 +5,11 @@ from PyQt5.QtWidgets import (QApplication, QStatusBar)
 from handlers.connection import PacemakerState
 
 
-# This class extends the status bar widget to allow animations
+# This class extends the status bar widget to allow for animations
 class AnimatedStatusBar(QStatusBar):
+    no_conn_anim: QSequentialAnimationGroup
+    conn_anim: QSequentialAnimationGroup
+
     def __init__(self, parent=None):
         QStatusBar.__init__(self, parent)
         self.setAutoFillBackground(True)  # set the widget background to be filled automatically
@@ -69,7 +72,7 @@ class AnimatedStatusBar(QStatusBar):
 
     # Depending on the pacemaker connection state, display the corresponding animation/colour and the passed in
     # message on the status bar
-    def handle_conn_anim(self, conn_state: PacemakerState, msg: str):
+    def handle_conn_anim(self, conn_state: PacemakerState, msg: str) -> None:
         if conn_state == PacemakerState.NOT_CONNECTED:
             self.no_conn_anim.start()
             self.conn_anim.stop()
@@ -86,17 +89,17 @@ class AnimatedStatusBar(QStatusBar):
             self.showMessage(f"Registered pacemaker {msg}")
 
     # Return the current background color of the status bar
-    def get_back_color(self):
+    def get_back_color(self) -> QColor:
         return self.palette().color(self.backgroundRole())
 
     # Set the background color of the status bar
-    def set_back_color(self, color: QColor):
+    def set_back_color(self, color: QColor) -> None:
         self.pal.setColor(self.backgroundRole(), color)
         self.setPalette(self.pal)
 
     # Define properties of the status bar, used in animations
-    pal = QPalette()
-    back_color = pyqtProperty(QColor, get_back_color, set_back_color)
+    pal: QPalette = QPalette()
+    back_color: pyqtProperty = pyqtProperty(QColor, get_back_color, set_back_color)
 
 
 if __name__ == "__main__":

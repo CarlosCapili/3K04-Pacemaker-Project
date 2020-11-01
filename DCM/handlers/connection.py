@@ -188,7 +188,12 @@ class ConnectionHandler(QThread):
             self.show_alert("Please plug in a pacemaker!")
 
     @staticmethod
-    def show_alert(msg: str):
+    def show_alert(msg: str) -> None:
+        """
+        Displays an information message with the specified text
+
+        :param msg: the text to show
+        """
         qm = QMessageBox()
         QMessageBox.information(qm, "Connection", msg, QMessageBox.Ok, QMessageBox.Ok)
 

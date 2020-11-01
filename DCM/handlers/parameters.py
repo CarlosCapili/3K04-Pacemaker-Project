@@ -19,10 +19,10 @@ class ParametersHandler:
         self.table = table
 
         self.params_per_mode = {
-            "AOO": ['Lower Rate Limit', 'Upper Rate Limit', 'Atrial Amplitude', 'Atrial Pulse Width'],
-            "AAI": ['Lower Rate Limit', 'Upper Rate Limit', 'Atrial Amplitude', 'Atrial Pulse Width', 'ARP'],
-            "VOO": ['Lower Rate Limit', 'Upper Rate Limit', 'Ventricular Amplitude', 'Ventricular Pulse Width'],
-            "VVI": ['Lower Rate Limit', 'Upper Rate Limit', 'Ventricular Amplitude', 'Ventricular Pulse Width', 'VRP']}
+            'AOO': ["Lower Rate Limit", "Upper Rate Limit", "Atrial Amplitude", "Atrial Pulse Width"],
+            'AAI': ["Lower Rate Limit", "Upper Rate Limit", "Atrial Amplitude", "Atrial Pulse Width", "ARP"],
+            'VOO': ["Lower Rate Limit", "Upper Rate Limit", "Ventricular Amplitude", "Ventricular Pulse Width"],
+            'VVI': ["Lower Rate Limit", "Upper Rate Limit", "Ventricular Amplitude", "Ventricular Pulse Width", "VRP"]}
 
         self.default_params_store = {}
         self.units = {}
@@ -47,7 +47,7 @@ class ParametersHandler:
     def reset(self):
         print("resetting params maybe")
         qm = QMessageBox()
-        ret = QMessageBox.question(qm, 'Parameters', "Are you sure you want to reset all the values?",
+        ret = QMessageBox.question(qm, "Parameters", "Are you sure you want to reset all the values?",
                                    QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if ret == QMessageBox.Yes:
             self.params_store = self.default_params_store
