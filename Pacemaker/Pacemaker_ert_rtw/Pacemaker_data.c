@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Pacemaker'.
  *
- * Model version                  : 1.66
+ * Model version                  : 1.77
  * Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
- * C/C++ source code generated on : Tue Oct 27 05:45:09 2020
+ * C/C++ source code generated on : Sun Nov  1 10:08:03 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -31,6 +31,16 @@ P_Pacemaker_T Pacemaker_P = {
    * Referenced by: '<S2>/ATR_CMP_DETECT'
    */
   -1.0,
+
+  /* Expression: 4
+   * Referenced by: '<Root>/Constant3'
+   */
+  4.0,
+
+  /* Expression: 100
+   * Referenced by: '<S4>/Gain2'
+   */
+  100.0,
 
   /* Expression: 60000
    * Referenced by: '<S4>/Gain'
@@ -70,17 +80,12 @@ P_Pacemaker_T Pacemaker_P = {
   /* Computed Parameter: Constant10_Value
    * Referenced by: '<Root>/Constant10'
    */
-  1U,
+  200U,
 
   /* Computed Parameter: Constant2_Value_h
    * Referenced by: '<Root>/Constant2'
    */
   10U,
-
-  /* Computed Parameter: Constant3_Value
-   * Referenced by: '<Root>/Constant3'
-   */
-  5U,
 
   /* Computed Parameter: Constant4_Value
    * Referenced by: '<Root>/Constant4'

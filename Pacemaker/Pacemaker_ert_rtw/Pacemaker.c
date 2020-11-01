@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Pacemaker'.
  *
- * Model version                  : 1.66
+ * Model version                  : 1.77
  * Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
- * C/C++ source code generated on : Tue Oct 27 05:45:09 2020
+ * C/C++ source code generated on : Sun Nov  1 10:08:03 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -40,7 +40,6 @@
 #define Pacemaker_event_V_PaceBypass   (3)
 #define Pacemaker_event_Vent_Bypass    (5)
 #define Pacemaker_event_chargePace     (6)
-#define Pacemaker_event_dischargePace  (7)
 #define Pacemaker_event_paceEnd        (8)
 #define Pacemaker_event_paceStart      (9)
 
@@ -55,10 +54,8 @@ RT_MODEL_Pacemaker_T Pacemaker_M_;
 RT_MODEL_Pacemaker_T *const Pacemaker_M = &Pacemaker_M_;
 
 /* Forward declaration for local functions */
-static void Pacemak_broadcast_dischargePace(void);
-static void Pacemaker_broadcast_chargePace(void);
 static void Pacemaker_broadcast_paceEnd(void);
-static void Pacema_enter_atomic_Discharging(void);
+static void Pacemaker_broadcast_chargePace(void);
 static void Pacemaker_broadcast_A_Loop(void);
 static void Pacemaker_broadcast_paceStart(void);
 static real_T Pacemaker_ventSense(ChamberPaced a, ChamberSensed b);
@@ -81,64 +78,6 @@ static void Pacemake_SystemCore_release_j04(const
 static void Pacemaker_SystemCore_delete_j04(const
   freedomk64f_PWMOutput_Pacemak_T *obj);
 static void matlabCodegenHandle_matlabC_j04(freedomk64f_PWMOutput_Pacemak_T *obj);
-void mul_wide_u32(uint32_T in0, uint32_T in1, uint32_T *ptrOutBitsHi, uint32_T
-                  *ptrOutBitsLo)
-{
-  uint32_T outBitsLo;
-  uint32_T in0Lo;
-  uint32_T in0Hi;
-  uint32_T in1Lo;
-  uint32_T in1Hi;
-  uint32_T productHiLo;
-  uint32_T productLoHi;
-  in0Hi = in0 >> 16U;
-  in0Lo = in0 & 65535U;
-  in1Hi = in1 >> 16U;
-  in1Lo = in1 & 65535U;
-  productHiLo = in0Hi * in1Lo;
-  productLoHi = in0Lo * in1Hi;
-  in0Lo *= in1Lo;
-  in1Lo = 0U;
-  outBitsLo = (productLoHi << /*MW:OvBitwiseOk*/ 16U) + /*MW:OvCarryOk*/ in0Lo;
-  if (outBitsLo < in0Lo) {
-    in1Lo = 1U;
-  }
-
-  in0Lo = outBitsLo;
-  outBitsLo += /*MW:OvCarryOk*/ productHiLo << /*MW:OvBitwiseOk*/ 16U;
-  if (outBitsLo < in0Lo) {
-    in1Lo++;
-  }
-
-  *ptrOutBitsHi = (((productLoHi >> 16U) + (productHiLo >> 16U)) + in0Hi * in1Hi)
-    + in1Lo;
-  *ptrOutBitsLo = outBitsLo;
-}
-
-uint32_T mul_u32_sat(uint32_T a, uint32_T b)
-{
-  uint32_T result;
-  uint32_T u32_chi;
-  mul_wide_u32(a, b, &u32_chi, &result);
-  if (u32_chi) {
-    result = MAX_uint32_T;
-  }
-
-  return result;
-}
-
-/* Function for Chart: '<Root>/Chart' */
-static void Pacemak_broadcast_dischargePace(void)
-{
-  int32_T b_previousEvent;
-  b_previousEvent = Pacemaker_DW.sfEvent;
-  Pacemaker_DW.sfEvent = Pacemaker_event_dischargePace;
-
-  /* Chart: '<Root>/Chart' */
-  Pacemaker_c2_Pacemaker();
-  Pacemaker_DW.sfEvent = b_previousEvent;
-}
-
 real_T rt_roundd_snf(real_T u)
 {
   real_T y;
@@ -158,18 +97,6 @@ real_T rt_roundd_snf(real_T u)
 }
 
 /* Function for Chart: '<Root>/Chart' */
-static void Pacemaker_broadcast_chargePace(void)
-{
-  int32_T b_previousEvent;
-  b_previousEvent = Pacemaker_DW.sfEvent;
-  Pacemaker_DW.sfEvent = Pacemaker_event_chargePace;
-
-  /* Chart: '<Root>/Chart' */
-  Pacemaker_c2_Pacemaker();
-  Pacemaker_DW.sfEvent = b_previousEvent;
-}
-
-/* Function for Chart: '<Root>/Chart' */
 static void Pacemaker_broadcast_paceEnd(void)
 {
   int32_T b_previousEvent;
@@ -182,33 +109,15 @@ static void Pacemaker_broadcast_paceEnd(void)
 }
 
 /* Function for Chart: '<Root>/Chart' */
-static void Pacema_enter_atomic_Discharging(void)
+static void Pacemaker_broadcast_chargePace(void)
 {
-  Pacemaker_B.R_LED = false;
-  Pacemaker_B.ATR_PACE_CTRL = false;
-  Pacemaker_B.VENT_PACE_CTRL = false;
-  if (Pacemaker_DW.sfEvent == Pacemaker_event_dischargePace) {
-    Pacemaker_B.PACE_GND_CTRL = true;
-    Pacemaker_B.Z_ATR_CTRL = false;
-    Pacemaker_B.Z_VENT_CTRL = false;
-    if (Pacemaker_DW.ActiveChamber == 1.0) {
-      Pacemaker_B.ATR_GND_CTRL = true;
-      Pacemaker_B.VENT_GND_CTRL = false;
-    } else {
-      Pacemaker_B.ATR_GND_CTRL = false;
-      Pacemaker_B.VENT_GND_CTRL = true;
-    }
+  int32_T b_previousEvent;
+  b_previousEvent = Pacemaker_DW.sfEvent;
+  Pacemaker_DW.sfEvent = Pacemaker_event_chargePace;
 
-    Pacemaker_broadcast_paceEnd();
-  } else {
-    /* Constant: '<Root>/Constant3' */
-    Pacemaker_B.PACING_REF_PWM = mul_u32_sat((uint32_T)rt_roundd_snf((real_T)
-      Pacemaker_P.Constant3_Value / 5.0), 100U);
-    Pacemaker_B.PACE_CHARGE_CTRL = true;
-    if (Pacemaker_DW.temporalCounter_i1 >= 100U) {
-      Pacemaker_broadcast_chargePace();
-    }
-  }
+  /* Chart: '<Root>/Chart' */
+  Pacemaker_c2_Pacemaker();
+  Pacemaker_DW.sfEvent = b_previousEvent;
 }
 
 /* Function for Chart: '<Root>/Chart' */
@@ -296,7 +205,6 @@ static void Pacemaker_broadcast_V_Loop(void)
 /* Function for Chart: '<Root>/Chart' */
 static void Pacemaker_Sense(void)
 {
-  uint32_T qY;
   boolean_T guard1 = false;
   boolean_T guard2 = false;
   boolean_T guard3 = false;
@@ -308,7 +216,22 @@ static void Pacemaker_Sense(void)
     Pacemaker_DW.is_c2_Pacemaker = Pacemaker_IN_Pace;
     Pacemaker_DW.is_Pace = Pacemaker_IN_Discharging;
     Pacemaker_DW.temporalCounter_i1 = 0U;
-    Pacema_enter_atomic_Discharging();
+    Pacemaker_B.PACE_CHARGE_CTRL = false;
+    Pacemaker_B.PACE_GND_CTRL = true;
+    Pacemaker_B.ATR_GND_CTRL = false;
+    Pacemaker_B.VENT_GND_CTRL = false;
+    if (Pacemaker_DW.ActiveChamber == 1.0) {
+      Pacemaker_B.ATR_PACE_CTRL = true;
+    } else {
+      Pacemaker_B.VENT_PACE_CTRL = true;
+    }
+
+    /* Constant: '<Root>/Constant2' */
+    if (Pacemaker_DW.temporalCounter_i1 >= Pacemaker_P.Constant2_Value_h) {
+      Pacemaker_broadcast_chargePace();
+    }
+
+    /* End of Constant: '<Root>/Constant2' */
   } else {
     guard1 = false;
     guard2 = false;
@@ -324,8 +247,6 @@ static void Pacemaker_Sense(void)
       } else if (Pacemaker_DW.sfEvent == Pacemaker_event_A_Loop) {
         Pacemaker_DW.is_Atrium = Pacemaker_IN_NO_ACTIVE_CHILD;
         Pacemaker_DW.is_Sense = Pacemaker_IN_Default;
-        Pacemaker_B.R_LED = false;
-        Pacemaker_B.B_LED = false;
       } else {
         switch (Pacemaker_DW.is_Atrium) {
          case Pacemaker_IN_Default_l:
@@ -334,19 +255,8 @@ static void Pacemaker_Sense(void)
           } else if (Pacemaker_P.Constant_Value == NONE_A) {
             Pacemaker_DW.is_Atrium = Pacemaker_IN_None;
             Pacemaker_DW.temporalCounter_i1 = 0U;
-
-            /* Constant: '<Root>/Constant2' */
-            qY = Pacemaker_P.Constant2_Value_h + /*MW:OvSatOk*/ 100U;
-            if (qY < Pacemaker_P.Constant2_Value_h) {
-              qY = MAX_uint32_T;
-            }
-
-            qY = Pacemaker_B.DataTypeConversion1 - /*MW:OvSatOk*/ qY;
-            if (qY > Pacemaker_B.DataTypeConversion1) {
-              qY = 0U;
-            }
-
-            if (Pacemaker_DW.temporalCounter_i1 >= qY) {
+            if (Pacemaker_DW.temporalCounter_i1 >=
+                Pacemaker_B.DataTypeConversion1) {
               Pacemaker_broadcast_paceStart();
             }
           } else if (Pacemaker_P.Constant_Value == INHIBITED_A) {
@@ -379,18 +289,8 @@ static void Pacemaker_Sense(void)
           break;
 
          case Pacemaker_IN_None:
-          /* Constant: '<Root>/Constant2' */
-          qY = Pacemaker_P.Constant2_Value_h + /*MW:OvSatOk*/ 100U;
-          if (qY < Pacemaker_P.Constant2_Value_h) {
-            qY = MAX_uint32_T;
-          }
-
-          qY = Pacemaker_B.DataTypeConversion1 - /*MW:OvSatOk*/ qY;
-          if (qY > Pacemaker_B.DataTypeConversion1) {
-            qY = 0U;
-          }
-
-          if (Pacemaker_DW.temporalCounter_i1 >= qY) {
+          if (Pacemaker_DW.temporalCounter_i1 >= Pacemaker_B.DataTypeConversion1)
+          {
             Pacemaker_broadcast_paceStart();
           }
           break;
@@ -410,14 +310,13 @@ static void Pacemaker_Sense(void)
         Pacemaker_DW.is_Sense = Pacemaker_IN_Ventricle;
         Pacemaker_DW.is_Ventricle = Pacemaker_IN_Default_l;
         Pacemaker_DW.ActiveChamber = 2.0;
-      } else if (Pacemaker_atrSense(Pacemaker_P.Constant11_Value,
-                  Pacemaker_P.Constant9_Value) == 1.0) {
-        Pacemaker_DW.is_Sense = Pacemaker_IN_Atrium;
-        Pacemaker_DW.is_Atrium = Pacemaker_IN_Default_l;
-        Pacemaker_DW.ActiveChamber = 1.0;
       } else {
-        Pacemaker_B.R_LED = false;
-        Pacemaker_B.B_LED = false;
+        if (Pacemaker_atrSense(Pacemaker_P.Constant11_Value,
+                               Pacemaker_P.Constant9_Value) == 1.0) {
+          Pacemaker_DW.is_Sense = Pacemaker_IN_Atrium;
+          Pacemaker_DW.is_Atrium = Pacemaker_IN_Default_l;
+          Pacemaker_DW.ActiveChamber = 1.0;
+        }
       }
 
       /* End of Constant: '<Root>/Constant11' */
@@ -427,15 +326,12 @@ static void Pacemaker_Sense(void)
       if (Pacemaker_DW.sfEvent == Pacemaker_event_V_Loop) {
         Pacemaker_DW.is_Ventricle = Pacemaker_IN_NO_ACTIVE_CHILD;
         Pacemaker_DW.is_Sense = Pacemaker_IN_Default;
-        Pacemaker_B.R_LED = false;
-        Pacemaker_B.B_LED = false;
       } else {
         switch (Pacemaker_DW.is_Ventricle) {
          case Pacemaker_IN_Default_l:
           if (Pacemaker_P.Constant_Value == INHIBITED_A) {
             Pacemaker_DW.is_Ventricle = Pacemaker_IN_Inhibited;
             Pacemaker_DW.temporalCounter_i1 = 0U;
-            Pacemaker_B.B_LED = true;
             if (Pacemaker_B.VENT_CMP_DETECT) {
               Pacemaker_broadcast_V_Loop();
               if (Pacemaker_DW.is_Ventricle != 2) {
@@ -450,19 +346,8 @@ static void Pacemaker_Sense(void)
             if (Pacemaker_P.Constant_Value == NONE_A) {
               Pacemaker_DW.is_Ventricle = Pacemaker_IN_None;
               Pacemaker_DW.temporalCounter_i1 = 0U;
-
-              /* Constant: '<Root>/Constant2' */
-              qY = Pacemaker_P.Constant2_Value_h + /*MW:OvSatOk*/ 100U;
-              if (qY < Pacemaker_P.Constant2_Value_h) {
-                qY = MAX_uint32_T;
-              }
-
-              qY = Pacemaker_B.DataTypeConversion1 - /*MW:OvSatOk*/ qY;
-              if (qY > Pacemaker_B.DataTypeConversion1) {
-                qY = 0U;
-              }
-
-              if (Pacemaker_DW.temporalCounter_i1 >= qY) {
+              if (Pacemaker_DW.temporalCounter_i1 >=
+                  Pacemaker_B.DataTypeConversion1) {
                 Pacemaker_broadcast_paceStart();
               }
             } else {
@@ -474,7 +359,6 @@ static void Pacemaker_Sense(void)
           break;
 
          case Pacemaker_IN_Inhibited:
-          Pacemaker_B.B_LED = true;
           if (Pacemaker_B.VENT_CMP_DETECT) {
             Pacemaker_broadcast_V_Loop();
             if (Pacemaker_DW.is_Ventricle != 2) {
@@ -487,18 +371,8 @@ static void Pacemaker_Sense(void)
           break;
 
          case Pacemaker_IN_None:
-          /* Constant: '<Root>/Constant2' */
-          qY = Pacemaker_P.Constant2_Value_h + /*MW:OvSatOk*/ 100U;
-          if (qY < Pacemaker_P.Constant2_Value_h) {
-            qY = MAX_uint32_T;
-          }
-
-          qY = Pacemaker_B.DataTypeConversion1 - /*MW:OvSatOk*/ qY;
-          if (qY > Pacemaker_B.DataTypeConversion1) {
-            qY = 0U;
-          }
-
-          if (Pacemaker_DW.temporalCounter_i1 >= qY) {
+          if (Pacemaker_DW.temporalCounter_i1 >= Pacemaker_B.DataTypeConversion1)
+          {
             Pacemaker_broadcast_paceStart();
           }
           break;
@@ -538,27 +412,27 @@ static void Pacemaker_c2_Pacemaker(void)
 {
   /* Chart: '<Root>/Chart' incorporates:
    *  Constant: '<Root>/Constant2'
-   *  Constant: '<Root>/Constant3'
    */
   if (Pacemaker_DW.is_active_c2_Pacemaker == 0U) {
     Pacemaker_DW.is_active_c2_Pacemaker = 1U;
     Pacemaker_DW.is_c2_Pacemaker = Pacemaker_IN_INIT;
     Pacemaker_B.Z_ATR_CTRL = false;
-    Pacemaker_B.PACING_REF_PWM = 0U;
     Pacemaker_B.Z_VENT_CTRL = false;
+    Pacemaker_B.PACING_REF_PWM = (uint32_T)rt_roundd_snf((real_T)
+      Pacemaker_B.DataTypeConversion4 / 5.0);
     Pacemaker_B.ATR_PACE_CTRL = false;
     Pacemaker_B.VENT_PACE_CTRL = false;
-    Pacemaker_B.PACE_GND_CTRL = false;
+    Pacemaker_B.PACE_GND_CTRL = true;
     Pacemaker_B.ATR_GND_CTRL = false;
     Pacemaker_B.VENT_GND_CTRL = false;
-    Pacemaker_B.PACE_CHARGE_CTRL = false;
+    Pacemaker_B.PACE_CHARGE_CTRL = true;
+    Pacemaker_B.R_LED = false;
+    Pacemaker_B.B_LED = false;
   } else {
     switch (Pacemaker_DW.is_c2_Pacemaker) {
      case Pacemaker_IN_INIT:
       Pacemaker_DW.is_c2_Pacemaker = Pacemaker_IN_Sense;
       Pacemaker_DW.is_Sense = Pacemaker_IN_Default;
-      Pacemaker_B.R_LED = false;
-      Pacemaker_B.B_LED = false;
       break;
 
      case Pacemaker_IN_Pace:
@@ -567,8 +441,6 @@ static void Pacemaker_c2_Pacemaker(void)
         Pacemaker_DW.is_Pace = Pacemaker_IN_NO_ACTIVE_CHILD;
         Pacemaker_DW.is_c2_Pacemaker = Pacemaker_IN_Sense;
         Pacemaker_DW.is_Sense = Pacemaker_IN_Default;
-        Pacemaker_B.R_LED = false;
-        Pacemaker_B.B_LED = false;
         break;
 
        case Pacemaker_event_Vent_Bypass:
@@ -582,80 +454,55 @@ static void Pacemaker_c2_Pacemaker(void)
        default:
         switch (Pacemaker_DW.is_Pace) {
          case Pacemaker_IN_Charging:
-          if (Pacemaker_DW.sfEvent == Pacemaker_event_dischargePace) {
-            Pacemaker_DW.is_Pace = Pacemaker_IN_Discharging;
-            Pacemaker_DW.temporalCounter_i1 = 0U;
-            Pacema_enter_atomic_Discharging();
-          } else {
-            Pacemaker_B.R_LED = true;
-            Pacemaker_B.PACE_CHARGE_CTRL = false;
-            Pacemaker_B.PACE_GND_CTRL = true;
-            if (Pacemaker_DW.ActiveChamber == 1.0) {
-              Pacemaker_B.ATR_PACE_CTRL = true;
-              Pacemaker_B.VENT_PACE_CTRL = false;
-            } else {
-              Pacemaker_B.ATR_PACE_CTRL = false;
-              Pacemaker_B.VENT_PACE_CTRL = true;
-            }
-
-            Pacemaker_B.ATR_GND_CTRL = false;
-            Pacemaker_B.Z_ATR_CTRL = false;
-            Pacemaker_B.Z_VENT_CTRL = false;
+          Pacemaker_B.PACE_GND_CTRL = true;
+          Pacemaker_B.VENT_PACE_CTRL = false;
+          Pacemaker_B.ATR_PACE_CTRL = false;
+          if (Pacemaker_DW.ActiveChamber == 1.0) {
+            Pacemaker_B.ATR_GND_CTRL = true;
             Pacemaker_B.VENT_GND_CTRL = false;
-            if (Pacemaker_DW.temporalCounter_i1 >= Pacemaker_P.Constant2_Value_h)
-            {
-              Pacemak_broadcast_dischargePace();
-            }
+          } else {
+            Pacemaker_B.ATR_GND_CTRL = false;
+            Pacemaker_B.VENT_GND_CTRL = true;
           }
+
+          Pacemaker_B.PACING_REF_PWM = (uint32_T)rt_roundd_snf((real_T)
+            Pacemaker_B.DataTypeConversion4 / 5.0);
+          Pacemaker_B.PACE_CHARGE_CTRL = true;
+          Pacemaker_broadcast_paceEnd();
           break;
 
          case Pacemaker_IN_Discharging:
           if (Pacemaker_DW.sfEvent == Pacemaker_event_chargePace) {
             Pacemaker_DW.is_Pace = Pacemaker_IN_Charging;
-            Pacemaker_DW.temporalCounter_i1 = 0U;
-            Pacemaker_B.R_LED = true;
+            Pacemaker_B.PACE_GND_CTRL = true;
+            Pacemaker_B.VENT_PACE_CTRL = false;
+            Pacemaker_B.ATR_PACE_CTRL = false;
+            if (Pacemaker_DW.ActiveChamber == 1.0) {
+              Pacemaker_B.ATR_GND_CTRL = true;
+              Pacemaker_B.VENT_GND_CTRL = false;
+            } else {
+              Pacemaker_B.ATR_GND_CTRL = false;
+              Pacemaker_B.VENT_GND_CTRL = true;
+            }
+
+            Pacemaker_B.PACING_REF_PWM = (uint32_T)rt_roundd_snf((real_T)
+              Pacemaker_B.DataTypeConversion4 / 5.0);
+            Pacemaker_B.PACE_CHARGE_CTRL = true;
+            Pacemaker_broadcast_paceEnd();
+          } else {
             Pacemaker_B.PACE_CHARGE_CTRL = false;
             Pacemaker_B.PACE_GND_CTRL = true;
+            Pacemaker_B.ATR_GND_CTRL = false;
+            Pacemaker_B.VENT_GND_CTRL = false;
             if (Pacemaker_DW.ActiveChamber == 1.0) {
               Pacemaker_B.ATR_PACE_CTRL = true;
-              Pacemaker_B.VENT_PACE_CTRL = false;
             } else {
-              Pacemaker_B.ATR_PACE_CTRL = false;
               Pacemaker_B.VENT_PACE_CTRL = true;
             }
 
-            Pacemaker_B.ATR_GND_CTRL = false;
-            Pacemaker_B.Z_ATR_CTRL = false;
-            Pacemaker_B.Z_VENT_CTRL = false;
-            Pacemaker_B.VENT_GND_CTRL = false;
             if (Pacemaker_DW.temporalCounter_i1 >= Pacemaker_P.Constant2_Value_h)
             {
-              Pacemak_broadcast_dischargePace();
-            }
-          } else {
-            Pacemaker_B.R_LED = false;
-            Pacemaker_B.ATR_PACE_CTRL = false;
-            Pacemaker_B.VENT_PACE_CTRL = false;
-            if (Pacemaker_DW.sfEvent == Pacemaker_event_dischargePace) {
-              Pacemaker_B.PACE_GND_CTRL = true;
-              Pacemaker_B.Z_ATR_CTRL = false;
-              Pacemaker_B.Z_VENT_CTRL = false;
-              if (Pacemaker_DW.ActiveChamber == 1.0) {
-                Pacemaker_B.ATR_GND_CTRL = true;
-                Pacemaker_B.VENT_GND_CTRL = false;
-              } else {
-                Pacemaker_B.ATR_GND_CTRL = false;
-                Pacemaker_B.VENT_GND_CTRL = true;
-              }
-
-              Pacemaker_broadcast_paceEnd();
-            } else {
-              Pacemaker_B.PACING_REF_PWM = mul_u32_sat((uint32_T)rt_roundd_snf
-                ((real_T)Pacemaker_P.Constant3_Value / 5.0), 100U);
-              Pacemaker_B.PACE_CHARGE_CTRL = true;
-              if (Pacemaker_DW.temporalCounter_i1 >= 100U) {
-                Pacemaker_broadcast_chargePace();
-              }
+              Pacemaker_broadcast_chargePace();
             }
           }
           break;
@@ -764,6 +611,22 @@ void Pacemaker_step(void)
     (Pacemaker_DW.obj_n.MW_DIGITALIO_HANDLE);
 
   /* End of MATLABSystem: '<S2>/VENT_CMP_DETECT' */
+
+  /* DataTypeConversion: '<S4>/Data Type Conversion4' incorporates:
+   *  Constant: '<Root>/Constant3'
+   *  Gain: '<S4>/Gain2'
+   */
+  tmp = rt_roundd_snf(Pacemaker_P.Gain2_Gain * Pacemaker_P.Constant3_Value);
+  if (rtIsNaN(tmp) || rtIsInf(tmp)) {
+    tmp = 0.0;
+  } else {
+    tmp = fmod(tmp, 4.294967296E+9);
+  }
+
+  Pacemaker_B.DataTypeConversion4 = tmp < 0.0 ? (uint32_T)-(int32_T)(uint32_T)
+    -tmp : (uint32_T)tmp;
+
+  /* End of DataTypeConversion: '<S4>/Data Type Conversion4' */
 
   /* DataTypeConversion: '<S4>/Data Type Conversion1' incorporates:
    *  Constant: '<Root>/Constant4'

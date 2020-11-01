@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Pacemaker'.
  *
- * Model version                  : 1.66
+ * Model version                  : 1.77
  * Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
- * C/C++ source code generated on : Tue Oct 27 05:45:09 2020
+ * C/C++ source code generated on : Sun Nov  1 10:08:03 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -43,6 +43,7 @@
 
 /* Block signals (default storage) */
 typedef struct {
+  uint32_T DataTypeConversion4;        /* '<S4>/Data Type Conversion4' */
   uint32_T DataTypeConversion1;        /* '<S4>/Data Type Conversion1' */
   uint32_T PACING_REF_PWM;             /* '<Root>/Chart' */
   boolean_T ATR_CMP_DETECT;            /* '<S2>/ATR_CMP_DETECT' */
@@ -96,6 +97,12 @@ struct P_Pacemaker_T_ {
   real_T ATR_CMP_DETECT_SampleTime;    /* Expression: SampleTime
                                         * Referenced by: '<S2>/ATR_CMP_DETECT'
                                         */
+  real_T Constant3_Value;              /* Expression: 4
+                                        * Referenced by: '<Root>/Constant3'
+                                        */
+  real_T Gain2_Gain;                   /* Expression: 100
+                                        * Referenced by: '<S4>/Gain2'
+                                        */
   real_T Gain_Gain;                    /* Expression: 60000
                                         * Referenced by: '<S4>/Gain'
                                         */
@@ -122,9 +129,6 @@ struct P_Pacemaker_T_ {
                                         */
   uint32_T Constant2_Value_h;          /* Computed Parameter: Constant2_Value_h
                                         * Referenced by: '<Root>/Constant2'
-                                        */
-  uint32_T Constant3_Value;            /* Computed Parameter: Constant3_Value
-                                        * Referenced by: '<Root>/Constant3'
                                         */
   uint32_T Constant4_Value;            /* Computed Parameter: Constant4_Value
                                         * Referenced by: '<Root>/Constant4'
@@ -196,7 +200,7 @@ extern RT_MODEL_Pacemaker_T *const Pacemaker_M;
  * '<S1>'   : 'Pacemaker/Chart'
  * '<S2>'   : 'Pacemaker/Hardware Input '
  * '<S3>'   : 'Pacemaker/Hardware output'
- * '<S4>'   : 'Pacemaker/Subsystem1'
+ * '<S4>'   : 'Pacemaker/Parameters'
  */
 #endif                                 /* RTW_HEADER_Pacemaker_h_ */
 
