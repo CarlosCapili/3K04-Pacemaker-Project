@@ -11,7 +11,7 @@ class ReportsHandler:
     def __init__(self, table: QTableWidget):
         print("Reports handler init")
 
-        # Get report header data from About section, so that we're not hard-coding values multiple times
+        # Get report header data from the About section, so that we're not hard-coding values multiple times
         header = {table.verticalHeaderItem(row).text(): table.item(row, 0).text() for row in range(table.rowCount())}
         self.header = self._format_params(header)
 

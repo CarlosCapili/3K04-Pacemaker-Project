@@ -323,7 +323,16 @@ There are no private functions in the module.
 \subsubsection{Parameters}
 A lot more stuff
 \subsubsection{Reports}
-Extreme amounts of stuff
+The reports handler handles generating and displaying all the reports for the DCM window.
+The 4 public functions are the constructor, generate\_egram, generate\_brady, and generate\_temp.
+The constructor takes in a PyQt5 TableWidget named table, which is used to generate the header for each report.
+The generate\_egram method is not implemented yet because we don't have actual electrogram data, and generate\_temp will most likely get removed.
+The generate\_brady method takes in a dictionary of strings named params, which are all the parameters for the current pacing mode.
+It then joins the header string and all the parameters as strings on new lines, before displaying the report in a custom message box.
+The state variable for the report module is just the header string, which contains each "About" property on a new line.
+The two private functions in the module are \texttt{\_format\_params(params: Dict[str, str])} and \texttt{\_show\_report(report: str)}.
+Format\_params just takes in a dictionary of parameters as strings, and then returns a string with each param aligned to the colon and each parameter name/value on a new line.
+Show\_report takes in a report as a string and shows a customized message box with the specified text.
 \newpage
 \section{Testing}
 \subsection{GUI}
