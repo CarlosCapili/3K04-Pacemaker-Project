@@ -301,14 +301,14 @@ For example with the reports and parameters handlers, the reports are generated 
 \subsubsection{Authentication}
 The authentication handler handles the authentication process for the user.
 The three main public functions are the constructor, login and register.
-The constructor takes in a Python callable named on\_success, which gets called when the login or registration process is successful.
+The constructor takes in a Python callable named \texttt{on\_success}, which gets called when the login or registration process is successful.
 It also initializes the credential store, which stores the user credentials while the program is running.
 The login method takes in a username and password as strings, which are used to authenticate the user.
-It essentially compares the username and password to the existing entries in the credential store, and if they match it calls the on\_success function.
+It essentially compares the username and password to the existing entries in the credential store, and if they match it calls the \texttt{on\_success} function.
 The register method also takes in a username and password as strings, which are used to create a new user.
-The function checks if the username exists or if there are already 10 users, and if none of those are true it updates the credential store, writes it to a file and calls the on\_success function.
-The state variables for the auth module are the credential store, which is a dictionary of strings where the keys are the usernames and the values are the passwords, and the on\_success function.
-The private function of the module is the \_show\_alert(msg: str) function which takes in a message as a string and displays that on an error alert box that appears on top of the current window.
+The function checks if the username exists or if there are already 10 users, and if none of those are true it updates the credential store, writes it to a file and calls the \texttt{on\_success} function.
+The state variables for the auth module are the credential store, which is a dictionary of strings where the keys are the usernames and the values are the passwords, and the \texttt{on\_success} function.
+The private function of the module is the \texttt{\_show\_alert(msg: str)} function which takes in a message as a string and displays that on an error alert box that appears on top of the current window.
 \subsubsection{Connection}
 Even more stuff
 \subsubsection{Graphs}
