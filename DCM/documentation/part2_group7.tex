@@ -303,6 +303,9 @@ The New Patient push button calls the \texttt{register\_device()} in the connect
 \paragraph{Quit}
 The Quit push button closes the DCM GUI and exits the program.
 
+\paragraph{Animated Status Bar}
+The animated status bar is a status bar for displaying the connection status between the DCM and the pacemaker with some integrated animations that depend on the connection status. The animated status bar is an AnimatedStatusBar, a class that extends the QStatusBar class from Qt with additional functions that interact with the connection handler. The AnimatedStatusBar's handle\_conn\_anim function is called by the connection handler whenever the status bar should be updated, and the function will display a programmed message and animation depending on the connection state received from the connection handler. 
+
 \subsection{Handlers}
 The handlers are the backend of the program, where all the actions from the GUI are implemented.
 Each handler is independent from each other, but they can interact through passing in function arguments.
