@@ -79,15 +79,16 @@ class _SerialHandler(QThread):
                 self.buf.extend(data)
 
 
+# This class handles the pacemaker connection for the DCM and extends the QThread class to allow for multithreading
 class ConnectionHandler(QThread):
     running: bool
     device: ListPortInfo
     devices: List[ListPortInfo]
     old_devices: List[ListPortInfo]
     first_serial_num: str
-    wanted_state: PacemakerState
-    prev_state: PacemakerState
     current_state: PacemakerState
+    prev_state: PacemakerState
+    wanted_state: PacemakerState
     serial: _SerialHandler
 
     connectStatusChange: pyqtSignal = pyqtSignal(PacemakerState, str)  # (not conn, conn, reg), (serial_num and/or msg)
