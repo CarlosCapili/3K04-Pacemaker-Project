@@ -169,7 +169,7 @@ class ConnectionHandler(QThread):
             # The only way to go from CONNECTED to REGISTERED is if the New Patient btn is pressed
             if self.prev_state == PacemakerState.NOT_CONNECTED:
                 self.connect_status_change.emit(PacemakerState.CONNECTED, f"{self.device.serial_number}, press New "
-                                                                        f"Patient to register")
+                                                                          f"Patient to register")
             # Handle a device being removed
             self._handle_removed_device(removed)
 
@@ -200,7 +200,7 @@ class ConnectionHandler(QThread):
 
     # Handles the transition to NOT_CONNECTED if the pacemaker we're connected to is unplugged
     def _handle_removed_device(self, removed: List[ListPortInfo]) -> None:
-        if len(removed) > 0 and self.device.serial_number == removed[0].serial_number:
+        if any(self.device.serial_number == dev.serial_number for dev in removed):
             self.wanted_state = PacemakerState.NOT_CONNECTED
             self.connect_status_change.emit(PacemakerState.NOT_CONNECTED, removed[0].serial_number)
             self.device = ListPortInfo()
