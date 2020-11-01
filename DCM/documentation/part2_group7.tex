@@ -283,13 +283,50 @@ Future requirements that will be implemented include:
 \newpage
 \section{Testing}
 \subsection{GUI}
+All testing for the GUI was done manually.
+
 \subsubsection{Welcome Screen}
+The push buttons were tested to check if they led to the appropriate GUI elements and called the correct functions. 
+
+In the Welcome window, the register and login buttons were pressed, and they lead to the register and login screens respectively. 
+
+In the register screen, the back button led the user back to the welcome screen. The text fields allowed user input up to 15 characters with the password field being masked with bullet points. The submit button saved the new user in the credentials file and sent the user to the DCM main window when there were less than 10 users registered. The submit button displayed a popup message telling the user that the maximum of 10 registered users had been reached when there were 10 users registered. The submit button displayed a popup message telling the user to login instead if the username already exists in the credentials file.
+
+In the login screen, the back button led the user back to the welcome screen. The text fields allowed user input up to 15 characters with the password field being masked with bullet points. The submit button sent the user to the DCM main window when the user's credentials were present in the credentials file. The submit button displayed a popup message instructing the user to register the account if the user did not exist in the credentials file. The submit button displayed a popup message telling the user that the password is incorrect if the username existed in the credentials file but the passwords did not match.
+
 \subsubsection{DCM Main Window}
+The push buttons, check boxes, graphs and radio buttons were tested to see if they led to the appropriate GUI elements and called the correct functions.
+
+The pace electrograms were no longer displayed when the pace leads checkbox was unchecked. The pace electrograms were displayed again when the pace leads checkbox was checked. The sense electrograms were no longer displayed when the sense leads checkbox was unchecked. The sense electrograms were displayed again when the sense leads checkbox was checked. The electrogram graphs were scrollable.
+
+The Reports window was opened when the reports button was pressed. The Parameters window was opened when the parameters button was pressed. The About window was opened when the about button was pressed. The Set Clock window was opened when the set clock window was pressed. The new patient button could not be tested in its current implementation as the testers only had access to one pacemaker. The program was exitted when the quit button was pressed.
+
 \subsubsection{Reports}
+The push buttons were tested to check if they called the correct functions.
+
+The "Electrogram" and "Temporary Parameters" buttons did not display anything. The "Bradycardia Parameters" button displayed a popup window showing the necessary header information. The pacing mode selected in the DCM main window and the relevant programmable parameters for the pacing mode were displayed following the header information. 
+
+Other functions of the main window could not be accessed while the Reports window was active.
+
 \subsubsection{Parameters}
+The push buttons and the data table were tested to check if they called the correct functions and displayed the intended behaviour.
+
+The only values displayed that could be changed were the ones listed under the "Values" column. All other text could not be modified. Changing the values in the column did not immediately update the parameters file. 
+
+The parameters file was updated when the "Confirm changes" button was pressed with modified values in the table. 
+
+The reset to defaults button displayed a popup window to confirm if you want to reset all values. The "No" option returned the user to the Parameters window with no changes to the paramaters file. The "Yes" option returned the user to the Parameters window with the values in the parameters file and the values showed in the table being set to their default values. 
+
+Other functions of the main window could not be accessed while the Parameters window was active.
+
 \subsubsection{About}
+The information displayed in the About window could not be changed.
+
+Other functions of the main window could not be accessed while the About window was active.
+
 \subsubsection{New Patient}
-\subsubsection{Quit}
+The New Patient functions could not be tested in its current implementation due the testers only having access to one pacemaker.
+
 \subsection{Handlers}
 \subsubsection{Authentication}
 \subsubsection{Connection}
