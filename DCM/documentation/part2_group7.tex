@@ -312,7 +312,14 @@ The private function of the module is the \_show\_alert(msg: str) function which
 \subsubsection{Connection}
 Even more stuff
 \subsubsection{Graphs}
-Much more stuff
+The graphs handler handles the drawing and updating of the graphs in the DCM window.
+The 7 public functions are the constructor, pace/sense\_plot, pace/sense\_show, and pace/sense\_hide.
+The constructor takes in two PyQtGraph PlotWidgets named atri/vent\_plot, for the atrial and ventricular plots, which are used to generate the plot data items.
+It also generates some random sample data for right now, so that we can show something on the graphs.
+The pace/sense\_plot methods set the data of the plot data items to their corresponding sample data set, and then show the data on the graphs as well.
+The pace/sense\_show methods show the corresponding plot data item on the graphs, while the pace/sense\_hide methods hide them.
+The state variables for the graph module are atri/vent\_data\_pace and atri/vent\_data\_sense, which store the pace and sense lead data as 1D arrays, and atri/vent\_pace\_plot and atri/vent\_sense\_plot which are the PlotDataItems for the graphs.
+There are no private functions in the module.
 \subsubsection{Parameters}
 A lot more stuff
 \subsubsection{Reports}
