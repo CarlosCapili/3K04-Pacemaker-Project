@@ -288,10 +288,14 @@ The reports window provides the user the option to view one of the following pri
 \end{table}
 
 \paragraph{Parameters}
-stuff
+The parameters window displays all the DCM programmable parameters to the user and allows the user to modify them and save their changes. The parameters window contains a QTableWidget, a widget providing an item-based table view. The horizontal headers contains a list of the programmable parameters that have been implemented, while the vertical headers contain the current values, the maximum and minimum values for the parameter, and the increment of the parameter. The values in the cells of the table are pre-programmed, with the maximum, minimum and increment values being unselectable (the user is unable to modify the cells' values).
+
+The current paramter values are programmed into the table, however they are immediately replaced by any changes that have been saved to the parameters file. The current value cells are selectable, allowing the user to modify their values, however these values are not saved to the parameters file until the "Confirm changes" button has been pressed. The "Reset to defaults" button will reset the parameter files values to the default values programmed into the QTableWidget cells. These functions are all handled by the parameters handler, with the push buttons calling functions within the handler.
+
+Modules that rely on the programmable parameters will retrieve them from the parameters file through the paramaters handler, the paramaters window does not directly interact with any other GUI modules.
 
 \paragraph{About}
-The about window displays the application model number, application software revision, DCM serial number and institution name. The About window contains a QTableWidget, a widget providing an item-based table review. The headers and cells of the table are set to the appropriate values and made unselectable, making the user unable to modify the cells' values. The widget only shows pre-programmed values and does not interact with any other modules in the DCM.
+The about window displays the application model number, application software revision, DCM serial number and institution name. The about window contains a QTableWidget. The headers and cells of the table are set to the appropriate values and made unselectable, making the user unable to modify the cells' values. The widget only shows pre-programmed values and does not interact with any other modules in the DCM.
 
 \paragraph{New Patient}
 The New Patient push button calls the \texttt{register\_device()} in the connection handler. The connection handler will generate a popup message depending on the results of the function.
@@ -303,6 +307,7 @@ The Quit push button closes the DCM GUI and exits the program.
 The handlers are the backend of the program, where all the actions from the GUI are implemented.
 Each handler is independent from each other, but they can interact through passing in function arguments.
 For example with the reports and parameters handlers, the reports are generated from the input passed into each method which comes from the parameters handler.
+
 \subsubsection{Authentication}
 The authentication handler handles the authentication process for the user.
 The three main public functions are the constructor, login and register.
@@ -314,8 +319,20 @@ The register method also takes in a username and password as strings, which are 
 The function checks if the username exists or if there are already 10 users, and if none of those are true it updates the credential store, writes it to a file and calls the \texttt{on\_success} function.
 The state variables for the auth module are the credential store, which is a dictionary of strings where the keys are the usernames and the values are the passwords, and the \texttt{on\_success} function.
 The private function of the module is the \texttt{\_show\_alert(msg: str)} function which takes in a message as a string and displays that on an error alert box that appears on top of the current window.
-\subsubsection{Connection}
-Even more stuff
+
+\subsubsection{Connection} MOSTLY COPY-PASTED PLS FIX \\
+The connections handler handles STUFF.
+The 6 public functions are the constructor, run, stop, \_update\_state, register\_device, and \_handle\_removed\_device.
+
+The constructor takes in a PyQt5 TableWidget named table, which is used to generate the header for each report.
+The generate\_egram method is not implemented yet because we don't have actual electrogram data, and generate\_temp will most likely get removed.
+The generate\_brady method takes in a dictionary of strings named params, which are all the parameters for the current pacing mode.
+It then joins the header string and all the parameters as strings on new lines, before displaying the report in a custom message box.
+The state variable for the report module is just the header string, which contains each "About" property on a new line.
+The two private functions in the module are \texttt{\_format\_params(params: Dict[str, str])} and \texttt{\_show\_report(report: str)}.
+Format\_params just takes in a dictionary of parameters as strings, and then returns a string with each param aligned to the colon and each parameter name/value on a new line.
+Show\_report takes in a report as a string and shows a customized message box with the specified text.
+
 \subsubsection{Graphs}
 The graphs handler handles the drawing and updating of the graphs in the DCM window.
 The 7 public functions are the constructor, pace/sense\_plot, pace/sense\_show, and pace/sense\_hide.
@@ -325,8 +342,20 @@ The pace/sense\_plot methods set the data of the plot data items to their corres
 The pace/sense\_show methods show the corresponding plot data item on the graphs, while the pace/sense\_hide methods hide them.
 The state variables for the graph module are atri/vent\_data\_pace and atri/vent\_data\_sense, which store the pace and sense lead data as 1D arrays, and atri/vent\_pace\_plot and atri/vent\_sense\_plot which are the PlotDataItems for the graphs.
 There are no private functions in the module.
-\subsubsection{Parameters}
-A lot more stuff
+
+\subsubsection{Parameters} MOSTLY COPY-PASTED PLS FIX \\
+The parameters handler handles STUFF.
+The 6 public functions are the constructor, confirm, reset, \_update\_params\_file, \_update\_params\_gui and filter\_params.
+
+The constructor takes in a PyQt5 TableWidget named table, which is used to generate the header for each report.
+The generate\_egram method is not implemented yet because we don't have actual electrogram data, and generate\_temp will most likely get removed.
+The generate\_brady method takes in a dictionary of strings named params, which are all the parameters for the current pacing mode.
+It then joins the header string and all the parameters as strings on new lines, before displaying the report in a custom message box.
+The state variable for the report module is just the header string, which contains each "About" property on a new line.
+The two private functions in the module are \texttt{\_format\_params(params: Dict[str, str])} and \texttt{\_show\_report(report: str)}.
+Format\_params just takes in a dictionary of parameters as strings, and then returns a string with each param aligned to the colon and each parameter name/value on a new line.
+Show\_report takes in a report as a string and shows a customized message box with the specified text.
+
 \subsubsection{Reports}
 The reports handler handles generating and displaying all the reports for the DCM window.
 The 4 public functions are the constructor, generate\_egram, generate\_brady, and generate\_temp.
@@ -338,6 +367,7 @@ The state variable for the report module is just the header string, which contai
 The two private functions in the module are \texttt{\_format\_params(params: Dict[str, str])} and \texttt{\_show\_report(report: str)}.
 Format\_params just takes in a dictionary of parameters as strings, and then returns a string with each param aligned to the colon and each parameter name/value on a new line.
 Show\_report takes in a report as a string and shows a customized message box with the specified text.
+
 \newpage
 \section{Testing}
 \subsection{GUI}
