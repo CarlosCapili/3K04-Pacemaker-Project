@@ -2,7 +2,7 @@ import queue
 from enum import Enum, unique
 from queue import Queue
 from time import sleep
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
@@ -45,7 +45,7 @@ class _SerialHandler(QThread):
             # Check if the serial connection is open with the pacemaker
             if self.conn.is_open:
                 # try:
-                line = self.readline().decode()  # read one line
+                line = self._readline().decode()  # read one line
                 print(f"received from pacemaker: {line}")
                 self.in_q.put(line)
                 # except
@@ -65,8 +65,8 @@ class _SerialHandler(QThread):
         # except SerialException as e:
         #     raise e
 
-    # Read the input stream from the pacemaker until a newline is reached
-    def readline(self):
+    # Read the output stream from the pacemaker until a newline is reached
+    def _readline(self):
         i: int = self.buf.find(b"\n")
 
         if i >= 0:
@@ -85,6 +85,10 @@ class _SerialHandler(QThread):
                 return r
             else:
                 self.buf.extend(data)
+
+    # Sends the DCM parameters to the pacemaker
+    def send_params_to_pacemaker(self, params_to_send: Dict[str, str]) -> None:
+        print(f"send params {params_to_send} (PLACEHOLDER)")
 
 
 # This class handles the pacemaker connection for the DCM and extends the QThread class to allow for multithreading
@@ -125,7 +129,7 @@ class ConnectionHandler(QThread):
         self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, "")
 
         while self.running:
-            self.update_state()
+            self._update_state()
             sleep(0.01)
 
     # Stops the thread and stops the serial conn thread
@@ -136,9 +140,9 @@ class ConnectionHandler(QThread):
     # State machine for pacemaker connection state. It was implemented like this because it offers us many benefits
     # such as cleaner, easier to read code, ensuring that a pacemaker gets registered only once, handling multiple
     # pacemakers being plugged into the same computer, and handling the New Patient btn presses in a much simpler way.
-    def update_state(self) -> None:
+    def _update_state(self) -> None:
         # Get list of connected COM port devices
-        self.devices = self.filter_devices(list_ports.comports())
+        self.devices = self._filter_devices(list_ports.comports())
 
         added = [dev for dev in self.devices if dev not in self.old_devices]  # difference between new and old
         removed = [dev for dev in self.old_devices if dev not in self.devices]  # difference between old and new
@@ -167,7 +171,7 @@ class ConnectionHandler(QThread):
                 self.connectStatusChange.emit(PacemakerState.CONNECTED, f"{self.device.serial_number}, press New "
                                                                         f"Patient to register")
             # Handle a device being removed
-            self.handle_removed_device(removed)
+            self._handle_removed_device(removed)
 
         # We're connected to a registered pacemaker
         elif self.current_state == PacemakerState.REGISTERED:
@@ -177,7 +181,7 @@ class ConnectionHandler(QThread):
                 self.connectStatusChange.emit(PacemakerState.REGISTERED, self.device.serial_number)
 
             # Handle a device being removed
-            self.handle_removed_device(removed)
+            self._handle_removed_device(removed)
 
         # Update variables that store previous cycle information
         self.old_devices = self.devices
@@ -188,30 +192,31 @@ class ConnectionHandler(QThread):
         if self.current_state == PacemakerState.CONNECTED:
             self.wanted_state = PacemakerState.REGISTERED
         elif self.device.serial_number:  # at this point, we've already registered the device
-            self.show_alert("Already registered this pacemaker!")
+            self._show_alert("Already registered this pacemaker!")
         elif len(self.devices) > 0:  # we only connect to 1 device at a time, so the rest are ignored
-            self.show_alert("Please unplug and replug the pacemaker you want to connect to!")
+            self._show_alert("Please unplug and replug the pacemaker you want to connect to!")
         else:
-            self.show_alert("Please plug in a pacemaker!")
+            self._show_alert("Please plug in a pacemaker!")
 
     # Handles the transition to NOT_CONNECTED if the pacemaker we're connected to is unplugged
-    def handle_removed_device(self, removed: List[ListPortInfo]) -> None:
+    def _handle_removed_device(self, removed: List[ListPortInfo]) -> None:
         if len(removed) > 0 and self.device.serial_number == removed[0].serial_number:
             self.wanted_state = PacemakerState.NOT_CONNECTED
             self.connectStatusChange.emit(PacemakerState.NOT_CONNECTED, removed[0].serial_number)
             self.device = ListPortInfo()
 
     # Called when the Pace Now button is pressed, not fully implemented because of no serial communication
-    def send_data_to_pacemaker(self) -> None:
+    def send_data_to_pacemaker(self, params: Dict[str, str]) -> None:
         if self.current_state == PacemakerState.REGISTERED:
             print("sending data to pacemaker (PLACEHOLDER)")
+            self.serial.send_params_to_pacemaker(params)
         elif self.current_state == PacemakerState.CONNECTED:
-            self.show_alert("Please register the pacemaker first!")
+            self._show_alert("Please register the pacemaker first!")
         else:
-            self.show_alert("Please plug in a pacemaker!")
+            self._show_alert("Please plug in a pacemaker!")
 
     @staticmethod
-    def show_alert(msg: str) -> None:
+    def _show_alert(msg: str) -> None:
         """
         Displays an information message with the specified text
 
@@ -221,7 +226,7 @@ class ConnectionHandler(QThread):
         QMessageBox.information(qm, "Connection", msg, QMessageBox.Ok, QMessageBox.Ok)
 
     @staticmethod
-    def filter_devices(data: List[ListPortInfo]) -> List[ListPortInfo]:
+    def _filter_devices(data: List[ListPortInfo]) -> List[ListPortInfo]:
         """
         Filter plugged in COM port devices so that we only connect to pacemaker devices
         The SEGGER devices have a Vendor ID of 0x1366 and Product ID of 0x1015

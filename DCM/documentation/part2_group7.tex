@@ -54,13 +54,13 @@
 
 \subsection{Welcome Screen}
 %Develop an interface that includes a welcome screen, including the ability to register a new user (name and password), and to login as an existing user. A maximum of 10 users should be allowed to be stored locally.
-All required aspects of the welcome screen are implemented in the current software revision: 
+All required aspects of the welcome screen are implemented in the current software revision:
 \begin{itemize}
     \item Register a new user
     \item Login as an existing user
     \item Maximum of 10 users stored locally
 \end{itemize}
-All requirements will remain in future software revisions.  
+All requirements will remain in future software revisions.
 
 \subsection{User Interface Essential Aspects}
 All required essential aspects of the user interface have been implemented in the current software revision:
@@ -75,7 +75,7 @@ All requirements will remain in future software revisions.
 
 \subsection{DCM Utility Functions}
 \subsubsection{About}
-All required aspects of the About function are implemented in the current software revision: 
+All required aspects of the About function are implemented in the current software revision:
 \begin{itemize}
     \item Application model number
     \item Application software revision
@@ -100,7 +100,7 @@ Interfaces for pacing modes and pacing mode selection for the following pacing m
     \item AAI
     \item VOO
     \item VVI
-\end{itemize} 
+\end{itemize}
 Additional pacing modes will be added to the requirements and implemented in future software revisions including:
 \begin{itemize}
     \item DOO
@@ -120,7 +120,7 @@ All common requirements for printed reports are implemented in the current softw
         \item Device model and serial number
         \item DCM serial number
         \item Date and time of report printing
-        \item Report name 
+        \item Report name
     \end{itemize}
 \end{itemize}
 All common requirements for printed reports will remain in future software revisions.
@@ -141,7 +141,7 @@ Provisions for storing programmable parameter data have been implemented in the 
     \item Ventricular Pulse Width
     \item Ventricular Refractory Period (VRP)
 \end{itemize}
-These programmable parameters will remain in future software revisions. Additional programmable parameters will be implemented in future software revisions which will depend on future requirements. 
+These programmable parameters will remain in future software revisions. Additional programmable parameters will be implemented in future software revisions which will depend on future requirements.
 
 \subsection{Real-time Electrograms}
 The following requirements of real-time electrograms and the displaying of electrograms have been implemented in the current software revision:
@@ -154,7 +154,7 @@ The following requirements of real-time electrograms and the displaying of elect
     \end{itemize}
     \item The system is capable of displaying real-time traces in a scrollable fashion
 \end{itemize}
-These features will remain in future software revisions. 
+These features will remain in future software revisions.
 
 Requirements that will be implemented in future software revisions include:
 \begin{itemize}
@@ -190,7 +190,7 @@ Graphs in the DCM are handled by the \href{http://www.pyqtgraph.org/}{PyQtGraph}
 
 \subsection{GUI}
 \subsubsection{Welcome Screen}
-The welcome window is the window the user is greeted by when the DCM program is launched, allowing the user to register users or login into the DCM. The Welcome Screen is a QStackedWidget, a Qt class that contains multiple widgets but only displays one at a time. The QStackedWidget class was chosen to allow all modules of the welcome screen to be accessible in a single window, while still allowing individual modules to behave independently. Additional modules can easily be added as new widgets without affecting implemented modules. The UI 
+The welcome window is the window the user is greeted by when the DCM program is launched, allowing the user to register users or login into the DCM. The Welcome Screen is a QStackedWidget, a Qt class that contains multiple widgets but only displays one at a time. The QStackedWidget class was chosen to allow all modules of the welcome screen to be accessible in a single window, while still allowing individual modules to behave independently. Additional modules can easily be added as new widgets without affecting implemented modules. The UI
 
 \paragraph{Welcome}
 The welcome screen is the first widget in the welcome window that is displayed when the window is launched. The widget gives the user the option to register a new user or login as an existing user through push buttons displayed in the widget. The welcome widget is a QWidget with internal functions that cannot be accessed by the other widgets. The widget's only functions are to direct the user to another widget when a push button is pressed. The register button will lead the user to the register widget and the login button will lead the user to the login widget. A tabular expression detailing the expected behaviour of the widget's functions are shown in Table \ref{tab:DCM_Welcome}.
@@ -254,9 +254,9 @@ The DCM's functions are operated through push buttons on the main window. The pu
         \multicolumn{2}{c}{UI Element} & \multicolumn{1}{|c|}{\tikzmark{topleft}\hfill Function\hfill\null}  \\ \hline
         \multicolumn{2}{|c}{dcm\_ui.about\_btn} & \multicolumn{1}{|c|}{about\_gui.exec\_} \\ \hline
         \multicolumn{2}{|c}{dcm\_ui.parameters\_btn} & \multicolumn{1}{|c|}{params\_gui.exec\_} \\ \hline
-        \multicolumn{2}{|c}{dcm\_ui.reports\_btn} & \multicolumn{1}{|c|}{reports\_gui.exec\_} \\ \hline 
-        \multicolumn{2}{|c}{dcm\_ui.set\_clock\_btn} & \multicolumn{1}{|c|}{set\_clock\_gui.exec\_} \\ \hline 
-        \multicolumn{2}{|c}{dcm\_ui.new\_patient\_btn} & \multicolumn{1}{|c|}{conn.register\_device} \\ \hline 
+        \multicolumn{2}{|c}{dcm\_ui.reports\_btn} & \multicolumn{1}{|c|}{reports\_gui.exec\_} \\ \hline
+        \multicolumn{2}{|c}{dcm\_ui.set\_clock\_btn} & \multicolumn{1}{|c|}{set\_clock\_gui.exec\_} \\ \hline
+        \multicolumn{2}{|c}{dcm\_ui.new\_patient\_btn} & \multicolumn{1}{|c|}{conn.register\_device} \\ \hline
         \multicolumn{2}{|c}{dcm\_ui.quit\_btn} & \multicolumn{1}{|c|}{dcm\_gui.close} \\ \hline
         \multicolumn{1}{|c}{\multirow{2}{*}{dcm\_ui.pace\_box}} & \multicolumn{1}{|c}{isChecked()} & \multicolumn{1}{|c|}{graphs.pace\_show()} \\ \cmidrule{2-3}
         \multicolumn{1}{|c}{} & \multicolumn{1}{|c}{!isChecked()} & \multicolumn{1}{|c|}{graphs.pace\_hide()} \\ \hline
@@ -284,7 +284,6 @@ The graphs use the PlotWidget class from PyQtGraph, a QGraphicsWidget with addit
     \caption{\label{tab:DCM_Reports}DCM Reports}
     \DrawBox[thin, black]{topleft}{bottomright}
 \end{table}
-    
 
 \paragraph{Parameters}
 
@@ -293,23 +292,40 @@ The graphs use the PlotWidget class from PyQtGraph, a QGraphicsWidget with addit
 \paragraph{New Patient}
 
 \paragraph{Quit}
-The Quit push button closes the DCM GUI and exits the program. 
+The Quit push button closes the DCM GUI and exits the program.
 
 \subsection{Handlers}
+The handlers are the backend of the program, where all the actions from the GUI are implemented.
+Each handler is independent from each other, but they can interact through passing in function arguments.
+For example with the reports and parameters handlers, the reports are generated from the input passed into each method which comes from the parameters handler.
 \subsubsection{Authentication}
+The authentication handler handles the authentication process for the user.
+The three main public functions are the constructor, login and register.
+The constructor takes in a Python callable named on\_success, which gets called when the login or registration process is successful.
+It also initializes the credential store, which stores the user credentials while the program is running.
+The login method takes in a username and password as strings, which are used to authenticate the user.
+It essentially compares the username and password to the existing entries in the credential store, and if they match it calls the on\_success function.
+The register method also takes in a username and password as strings, which are used to create a new user.
+The function checks if the username exists or if there are already 10 users, and if none of those are true it updates the credential store, writes it to a file and calls the on\_success function.
+The state variables for the auth module are the credential store, which is a dictionary of strings where the keys are the usernames and the values are the passwords, and the on\_success function.
+The private function of the module is the \_show\_alert(msg: str) function which takes in a message as a string and displays that on an error alert box that appears on top of the current window.
 \subsubsection{Connection}
+Even more stuff
 \subsubsection{Graphs}
+Much more stuff
 \subsubsection{Parameters}
+A lot more stuff
 \subsubsection{Reports}
+Extreme amounts of stuff
 \newpage
 \section{Testing}
 \subsection{GUI}
 All testing for the GUI was done manually. Tests for all modules confirmed that their functions were behaving as intended.
 
 \subsubsection{Welcome Screen}\label{Testing:WelcomeScreen}
-The push buttons were tested to check if they led to the appropriate GUI elements and called the correct functions. 
+The push buttons were tested to check if they led to the appropriate GUI elements and called the correct functions.
 
-In the Welcome window, the register and login buttons were pressed, and they lead to the register and login screens respectively. 
+In the Welcome window, the register and login buttons were pressed, and they lead to the register and login screens respectively.
 
 In the register screen, the back button led the user back to the welcome screen. The text fields allowed user input up to 15 characters with the password field being masked with bullet points. The submit button saved the new user in the credentials file and sent the user to the DCM main window when there were less than 10 users registered. The submit button displayed a popup message telling the user that the maximum of 10 registered users had been reached when there were 10 users registered. The submit button displayed a popup message telling the user to login instead if the username already exists in the credentials file.
 
@@ -325,18 +341,18 @@ The Reports window was opened when the reports button was pressed. The Parameter
 \subsubsection{Reports}\label{Testing:Reports}
 The push buttons were tested to check if they called the correct functions.
 
-The "Electrogram" and "Temporary Parameters" buttons did not display anything. The "Bradycardia Parameters" button displayed a popup window showing the necessary header information. The pacing mode selected in the DCM main window and the relevant programmable parameters for the pacing mode were displayed following the header information. 
+The "Electrogram" and "Temporary Parameters" buttons did not display anything. The "Bradycardia Parameters" button displayed a popup window showing the necessary header information. The pacing mode selected in the DCM main window and the relevant programmable parameters for the pacing mode were displayed following the header information.
 
 Other functions of the main window could not be accessed while the Reports window was active.
 
 \subsubsection{Parameters}\label{Testing:Parameters}
 The push buttons and the data table were tested to check if they called the correct functions and displayed the intended behaviour.
 
-The only values displayed that could be changed were the ones listed under the "Values" column. All other text could not be modified. Changing the values in the column did not immediately update the parameters file. 
+The only values displayed that could be changed were the ones listed under the "Values" column. All other text could not be modified. Changing the values in the column did not immediately update the parameters file.
 
-The parameters file was updated when the "Confirm changes" button was pressed with modified values in the table. 
+The parameters file was updated when the "Confirm changes" button was pressed with modified values in the table.
 
-The reset to defaults button displayed a popup window to confirm if you want to reset all values. The "No" option returned the user to the Parameters window with no changes to the paramaters file. The "Yes" option returned the user to the Parameters window with the values in the parameters file and the values showed in the table being set to their default values. 
+The reset to defaults button displayed a popup window to confirm if you want to reset all values. The "No" option returned the user to the Parameters window with no changes to the paramaters file. The "Yes" option returned the user to the Parameters window with the values in the parameters file and the values showed in the table being set to their default values.
 
 Other functions of the main window could not be accessed while the Parameters window was active.
 
@@ -349,10 +365,10 @@ Other functions of the main window could not be accessed while the About window 
 The New Patient functions could not be tested in its current implementation due the testers only having access to one pacemaker.
 
 \subsection{Handlers}
-The handlers were largely tested alongside the GUI as most handler functions are called from within the GUI. Tests for all modules confirmed that their functions were behaving as intended. 
+The handlers were largely tested alongside the GUI as most handler functions are called from within the GUI. Tests for all modules confirmed that their functions were behaving as intended.
 
 \subsubsection{Authentication}
-The authentication handler and its functions were tested in the register and login widgets in Section \ref{Testing:WelcomeScreen}. 
+The authentication handler and its functions were tested in the register and login widgets in Section \ref{Testing:WelcomeScreen}.
 
 \subsubsection{Connection}
 The status bar showed the message "Not connected to pacemaker" when the DCM main window was reached with no pacemaker connected. The status bar showed "Registered pacemaker 7" when a pacemaker was connected. When the pacemaker was disconnected, the status bar showed "Not connected to pacemaker 7". There was no testing done on functions that relied on an unregistered pacemaker to be connected, as the testing could only be done with a single pacemaker.

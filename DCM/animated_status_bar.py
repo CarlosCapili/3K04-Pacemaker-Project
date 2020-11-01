@@ -89,17 +89,17 @@ class AnimatedStatusBar(QStatusBar):
             self.showMessage(f"Registered pacemaker {msg}")
 
     # Return the current background color of the status bar
-    def get_back_color(self) -> QColor:
+    def _get_back_color(self) -> QColor:
         return self.palette().color(self.backgroundRole())
 
     # Set the background color of the status bar
-    def set_back_color(self, color: QColor) -> None:
+    def _set_back_color(self, color: QColor) -> None:
         self.pal.setColor(self.backgroundRole(), color)
         self.setPalette(self.pal)
 
     # Define properties of the status bar, used in animations
     pal: QPalette = QPalette()
-    back_color: pyqtProperty = pyqtProperty(QColor, get_back_color, set_back_color)
+    back_color: pyqtProperty = pyqtProperty(QColor, _get_back_color, _set_back_color)
 
 
 if __name__ == "__main__":

@@ -123,7 +123,8 @@ class MainController:
         self.dcm_ui.reports_btn.clicked.connect(self.reports_gui.exec_)  # show reports screen when reports is pressed
         self.dcm_ui.set_clock_btn.clicked.connect(self.set_clock_gui.exec_)  # show clock screen when clock is pressed
         self.dcm_ui.new_patient_btn.clicked.connect(self.conn.register_device)  # register pacemaker when btn is pressed
-        self.dcm_ui.pace_btn.clicked.connect(self.conn.send_data_to_pacemaker)  # write serial data when btn is pressed
+        self.dcm_ui.pace_btn.clicked.connect(lambda: self.conn.send_data_to_pacemaker(
+            self.get_pace_mode_params()))  # write serial data when btn is pressed
 
         # Checkboxes
         # show or hide the plots, depending on whether or not the checkbox is checked, when it changes state

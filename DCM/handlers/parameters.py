@@ -41,7 +41,7 @@ class ParametersHandler:
         try:
             with open(PARAMETERS_FILE_PATH, mode='r') as f:
                 self.params_store = json.load(f)
-                self.update_params_gui()
+                self._update_params_gui()
         except (FileNotFoundError, JSONDecodeError):
             self.params_store = self.default_params_store
 
@@ -49,7 +49,7 @@ class ParametersHandler:
     def confirm(self) -> None:
         self.params_store = {self.table.verticalHeaderItem(row).text(): self.table.item(row, 0).text() for row in
                              range(self.table.rowCount())}
-        self.update_params_file()
+        self._update_params_file()
 
     # When reset is clicked, prompt user if they're sure, and optionally load GUI defaults and update file and GUI
     def reset(self) -> None:
@@ -58,16 +58,16 @@ class ParametersHandler:
                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if response == QMessageBox.Yes:
             self.params_store = self.default_params_store
-            self.update_params_file()
-            self.update_params_gui()
+            self._update_params_file()
+            self._update_params_gui()
 
     # Write params store to file, creating a new one if it doesn't exist
-    def update_params_file(self) -> None:
+    def _update_params_file(self) -> None:
         with open(PARAMETERS_FILE_PATH, mode='w+') as f:
             json.dump(self.params_store, f)
 
     # Update the parameters GUI table with the values from the params store
-    def update_params_gui(self) -> None:
+    def _update_params_gui(self) -> None:
         for row in range(self.table.rowCount()):
             self.table.item(row, 0).setText(self.params_store[self.table.verticalHeaderItem(row).text()])
 

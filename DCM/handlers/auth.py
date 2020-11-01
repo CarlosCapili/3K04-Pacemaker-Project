@@ -36,22 +36,22 @@ class AuthHandler:
                 self.on_success()
             else:
                 print("Incorrect password!")
-                self.show_alert("Incorrect password!")
+                self._show_alert("Incorrect password!")
         else:
             print("Username does not exist, please register instead!")
-            self.show_alert("Username does not exist, please register instead!")
+            self._show_alert("Username does not exist, please register instead!")
 
     # Handles the registration process
     def register(self, username: str, password: str) -> None:
         # Check if username exists
         if username in self.cred_store.keys():
             print("Username already exists, please login instead!")
-            self.show_alert("Username already exists, please login instead!")
+            self._show_alert("Username already exists, please login instead!")
         else:
             # Check if there are already 10 users
             if len(self.cred_store.keys()) == 10:
                 print("Already 10 users, please login instead!")
-                self.show_alert("Already 10 users, please login instead!")
+                self._show_alert("Already 10 users, please login instead!")
             else:
                 self.cred_store[username] = password  # add new user to credentials store
 
@@ -61,7 +61,7 @@ class AuthHandler:
                 self.on_success()
 
     @staticmethod
-    def show_alert(msg: str) -> None:
+    def _show_alert(msg: str) -> None:
         """
         Displays a critical message with the specified text
 

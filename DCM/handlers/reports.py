@@ -13,7 +13,7 @@ class ReportsHandler:
 
         # Get report header data from About section, so that we're not hard-coding values multiple times
         header = {table.verticalHeaderItem(row).text(): table.item(row, 0).text() for row in range(table.rowCount())}
-        self.header = self.format_params(header)
+        self.header = self._format_params(header)
 
     # Handles the generation and presentation of the electrogram report, not implemented yet
     def generate_egram(self, params: Dict[str, str]) -> None:
@@ -23,18 +23,18 @@ class ReportsHandler:
     # Handles the generation and presentation of the bradycardia report
     def generate_brady(self, params: Dict[str, str]) -> None:
         print("generating brady report")
-        report = "{0}{1}".format(self.header, self.format_params(params))
-        self.show_report(report)
+        report = "{0}{1}".format(self.header, self._format_params(params))
+        self._show_report(report)
 
     # Handles the generation and presentation of the bradycardia report, may get removed
     def generate_temp(self, params: Dict[str, str]) -> None:
         print("generating temp report")
-        report = "{0}{1}".format(self.header, self.format_params(params))
+        report = "{0}{1}".format(self.header, self._format_params(params))
         print(report)
-        self.show_report(report)
+        self._show_report(report)
 
     @staticmethod
-    def format_params(params: Dict[str, str]) -> str:
+    def _format_params(params: Dict[str, str]) -> str:
         """
         Formats the dictionary of parameters as a string, aligned to the colon, with each parameter name/value on a
         new line. No param name is greater than 23 characters so we do left and right alignments in a 25 character long
@@ -46,7 +46,7 @@ class ReportsHandler:
         return "".join([f"{key:>25}: {value:<25}\n" for key, value in params.items()])
 
     @staticmethod
-    def show_report(report: str) -> None:
+    def _show_report(report: str) -> None:
         """
         Shows a customized message box with the specified text. The font is set to "Consolas" because it is a
         monospaced font.
