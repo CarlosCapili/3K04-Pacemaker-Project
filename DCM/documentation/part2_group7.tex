@@ -425,7 +425,7 @@ The confirm method is used to update the \verb|params_store| dict from the param
 
 The \verb|filter_params| method takes in a string named \verb|pacing_mode| which is used to get a dictionary that contains only the parameters for the specified pacing mode. It returns a dictionary with the param names as keys, and the param value with units as values.
 
-The state variables for the params module are table, which is just the params GUI table, \verb|params_per_mode|, \verb|default_params_store|, units, and \verb|params_store|.
+The state variables for the params module are \verb|table|, which is just the params GUI table, \verb|params_per_mode|, \verb|default_params_store|, \verb|units|, and \verb|params_store|.
 
 \verb|Params_per_mode| is a dictionary that maps the pacing mode as a string, specified as the keys, to the programmable parameters for that mode as a list of strings, specified as the value. This mapping was found in Table 6 of the PACEMAKER System Specification document.
 
