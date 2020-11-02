@@ -210,7 +210,7 @@ The welcome screen is the first widget in the welcome window that is displayed w
 \end{table}
 
 \paragraph{Register}
-The register screen can only be navigated to from the welcome screen. The register screens gives the user the ability to register a new user using a username and password, or return to the welcome screen. The register widget is a QWidget with internal functions that cannot be accessed by the other widgets. The widget's functions are accepting user inputs in the username and password fields, authorizing the user inputs, or directing the user to another widget. The register button will call the authentication handler's register funnction with the text in the username and password fields as inputs. The back button will return the user to the welcome screen. A tabular expression detailing the expected behaviour of the widget's functions are shown in Table \ref{tab:DCM_Register}.
+The register screen can only be navigated to from the welcome screen. The register screens gives the user the ability to register a new user using a username and password, or return to the welcome screen. The register widget is a QWidget with internal functions that cannot be accessed by the other widgets. The widget's functions are accepting user inputs in the username and password fields, authorizing the user inputs, or directing the user to another widget. The register button will call the authentication handler's \verb|register| funnction with the text in the username and password fields as inputs. The back button will return the user to the welcome screen. A tabular expression detailing the expected behaviour of the widget's functions are shown in Table \ref{tab:DCM_Register}.
 \begin{table}[ht]
     \centering
     \setlength{\aboverulesep}{0pt}
@@ -225,7 +225,7 @@ The register screen can only be navigated to from the welcome screen. The regist
     \end{table}
 
 \paragraph{Login}
-The login screen can only be navigated to from the welcome screen. The login screens gives the user the ability to login as an existing user using a username and password, or return to the welcome screen. The login widget is a QWidget with internal functions that cannot be accessed by the other widgets. The widget's functions are accepting user inputs in the username and password fields, authorizing the user inputs, or directing the user to another widget. The login button will call the authentication handler's login funnction with the text in the username and password fields as inputs. The back button will return the user to the welcome screen. A tabular expression detailing the expected behaviour of the widget's functions are shown in Table \ref{tab:DCM_Login}.
+The login screen can only be navigated to from the welcome screen. The login screens gives the user the ability to login as an existing user using a username and password, or return to the welcome screen. The login widget is a QWidget with internal functions that cannot be accessed by the other widgets. The widget's functions are accepting user inputs in the username and password fields, authorizing the user inputs, or directing the user to another widget. The login button will call the authentication handler's \verb|login| funnction with the text in the username and password fields as inputs. The back button will return the user to the welcome screen. A tabular expression detailing the expected behaviour of the widget's functions are shown in Table \ref{tab:DCM_Login}.
 \begin{table}[ht]
     \centering
     \setlength{\aboverulesep}{0pt}
@@ -240,7 +240,7 @@ The login screen can only be navigated to from the welcome screen. The login scr
     \end{table}
 
 \subsubsection{DCM Main Window}
-The main window is the window which contains all the DCM functions. The main window has three main functions: presenting important information about the pacemaker (DCM's connection status with the pacemaker, the pacemaker's pacing mode, graphical telemetry data from the pacemaker), provides the user the ability to change pacing modes, and allows the user to access the DCM's functions. The main window is a QMainWindow, a Qt class intended for main window management. The class was chosen due to it's ability to add status bars, which will be used to display information about the DCM's connection with the pacemaker. The main window consists of three main sections: real-time electrograms, pacing mode interfaces, and DCM functions. While there are some interactions between these sections (particularly the pacing mode interfaces and the modules in the DCM functions), they are largely contained in their own modules that can function independently from each other. Future modules can be added to any section without affecting implemented modules (with the expection of modules that do not have any defined behaviour for additional pacing modes).
+The main window is the window which contains all the DCM functions. The main window has three main functions: presenting important information about the pacemaker (DCM's connection status with the pacemaker, the pacemaker's pacing mode, graphical telemetry data from the pacemaker), providing the user the ability to change pacing modes, and allowing the user to access the DCM's functions. The main window is a QMainWindow, a Qt class intended for main window management. The class was chosen due to it's ability to add status bars, which will be used to display information about the DCM's connection with the pacemaker. The main window consists of three main sections: real-time electrograms, pacing mode interfaces, and DCM functions. While there are some interactions between these sections (particularly the pacing mode interfaces and the modules in the DCM functions), they are largely contained in their own modules that can function independently from each other. Future modules can be added to any section without affecting implemented modules (with the exception of modules that do not have any defined behaviour for additional pacing modes).
 
 The real-time electrograms show real-time telemetry data from the pace and sense leads on the pacemaker. Checkboxes for pace/sense leads will show and hide the pace/sense plots. The expected behaviour of the checkboxes are shown in Table \ref{tab:DCM_MainWindow}.
 
@@ -262,10 +262,10 @@ Additional pacing modes are expected to be added in future revisions of the soft
         \multicolumn{2}{|c}{dcm\_ui.set\_clock\_btn} & \multicolumn{1}{|c|}{set\_clock\_gui.exec\_} \\ \hline
         \multicolumn{2}{|c}{dcm\_ui.new\_patient\_btn} & \multicolumn{1}{|c|}{conn.register\_device} \\ \hline
         \multicolumn{2}{|c}{dcm\_ui.quit\_btn} & \multicolumn{1}{|c|}{dcm\_gui.close} \\ \hline
-        \multicolumn{1}{|c}{\multirow{2}{*}{dcm\_ui.pace\_box}} & \multicolumn{1}{|c}{isChecked()} & \multicolumn{1}{|c|}{graphs.pace\_show()} \\ \cmidrule{2-3}
-        \multicolumn{1}{|c}{} & \multicolumn{1}{|c}{!isChecked()} & \multicolumn{1}{|c|}{graphs.pace\_hide()} \\ \hline
-        \multicolumn{1}{|c}{\multirow{2}{*}{dcm\_ui.sense\_box}} & \multicolumn{1}{|c}{isChecked()} & \multicolumn{1}{|c|}{graphs.sense\_show()} \\ \cmidrule{2-3}
-        \multicolumn{1}{|c}{} & \multicolumn{1}{|c}{!isChecked()} & \multicolumn{1}{|c|}{graphs.sense\_hide()\hfill\null\tikzmark{bottomright}} \\ \cmidrule{1-3}
+        \multicolumn{1}{|c}{\multirow{2}{*}{dcm\_ui.pace\_box}} & \multicolumn{1}{|c}{isChecked} & \multicolumn{1}{|c|}{graphs.pace\_show} \\ \cmidrule{2-3}
+        \multicolumn{1}{|c}{} & \multicolumn{1}{|c}{!isChecked} & \multicolumn{1}{|c|}{graphs.pace\_hide} \\ \hline
+        \multicolumn{1}{|c}{\multirow{2}{*}{dcm\_ui.sense\_box}} & \multicolumn{1}{|c}{isChecked} & \multicolumn{1}{|c|}{graphs.sense\_show} \\ \cmidrule{2-3}
+        \multicolumn{1}{|c}{} & \multicolumn{1}{|c}{!isChecked} & \multicolumn{1}{|c|}{\hfill graphs.sense\_hide\hfill\null\tikzmark{bottomright}} \\ \cmidrule{1-3}
     \end{tabular}
     \caption{\label{tab:DCM_MainWindow}DCM Main Window GUI Connections}
     \DrawBox[thin, black]{topleft}{bottomright}
@@ -294,7 +294,7 @@ The reports window provides the user the option to view one of the following pri
 \paragraph{Parameters}
 The parameters window displays all the DCM programmable parameters to the user and allows the user to modify them and save their changes. The parameters window contains a QTableWidget, a widget providing an item-based table view. The horizontal headers contains a list of the programmable parameters that have been implemented, while the vertical headers contain the current values, the maximum and minimum values for the parameter, and the increment of the parameter. The values in the cells of the table are pre-programmed, with the maximum, minimum and increment values being unselectable (the user is unable to modify the cells' values).
 
-The current paramter values are programmed into the table, however they are immediately replaced by any changes that have been saved to the parameters file. The current value cells are selectable, allowing the user to modify their values, however these values are not saved to the parameters file until the "Confirm changes" button has been pressed. The "Reset to defaults" button will reset the parameter files values to the default values programmed into the QTableWidget cells. These functions are all handled by the parameters handler, with the push buttons calling functions within the handler.
+The current parameter values are programmed into the table, however they are immediately replaced by any changes that have been saved to the parameters file. The current value cells are selectable, allowing the user to modify their values, however these values are not saved to the parameters file until the "Confirm changes" button has been pressed. The "Reset to defaults" button will reset the parameter files values to the default values programmed into the QTableWidget cells. These functions are all handled by the parameters handler, with the push buttons calling functions within the handler.
 
 Modules that rely on the programmable parameters will retrieve them from the parameters file through the paramaters handler, the paramaters window does not directly interact with any modules other than the parameters handler.
 
@@ -304,7 +304,7 @@ Input validation will be implemented in future software revisions to ensure the 
 The about window displays the application model number, application software revision, DCM serial number and institution name. The about window contains a QTableWidget. The headers and cells of the table are set to the appropriate values and made unselectable, making the user unable to modify the cells' values. The widget only shows pre-programmed values and does not interact with any other modules in the DCM.
 
 \paragraph{New Patient}
-The New Patient push button calls the \verb|register_device()| in the connection handler. The connection handler will generate a popup message depending on the results of the function.
+The New Patient push button calls the \verb|register_device| in the connection handler. The connection handler will generate a popup message depending on the results of the function.
 
 \paragraph{Quit}
 The Quit push button closes the DCM GUI and exits the program.
@@ -318,14 +318,14 @@ The status bar operates independently from other modules in the DCM, and its ope
 The handlers are the backend of the program, where all the actions from the GUI are implemented. Each handler is independent from each other, but they can interact through passing in function arguments. For example with the reports and parameters handlers, the reports are generated from the input passed into each method which comes from the parameters handler.
 
 \subsubsection{Authentication}
-The authentication handler handles the authentication process for the user. The three main public functions are the constructor, login and register.
+The authentication handler handles the authentication process for the user. The three main public functions are the constructor, \verb|login|, and \verb|register|.
 
 The constructor takes in a Python callable named \verb|on_success|, which gets called when the login or registration process is successful.
 It also initializes the credential store, which stores the user credentials while the program is running.
 
-The login method takes in a username and password as strings, which are used to authenticate the user. It essentially compares the username and password to the existing entries in the credential store, and if they match it calls the \verb|on_success| function.
+The \verb|login| method takes in a username and password as strings, which are used to authenticate the user. It essentially compares the username and password to the existing entries in the credential store, and if they match it calls the \verb|on_success| function.
 
-The register method also takes in a username and password as strings, which are used to create a new user. The function checks if the username exists or if there are already 10 users, and if none of those are true it updates the credential store, writes it to a file and calls the \verb|on_success| function.
+The \verb|register| method also takes in a username and password as strings, which are used to create a new user. The function checks if the username exists or if there are already 10 users, and if none of those are true it updates the credential store, writes it to a file and calls the \verb|on_success| function.
 
 The state variables for the auth module are the credential store, which is a dictionary of strings where the keys are the usernames and the values are the passwords, and the \verb|on_success| function. The private function of the module is the \verb|_show_alert(msg: str)| function which takes in a message as a string and displays that on an error alert box that appears on top of the current window.
 
@@ -338,9 +338,9 @@ In the connections handler, the 5 public functions are the constructor, \verb|ru
 
 The constructor only initializes the state variables to default values, and starts the serial handler thread.
 
-The run method is called when the thread starts and overrides the method in \verb|QThread|. It sets its running variable to True, emits an initial state change signal and then loops until the program is closed, calling the \verb|_update_state| method every 10ms approximately.
+The \verb|run| method is called when the thread starts and overrides the method in \verb|QThread|. It sets its running variable to True, emits an initial state change signal and then loops until the program is closed, calling the \verb|_update_state| method every 10ms approximately.
 
-The stop method is used to stop the thread and stop the serial conn thread.
+The \verb|stop| method is used to stop the thread and stop the serial conn thread.
 The \\ \verb|register_device| method is called when the New Patient button is pressed and it registers the pacemaker if the current state is CONNECTED, otherwise it displays an alert depending on other conditions.
 For example, it will display "Please plug in a pacemaker!" when the New Patient button is pressed and there are no pacemakers plugged into the PC.
 
