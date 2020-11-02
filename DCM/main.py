@@ -1,3 +1,5 @@
+from typing import Dict
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QPalette
 from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QStackedWidget)
@@ -8,9 +10,35 @@ from handlers.graphs import GraphsHandler
 from handlers.parameters import ParametersHandler
 from handlers.reports import ReportsHandler
 from py_ui_files import (about, dcm, parameters, reports, setclock, welcomescreen)  # auto-generated files
+from py_ui_files.about import Ui_aboutWindow
+from py_ui_files.dcm import Ui_MainWindow
+from py_ui_files.parameters import Ui_parametersWindow
+from py_ui_files.reports import Ui_ReportsWindow
+from py_ui_files.setclock import Ui_Dialog
+from py_ui_files.welcomescreen import Ui_Welcome
 
 
+# This class handles all the linking between the frontend (GUI/UI) and the backend (handlers)
 class MainController:
+    palette: QPalette
+    welcome_gui: QStackedWidget
+    welcome_ui: Ui_Welcome
+    dcm_gui: QMainWindow
+    dcm_ui: Ui_MainWindow
+    about_gui: QDialog
+    about_ui: Ui_aboutWindow
+    params_gui: QDialog
+    params_ui: Ui_parametersWindow
+    reports_gui: QDialog
+    reports_ui: Ui_ReportsWindow
+    set_clock_gui: QDialog
+    set_clock_ui: Ui_Dialog
+    auth: AuthHandler
+    conn: ConnectionHandler
+    params: ParametersHandler
+    reports: ReportsHandler
+    graphs: GraphsHandler
+
     def __init__(self):
         # Set theme to dark mode
         self.palette = QPalette()
@@ -61,13 +89,14 @@ class MainController:
         self.link_params_buttons()
 
         # Start connection thread
-        self.conn.connectStatusChange.connect(self.dcm_ui.statusbar.handle_conn_anim)
+        self.conn.connect_status_change.connect(self.dcm_ui.statusbar.handle_conn_anim)
         self.conn.start()
 
         # Show welcome screen GUI
         self.welcome_gui.show()
 
-    def link_welcome_buttons(self):
+    # Link welcome screen ui elements to their respective functions
+    def link_welcome_buttons(self) -> None:
         # Welcome screen
         # show register and login screens when those buttons are pressed, respectively
         self.welcome_ui.reg_btn.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(1))
@@ -85,7 +114,8 @@ class MainController:
             lambda: self.auth.login(self.welcome_ui.log_user.text(), self.welcome_ui.log_pass.text()))
         self.welcome_ui.log_back_btn.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(0))
 
-    def link_dcm_elements(self):
+    # Link dcm ui elements to their respective functions
+    def link_dcm_elements(self) -> None:
         # Buttons
         self.dcm_ui.quit_btn.clicked.connect(self.dcm_gui.close)  # close dcm and quit program when quit is pressed
         self.dcm_ui.about_btn.clicked.connect(self.about_gui.exec_)  # show about screen when about is pressed
@@ -93,34 +123,37 @@ class MainController:
         self.dcm_ui.reports_btn.clicked.connect(self.reports_gui.exec_)  # show reports screen when reports is pressed
         self.dcm_ui.set_clock_btn.clicked.connect(self.set_clock_gui.exec_)  # show clock screen when clock is pressed
         self.dcm_ui.new_patient_btn.clicked.connect(self.conn.register_device)  # register pacemaker when btn is pressed
+        self.dcm_ui.pace_btn.clicked.connect(lambda: self.conn.send_data_to_pacemaker(
+            self.get_pace_mode_params()))  # write serial data when btn is pressed
 
         # Checkboxes
-        # show or hide the pace plots, depending on whether or not the checkbox is checked, when it changes state
+        # show or hide the plots, depending on whether or not the checkbox is checked, when it changes state
         self.dcm_ui.pace_box.stateChanged.connect(
             lambda: self.graphs.pace_show() if self.dcm_ui.pace_box.isChecked() else self.graphs.pace_hide())
-        # show or hide the sense plots, depending on whether or not the checkbox is checked, when it changes state
         self.dcm_ui.sense_box.stateChanged.connect(
             lambda: self.graphs.sense_show() if self.dcm_ui.sense_box.isChecked() else self.graphs.sense_hide())
 
-    def link_reports_buttons(self):
+    # Link reports ui elements to their respective functions
+    def link_reports_buttons(self) -> None:
         # Get the params based on the pacing mode, and then generate the respective report based on the pressed btn
         self.reports_ui.egram_btn.clicked.connect(lambda: self.reports.generate_egram(self.get_pace_mode_params()))
         self.reports_ui.brady_btn.clicked.connect(lambda: self.reports.generate_brady(self.get_pace_mode_params()))
         self.reports_ui.temp_btn.clicked.connect(lambda: self.reports.generate_temp(self.get_pace_mode_params()))
 
-    def link_params_buttons(self):
+    # Link parameters ui elements to their respective functions
+    def link_params_buttons(self) -> None:
         self.params_ui.confirm_btn.clicked.connect(self.params.confirm)  # update stored params and write them to a file
         self.params_ui.reset_btn.clicked.connect(self.params.reset)  # reset stored and shown params to GUI defaults
 
     # Upon successful user registration or login, close the welcome screen and show the dcm
-    def show_dcm(self):
+    def show_dcm(self) -> None:
         self.welcome_gui.close()
         self.dcm_gui.show()
         self.graphs.pace_plot()
         self.graphs.sense_plot()
 
     # Get only the parameters required for the current pacing mode
-    def get_pace_mode_params(self):
+    def get_pace_mode_params(self) -> Dict[str, str]:
         return self.params.filter_params(self.dcm_ui.pacing_mode_group.checkedButton().text())
 
 
