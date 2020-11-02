@@ -295,6 +295,8 @@ The current paramter values are programmed into the table, however they are imme
 
 Modules that rely on the programmable parameters will retrieve them from the parameters file through the paramaters handler, the paramaters window does not directly interact with any other GUI modules.
 
+Input validation will be implemented in future software revisions to ensure the user inputs are within the permissible ranges due to safety critical nature of the system. The parameters window will also emphasize programmable parameters that are relevant to the current pacing mode. The implementation has not been decided yet, but it is likely either irrelevant parameters will be hidden or irrelevant parameters will be disabled (greyed out in GUI). These features will primarily be implemented through the parameters handler.   
+
 \paragraph{About}
 The about window displays the application model number, application software revision, DCM serial number and institution name. The about window contains a QTableWidget. The headers and cells of the table are set to the appropriate values and made unselectable, making the user unable to modify the cells' values. The widget only shows pre-programmed values and does not interact with any other modules in the DCM.
 
@@ -430,6 +432,8 @@ The state variables for the params module are table, which is just the params GU
 The \verb|default_params_store| and units variables are simply dictionaries of strings with the parameter names as keys and the parameter values and units, as values respectively. The \verb|params_store| is the exact same data structure as \verb|default_params_store|, but it stores the most recent values of the params GUI table.
 
 The two private functions in the module are \verb|_update_params_file|, which just writes the \verb|params_store| to file, creating a new one if it doesn't exist, and \verb|_update_params_gui| which just updates the params GUI table with the values from the \verb|params_store|.
+
+Input validation will be implemented in future software revisions to ensure the user inputs are within the permissible ranges due to safety critical nature of the system. The parameters window will also emphasize programmable parameters that are relevant to the current pacing mode. The implementation has not been decided yet, but it is likely either irrelevant parameters will be hidden or irrelevant parameters will be disabled (greyed out in GUI).
 
 \subsubsection{Reports}
 The reports handler handles generating and displaying all the reports for the DCM window.
