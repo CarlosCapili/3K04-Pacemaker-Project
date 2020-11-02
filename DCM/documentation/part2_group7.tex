@@ -445,11 +445,11 @@ The 4 public functions are the constructor, \verb|generate_egram|, \verb|generat
 
 The constructor takes in a PyQt5 \verb|TableWidget| named table, which is used to generate the header for each report.
 
-The \verb|generate_egram| method is not implemented yet because we don't have actual electrogram data, and \verb|generate_temp| will most likely get removed.The \verb|generate_brady| method takes in a dictionary of strings named params, which are all the parameters for the current pacing mode. It then joins the header string and all the parameters as strings on new lines, before displaying the report in a custom message box.
+The \verb|generate_egram| method is not implemented yet because we don't have actual electrogram data, and \verb|generate_temp| will most likely get removed. The \verb|generate_brady| method takes in a dictionary of strings named params, which are all the parameters for the current pacing mode. It then joins the header string and all the parameters as strings on new lines, before displaying the report in a custom message box.
 
-The state variable for the report module is just the header string, which contains each "About" property on a new line.
+The state variable for the report module is just the header string, which contains each property from About on a new line.
 
-The two private functions in the module are \verb|_format_params(params: Dict[str, str])| and \verb|_show_report(report: str)|. \verb|_format_params| just takes in a dictionary of parameters as strings, and then returns a string with each param aligned to the colon and each parameter name/value on a new line. \verb|_show_report| takes in a report as a string and shows a customized message box with the specified text on top of the current window.
+The two private functions in the module are \verb|_format_params(params: Dict[str, str])| and \verb|_show_report(report: str)|. \verb|_format_params| just takes in a dictionary of parameters as strings, and then returns a string with each param aligned to the colon and each parameter name/value are grouped together on a new line. \verb|_show_report| takes in a report as a string and shows a customized message box with the specified text on top of the current window.
 
 \newpage
 \section{Testing}
@@ -470,7 +470,7 @@ The push buttons, check boxes, graphs and radio buttons were tested to see if th
 
 The pace electrograms were no longer displayed when the pace leads checkbox was unchecked. The pace electrograms were displayed again when the pace leads checkbox was checked. The sense electrograms were no longer displayed when the sense leads checkbox was unchecked. The sense electrograms were displayed again when the sense leads checkbox was checked. The electrogram graphs were scrollable.
 
-The Reports window was opened when the reports button was pressed. The Parameters window was opened when the parameters button was pressed. The About window was opened when the about button was pressed. The Set Clock window was opened when the set clock window was pressed. The new patient button could not be tested in its current implementation as the testers only had access to one pacemaker. The program was exitted when the quit button was pressed.
+The Reports window was opened when the reports button was pressed. The Parameters window was opened when the parameters button was pressed. The About window was opened when the about button was pressed. The Set Clock window was opened when the set clock window was pressed. The main functionality of the new patient button could not be tested in its current implementation as the testers only had access to one pacemaker. The program was exited when the quit button was pressed.
 
 \subsubsection{Reports}\label{Testing:Reports}
 The push buttons were tested to check if they called the correct functions.
@@ -486,7 +486,7 @@ The only values displayed that could be changed were the ones listed under the "
 
 The parameters file was updated when the "Confirm changes" button was pressed with modified values in the table.
 
-The reset to defaults button displayed a popup window to confirm if you want to reset all values. The "No" option returned the user to the Parameters window with no changes to the paramaters file. The "Yes" option returned the user to the Parameters window with the values in the parameters file and the values shown in the table being set to their default values.
+The reset to defaults button displayed a popup window to confirm if you want to reset all values. The "No" option returned the user to the Parameters window with no changes to the parameters file. The "Yes" option returned the user to the Parameters window with the values in the parameters file and the values shown in the table being set to their default values.
 
 Other functions of the main window could not be accessed while the Parameters window was active.
 
@@ -496,7 +496,7 @@ None of the cells in the table could be selected or modified.
 Other functions of the main window could not be accessed while the About window was active.
 
 \subsubsection{New Patient}
-The New Patient functions could not be tested in its current implementation due the testers only having access to one pacemaker.
+The New Patient main functionality could not be tested in its current implementation due the testers only having access to one pacemaker. A prompt was displayed saying "Pacemaker is already registered" when the button was pressed when connected to a pacemaker. A prompt was displayed saying "Please plug in a pacemaker" when the button was pressed with no pacemaker connected. 
 
 \subsection{Handlers}
 The handlers were largely tested alongside the GUI as most handler functions are called from within the GUI. Tests for all modules confirmed that their functions were behaving as intended.
