@@ -176,6 +176,7 @@ Future requirements that will be implemented include:
         \item Receiving telemetry data from Pacemaker
     \end{itemize}
     \item Input validation for safety critical Pacemaker systems operated by DCM
+    \item Additional pacing modes
 \end{itemize}
 
 \newpage
@@ -191,7 +192,7 @@ Graphs in the DCM are handled by the \href{http://www.pyqtgraph.org/}{PyQtGraph}
 
 \subsection{GUI}
 \subsubsection{Welcome Screen}
-The welcome window is the window the user is greeted by when the DCM program is launched, allowing the user to register users or login into the DCM. The Welcome Screen is a QStackedWidget, a Qt class that contains multiple widgets but only displays one at a time. The QStackedWidget class was chosen to allow all modules of the welcome screen to be accessible in a single window, while still allowing individual modules to behave independently. Additional modules can easily be added as new widgets without affecting implemented modules. The UI
+The welcome window is the window the user is greeted by when the DCM program is launched, allowing the user to register users or login into the DCM. The Welcome Screen is a QStackedWidget, a Qt class that contains multiple widgets but only displays one at a time. The QStackedWidget class was chosen to allow all modules of the welcome screen to be accessible in a single window, while still allowing individual modules to behave independently. Additional modules can easily be added as new widgets without affecting implemented modules.
 
 \paragraph{Welcome}
 The welcome screen is the first widget in the welcome window that is displayed when the window is launched. The widget gives the user the option to register a new user or login as an existing user through push buttons displayed in the widget. The welcome widget is a QWidget with internal functions that cannot be accessed by the other widgets. The widget's only functions are to direct the user to another widget when a push button is pressed. The register button will lead the user to the register widget and the login button will lead the user to the login widget. A tabular expression detailing the expected behaviour of the widget's functions are shown in Table \ref{tab:DCM_Welcome}.
@@ -204,7 +205,7 @@ The welcome screen is the first widget in the welcome window that is displayed w
     \multicolumn{1}{|c}{welcome\_ui.reg\_btn} & \multicolumn{1}{|c|}{welcome\_gui.setCurrentIndex(1)} \\ \hline
     \multicolumn{1}{|c}{welcome\_ui.log\_btn} & \multicolumn{1}{|c|}{welcome\_gui.setCurrentIndex(2)\hfill\null\tikzmark{bottomright}}  \\ \cmidrule{1-2}
 \end{tabular}
-\caption{\label{tab:DCM_Welcome}Welcome Screen}
+\caption{\label{tab:DCM_Welcome}Welcome Screen GUI Connections}
 \DrawBox[thin, black]{topleft}{bottomright}
 \end{table}
 
@@ -219,7 +220,7 @@ The register screen can only be navigated to from the welcome screen. The regist
         \multicolumn{1}{|c}{welcome\_ui.reg\_back\_btn} & \multicolumn{1}{|c|}{welcome\_gui.setCurrentIndex(0)} \\ \hline
         \multicolumn{1}{|c}{welcome\_ui.reg\_submit\_btn} & \multicolumn{1}{|c|}{\hfill auth.register\hfill\null\tikzmark{bottomright}}  \\ \cmidrule{1-2}
     \end{tabular}
-    \caption{\label{tab:DCM_Register}Register}
+    \caption{\label{tab:DCM_Register}Register GUI Connections}
     \DrawBox[thin, black]{topleft}{bottomright}
     \end{table}
 
@@ -234,7 +235,7 @@ The login screen can only be navigated to from the welcome screen. The login scr
         \multicolumn{1}{|c}{welcome\_ui.log\_back\_btn} & \multicolumn{1}{|c|}{welcome\_gui.setCurrentIndex(0)} \\ \hline
         \multicolumn{1}{|c}{welcome\_ui.log\_submit\_btn} & \multicolumn{1}{|c|}{\hfill auth.login\hfill\null\tikzmark{bottomright}}  \\ \cmidrule{1-2}
     \end{tabular}
-    \caption{\label{tab:DCM_Login}Login}
+    \caption{\label{tab:DCM_Login}Login GUI Connections}
     \DrawBox[thin, black]{topleft}{bottomright}
     \end{table}
 
@@ -246,6 +247,8 @@ The real-time electrograms show real-time telemetry data from the pace and sense
 The pacing mode interfaces allow the user to select the operating pacing mode of the pacemaker. Pacing mode selection is implemented using the QRadioGroup class, containing instances of the QRadioButton class for each pacing mode. The QRadioGroup class only allows one radio button to be switched on at a time, ensuring only a single pacing mode is selected at all times. Functions in other modules that rely on the pacing mode can rely on the functions of the QRadioGroup class, ensuring that the individual radio buttons cannot be altered.
 
 The DCM's functions are operated through push buttons on the main window. The push buttons will either call a function from a handler (new patient), or direct the user to another window. Relevant handler functions are called in these new windows depending on user selected options presented in these windows. The expected behaviour of the push buttons to access DCM functions are shown in Table \ref{tab:DCM_MainWindow}.
+
+Additional pacing modes are expected to be added in future revisions of the software, and behaviour for these pacing modes have to be accounted for in modules that require the pacing mode (or implement behaviour to handle unknown pacing modes). 
 
 \begin{table}[ht]
     \centering
@@ -264,7 +267,7 @@ The DCM's functions are operated through push buttons on the main window. The pu
         \multicolumn{1}{|c}{\multirow{2}{*}{dcm\_ui.sense\_box}} & \multicolumn{1}{|c}{isChecked()} & \multicolumn{1}{|c|}{graphs.sense\_show()} \\ \cmidrule{2-3}
         \multicolumn{1}{|c}{} & \multicolumn{1}{|c}{!isChecked()} & \multicolumn{1}{|c|}{graphs.sense\_hide()\hfill\null\tikzmark{bottomright}} \\ \cmidrule{1-3}
     \end{tabular}
-    \caption{\label{tab:DCM_MainWindow}DCM Main Window}
+    \caption{\label{tab:DCM_MainWindow}DCM Main Window GUI Connections}
     \DrawBox[thin, black]{topleft}{bottomright}
 \end{table}
 \newpage
@@ -272,7 +275,7 @@ The DCM's functions are operated through push buttons on the main window. The pu
 The graphs use the PlotWidget class from PyQtGraph, a QGraphicsWidget with additional functions for plotting. The data in the plots is randomly generated and the plotted when the DCM main window is opened. The random data is currently a placeholder until the ability to receive telemetry data from the pacemaker is implemented. All functions of the plots are handled by graphs handler, including showing and hiding the graphs with the lead checkboxes.
 
 \paragraph{Reports}
-The reports window provides the user the option to view one of the following printed reports: the electrogram report, the bradycardia parameters report, and the temporary parameters report. The reports window is a QDialog window that does not interact with other modules in the DCM. The window contains three push buttons that call functions in the reports handler with the pacing mode of the DCM as an input. The expected behaviour of the push buttons is shown in Table \ref{tab:DCM_Reports}. The reports are shown in a popup window that is generated by the reports handler.
+The reports window provides the user the option to view one of the following printed reports: the electrogram report, the bradycardia parameters report, and the temporary parameters report. The reports window is a QDialog window that does not interact with other modules in the DCM. The window contains three push buttons that call functions in the reports handler with the pacing mode of the DCM as an input. The expected behaviour of the push buttons is shown in Table \ref{tab:DCM_Reports}. The reports are shown in a popup window that is generated by the reports handler. The temporary parameters button will likely be removed in future software revisions, depending on if a temporary pacing mode is implemented.
 
 \begin{table}[ht]
     \centering
@@ -284,7 +287,7 @@ The reports window provides the user the option to view one of the following pri
         \multicolumn{1}{|c}{reports\_ui.brady\_btn} & \multicolumn{1}{|c|}{reports.generate\_brady(get\_pace\_mode\_params())} \\ \hline
         \multicolumn{1}{|c}{reports\_ui.temp\_btn} & \multicolumn{1}{|c|}{reports.generate\_temp(get\_pace\_mode\_params())\hfill\null\tikzmark{bottomright}} \\ \cmidrule{1-2}
     \end{tabular}
-    \caption{\label{tab:DCM_Reports}DCM Reports}
+    \caption{\label{tab:DCM_Reports}DCM Reports GUI Connections}
     \DrawBox[thin, black]{topleft}{bottomright}
 \end{table}
 
@@ -293,7 +296,7 @@ The parameters window displays all the DCM programmable parameters to the user a
 
 The current paramter values are programmed into the table, however they are immediately replaced by any changes that have been saved to the parameters file. The current value cells are selectable, allowing the user to modify their values, however these values are not saved to the parameters file until the "Confirm changes" button has been pressed. The "Reset to defaults" button will reset the parameter files values to the default values programmed into the QTableWidget cells. These functions are all handled by the parameters handler, with the push buttons calling functions within the handler.
 
-Modules that rely on the programmable parameters will retrieve them from the parameters file through the paramaters handler, the paramaters window does not directly interact with any other GUI modules.
+Modules that rely on the programmable parameters will retrieve them from the parameters file through the paramaters handler, the paramaters window does not directly interact with any modules other than the parameters handler.
 
 Input validation will be implemented in future software revisions to ensure the user inputs are within the permissible ranges due to safety critical nature of the system. The parameters window will also emphasize programmable parameters that are relevant to the current pacing mode. The implementation has not been decided yet, but it is likely either irrelevant parameters will be hidden or irrelevant parameters will be disabled (greyed out in GUI). These features will primarily be implemented through the parameters handler.   
 
@@ -307,7 +310,9 @@ The New Patient push button calls the \verb|register_device()| in the connection
 The Quit push button closes the DCM GUI and exits the program.
 
 \paragraph{Animated Status Bar}
-The animated status bar is a status bar for displaying the connection status between the DCM and the pacemaker with some integrated animations that depend on the connection status. The animated status bar is an AnimatedStatusBar, a class that extends the QStatusBar class from Qt with additional functions that interact with the connection handler. The AnimatedStatusBar's handle\_conn\_anim function is called by the connection handler whenever the status bar should be updated, and the function will display a programmed message and animation depending on the connection state received from the connection handler.
+The animated status bar is a status bar for displaying the connection status between the DCM and the pacemaker with some integrated animations that depend on the connection status. The animated status bar is an AnimatedStatusBar, a class that extends the QStatusBar class from Qt with additional functions that interact with the connection handler. The AnimatedStatusBar's \verb|handle_conn_anim| function is called by the connection handler whenever the status bar should be updated, and the function will display a programmed message and animation depending on the connection state received from the connection handler.
+
+The status bar operates independently from other modules in the DCM, and its operation is handled entirely by the connection handler.
 
 \subsection{Handlers}
 The handlers are the backend of the program, where all the actions from the GUI are implemented. Each handler is independent from each other, but they can interact through passing in function arguments. For example with the reports and parameters handlers, the reports are generated from the input passed into each method which comes from the parameters handler.
