@@ -304,18 +304,18 @@ Input validation will be implemented in future software revisions to ensure the 
 The about window displays the application model number, application software revision, DCM serial number and institution name. The about window contains a QTableWidget. The headers and cells of the table are set to the appropriate values and made unselectable, making the user unable to modify the cells' values. The widget only shows pre-programmed values and does not interact with any other modules in the DCM.
 
 \paragraph{New Patient}
-The New Patient push button calls the \verb|register_device| in the connection handler. The connection handler will generate a popup message depending on the results of the function.
+The New Patient push button calls the \verb|register_device| function in the connection handler. The connection handler will generate a popup message depending on the results of the function.
 
 \paragraph{Quit}
 The Quit push button closes the DCM GUI and exits the program.
 
 \paragraph{Animated Status Bar}
-The animated status bar is a status bar for displaying the connection status between the DCM and the pacemaker with some integrated animations that depend on the connection status. The animated status bar is an AnimatedStatusBar, a class that extends the QStatusBar class from Qt with additional functions that interact with the connection handler. The AnimatedStatusBar's \verb|handle_conn_anim| function is called by the connection handler whenever the status bar should be updated, and the function will display a programmed message and animation depending on the connection state received from the connection handler.
+The animated status bar is a status bar for displaying the connection status between the DCM and the pacemaker with some integrated animations that depend on the connection status. The animated status bar is an AnimatedStatusBar, a class that extends the QStatusBar class from Qt with additional functions that interact with the connection handler. The AnimatedStatusBar's \verb|handle_conn_anim| function is called whenever the state changes in the connection handler (the AnimatedStatusBar monitors a signal for state changes), and the function will display a programmed message and animation depending on the connection state.
 
-The status bar operates independently from other modules in the DCM, and its operation is handled entirely by the connection handler.
+The status bar operates independently from other modules in the DCM, and its behaviour is driven by events from the connection handler.
 
 \subsection{Handlers}
-The handlers are the backend of the program, where all the actions from the GUI are implemented. Each handler is independent from each other, but they can interact through passing in function arguments. For example with the reports and parameters handlers, the reports are generated from the input passed into each method which comes from the parameters handler.
+The handlers are the backend of the program, where all safety critical functions from the GUI are implemented. Each handler is independent from each other, but they can interact through passing in function arguments. For example with the reports and parameters handlers, the reports are generated from the input passed into each method which comes from the parameters handler.
 
 \subsubsection{Authentication}
 The authentication handler handles the authentication process for the user. The three main public functions are the constructor, \verb|login|, and \verb|register|.
@@ -341,7 +341,7 @@ The constructor only initializes the state variables to default values, and star
 The \verb|run| method is called when the thread starts and overrides the method in \verb|QThread|. It sets its running variable to True, emits an initial state change signal and then loops until the program is closed, calling the \verb|_update_state| method every 10ms approximately.
 
 The \verb|stop| method is used to stop the thread and stop the serial conn thread.
-The \\ \verb|register_device| method is called when the New Patient button is pressed and it registers the pacemaker if the current state is CONNECTED, otherwise it displays an alert depending on other conditions.
+The \verb|register_|\\\verb|device| method is called when the New Patient button is pressed and it registers the pacemaker if the current state is CONNECTED, otherwise it displays an alert depending on other conditions.
 For example, it will display "Please plug in a pacemaker!" when the New Patient button is pressed and there are no pacemakers plugged into the PC.
 
 The \verb|send_data_to_pacemaker| method takes in a dictionary of strings, named params and is not fully implemented because of no serial communication, so its just a placeholder.
@@ -463,9 +463,9 @@ The push buttons were tested to check if they led to the appropriate GUI element
 
 In the Welcome window, the register and login buttons were pressed, and they lead to the register and login screens respectively.
 
-In the register screen, the back button led the user back to the welcome screen. The text fields allowed user input up to 15 characters with the password field being masked with bullet points. The submit button saved the new user in the credentials file and sent the user to the DCM main window when there were less than 10 users registered. The submit button displayed a popup message telling the user that the maximum of 10 registered users had been reached when there were 10 users registered. The submit button displayed a popup message telling the user to login instead if the username already exists in the credentials file.
+In the register screen, the back button led the user back to the welcome screen. The text fields allowed user input up to 15 characters with the password field being masked with bullet points. The submit button saved the new user ("123") in the credentials file and sent the user to the DCM main window when there were less than 10 users registered. The submit button displayed a popup message telling the user that the maximum of 10 registered users had been reached when there were 10 users registered. The submit button displayed a popup message telling the user to login instead if the username ("3k04") already exists in the credentials file.
 
-In the login screen, the back button led the user back to the welcome screen. The text fields allowed user input up to 15 characters with the password field being masked with bullet points. The submit button sent the user to the DCM main window when the user's credentials were present in the credentials file. The submit button displayed a popup message instructing the user to register the account if the user did not exist in the credentials file. The submit button displayed a popup message telling the user that the password is incorrect if the username existed in the credentials file but the passwords did not match.
+In the login screen, the back button led the user back to the welcome screen. The text fields allowed user input up to 15 characters with the password field being masked with bullet points. The submit button sent the user to the DCM main window when the user's credentials (username: 3k04, password: 3k04) were present in the credentials file. The submit button displayed a popup message instructing the user to register the account if the user did not exist in the credentials file (username: 3k05, password: 3k05). The submit button displayed a popup message telling the user that the password is incorrect if the username existed in the credentials file but the passwords did not match (username: 3k04, password: 3k05).
 
 \subsubsection{DCM Main Window}\label{Testing:DCMMainWindow}
 The push buttons, check boxes, graphs and radio buttons were tested to see if they led to the appropriate GUI elements and called the correct functions.
