@@ -208,7 +208,6 @@ class ConnectionHandler(QThread):
     # Called when the Pace Now button is pressed, not fully implemented because of no serial communication
     def send_data_to_pacemaker(self, params: Dict[str, str]) -> None:
         if self.current_state == PacemakerState.REGISTERED:
-            print("sending data to pacemaker (PLACEHOLDER)")
             self.serial.send_params_to_pacemaker(params)
         elif self.current_state == PacemakerState.CONNECTED:
             self._show_alert("Please register the pacemaker first!")
