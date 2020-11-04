@@ -21,6 +21,10 @@ trim_trailing_whitespace = false
 [*.tex]
 max_line_length = off
 
+[*.ui]
+max_line_length = off
+indent_size = 1
+
 [.editorconfig]
 ij_editorconfig_align_group_field_declarations = false
 ij_editorconfig_space_after_colon = false
