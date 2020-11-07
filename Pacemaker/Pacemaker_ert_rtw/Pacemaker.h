@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Pacemaker'.
  *
- * Model version                  : 1.77
+ * Model version                  : 1.84
  * Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
- * C/C++ source code generated on : Sun Nov  1 10:08:03 2020
+ * C/C++ source code generated on : Fri Nov  6 20:49:07 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -118,10 +118,10 @@ struct P_Pacemaker_T_ {
   Adaptive Constant1_Value;            /* Expression: Adaptive.NONE_AD
                                         * Referenced by: '<Root>/Constant1'
                                         */
-  ChamberPaced Constant11_Value;       /* Expression: ChamberPaced.ATRIUM_P
+  ChamberPaced Constant11_Value;       /* Expression: ChamberPaced.VENTRICLE_P
                                         * Referenced by: '<Root>/Constant11'
                                         */
-  ChamberSensed Constant9_Value;       /* Expression: ChamberSensed.ATRIUM_S
+  ChamberSensed Constant9_Value;       /* Expression: ChamberSensed.VENTRICLE_S
                                         * Referenced by: '<Root>/Constant9'
                                         */
   uint32_T Constant10_Value;           /* Computed Parameter: Constant10_Value
