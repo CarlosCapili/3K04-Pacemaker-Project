@@ -22,21 +22,28 @@ class ParametersHandler:
         # Create dictionary of parameters per pacing mode
         self.params_per_mode = {
             'AOO': ["Lower Rate Limit", "Upper Rate Limit", "Atrial Amplitude", "Atrial Pulse Width"],
-            'AAI': ["Lower Rate Limit", "Upper Rate Limit", "Atrial Amplitude", "Atrial Pulse Width", "ARP"],
+            'AAI': ["Lower Rate Limit", "Upper Rate Limit", "Atrial Amplitude", "Atrial Pulse Width",
+                    "Atrial Sensitivity", "ARP", "PVARP"],
             'VOO': ["Lower Rate Limit", "Upper Rate Limit", "Ventricular Amplitude", "Ventricular Pulse Width"],
-            'VVI': ["Lower Rate Limit", "Upper Rate Limit", "Ventricular Amplitude", "Ventricular Pulse Width", "VRP"],
+            'VVI': ["Lower Rate Limit", "Upper Rate Limit", "Ventricular Amplitude", "Ventricular Pulse Width",
+                    "Ventricular Sensitivity", "VRP"],
             'DOO': ["Lower Rate Limit", "Upper Rate Limit", "Fixed AV Delay", "Atrial Amplitude", "Atrial Pulse Width",
                     "Ventricular Amplitude", "Ventricular Pulse Width"],
             'AOOR': ["Lower Rate Limit", "Upper Rate Limit", "Maximum Sensor Rate", "Atrial Amplitude",
-                     "Atrial Pulse Width"],
+                     "Atrial Pulse Width", "Activity Threshold", "Reaction Time", "Response Factor",
+                     "Recovery Time"],
             'AAIR': ["Lower Rate Limit", "Upper Rate Limit", "Maximum Sensor Rate", "Atrial Amplitude",
-                     "Atrial Pulse Width", "ARP"],
+                     "Atrial Pulse Width", "Atrial Sensitivity", "ARP", "PVARP", "Activity Threshold", "Reaction Time",
+                     "Response Factor", "Recovery Time"],
             'VOOR': ["Lower Rate Limit", "Upper Rate Limit", "Maximum Sensor Rate", "Ventricular Amplitude",
-                     "Ventricular Pulse Width"],
+                     "Ventricular Pulse Width", "Activity Threshold", "Reaction Time", "Response Factor",
+                     "Recovery Time"],
             'VVIR': ["Lower Rate Limit", "Upper Rate Limit", "Maximum Sensor Rate", "Ventricular Amplitude",
-                     "Ventricular Pulse Width", "VRP"],
+                     "Ventricular Pulse Width", "Ventricular Sensitivity", "VRP", "Activity Threshold", "Reaction Time",
+                     "Response Factor", "Recovery Time"],
             'DOOR': ["Lower Rate Limit", "Upper Rate Limit", "Maximum Sensor Rate", "Fixed AV Delay",
-                     "Atrial Amplitude", "Atrial Pulse Width", "Ventricular Amplitude", "Ventricular Pulse Width"]}
+                     "Atrial Amplitude", "Atrial Pulse Width", "Ventricular Amplitude", "Ventricular Pulse Width",
+                     "Activity Threshold", "Reaction Time", "Response Factor", "Recovery Time"]}
 
         # Keys are the parameter name, values are the param value or param units respectively
         self.default_params_store = {}
