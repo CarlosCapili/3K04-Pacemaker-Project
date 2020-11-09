@@ -35,6 +35,36 @@
    <bool>false</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="reset_btn">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Reset to defaults</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="confirm_btn">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Confirm changes</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="0" column="0">
     <widget class="QTableWidget" name="tableWidget">
      <property name="enabled">
@@ -210,6 +240,11 @@
      <row>
       <property name="text">
        <string>Ventricular Sensitivity</string>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string>PVARP</string>
       </property>
      </row>
      <column>
@@ -604,6 +639,11 @@
        <string>5</string>
       </property>
      </item>
+     <item row="10" column="0">
+      <property name="text">
+       <string>0</string>
+      </property>
+     </item>
      <item row="11" column="0">
       <property name="text">
        <string>30</string>
@@ -729,37 +769,32 @@
        <string>0.5</string>
       </property>
      </item>
+     <item row="16" column="0">
+      <property name="text">
+       <string>250</string>
+      </property>
+     </item>
+     <item row="16" column="1">
+      <property name="text">
+       <string>ms</string>
+      </property>
+     </item>
+     <item row="16" column="2">
+      <property name="text">
+       <string>150</string>
+      </property>
+     </item>
+     <item row="16" column="3">
+      <property name="text">
+       <string>500</string>
+      </property>
+     </item>
+     <item row="16" column="4">
+      <property name="text">
+       <string>10</string>
+      </property>
+     </item>
     </widget>
-   </item>
-   <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="reset_btn">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Reset to defaults</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="confirm_btn">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Confirm changes</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
   </layout>
  </widget>
