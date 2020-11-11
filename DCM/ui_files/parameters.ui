@@ -239,7 +239,7 @@
      </row>
      <row>
       <property name="text">
-       <string>Reponse Factor</string>
+       <string>Response Factor</string>
       </property>
      </row>
      <row>
@@ -783,21 +783,33 @@
       </property>
      </item>
      <item row="13" column="1">
+      <property name="text">
+       <string/>
+      </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>
      </item>
      <item row="13" column="2">
+      <property name="text">
+       <string/>
+      </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>
      </item>
      <item row="13" column="3">
+      <property name="text">
+       <string/>
+      </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>
      </item>
      <item row="13" column="4">
+      <property name="text">
+       <string/>
+      </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>

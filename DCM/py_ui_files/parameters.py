@@ -411,7 +411,7 @@ class Ui_parametersWindow(object):
         item = self.tableWidget.verticalHeaderItem(14)
         item.setText(_translate("parametersWindow", "Reaction Time"))
         item = self.tableWidget.verticalHeaderItem(15)
-        item.setText(_translate("parametersWindow", "Reponse Factor"))
+        item.setText(_translate("parametersWindow", "Response Factor"))
         item = self.tableWidget.verticalHeaderItem(16)
         item.setText(_translate("parametersWindow", "Recovery Time"))
         item = self.tableWidget.horizontalHeaderItem(0)
