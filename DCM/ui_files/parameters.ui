@@ -219,7 +219,7 @@
        <string>ARP</string>
       </property>
       <property name="textAlignment">
-       <set>AlignLeading|AlignTop</set>
+       <set>AlignLeading|AlignVCenter</set>
       </property>
      </row>
      <row>

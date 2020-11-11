@@ -91,7 +91,7 @@ class Ui_parametersWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setVerticalHeaderItem(10, item)
         item = QtWidgets.QTableWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignTop)
+        item.setTextAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
         self.tableWidget.setVerticalHeaderItem(11, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setVerticalHeaderItem(12, item)
