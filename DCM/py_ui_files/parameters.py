@@ -14,14 +14,14 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_parametersWindow(object):
     def setupUi(self, parametersWindow):
         parametersWindow.setObjectName("parametersWindow")
-        parametersWindow.resize(350, 440)
+        parametersWindow.resize(360, 460)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(parametersWindow.sizePolicy().hasHeightForWidth())
         parametersWindow.setSizePolicy(sizePolicy)
-        parametersWindow.setMinimumSize(QtCore.QSize(350, 440))
-        parametersWindow.setMaximumSize(QtCore.QSize(350, 500))
+        parametersWindow.setMinimumSize(QtCore.QSize(360, 460))
+        parametersWindow.setMaximumSize(QtCore.QSize(360, 460))
         parametersWindow.setSizeGripEnabled(False)
         self.gridLayout = QtWidgets.QGridLayout(parametersWindow)
         self.gridLayout.setObjectName("gridLayout")
