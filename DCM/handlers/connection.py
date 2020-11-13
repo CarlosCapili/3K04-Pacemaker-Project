@@ -29,6 +29,7 @@ class _SerialHandler(QThread):
     conn: Serial
     in_q: Queue
 
+    # https://docs.python.org/3.7/library/struct.html#format-strings
     PARAMS_FMT_STR, ECG_FMT_STR = "=3B4f4H4B2f", "=4f"
     PARAMS_NUM_BYTES, ECG_NUM_BYTES = struct.calcsize(PARAMS_FMT_STR), struct.calcsize(ECG_FMT_STR)
 

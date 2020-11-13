@@ -8,10 +8,10 @@
 | A Pulse W          | QDoubleSpinBox | 1       | ms                                              | 0.1 | 30  | 0.1       |
 | A Sensitivity      | QDoubleSpinBox | 1       | mV                                              | 0.5 | 10  | 0.5       |
 | V Amp              | QDoubleSpinBox | 5       | V                                               | 0   | 5   | 0.1       |
-| A Pulse W          | QDoubleSpinBox | 1       | ms                                              | 0.1 | 30  | 0.1       |
+| V Pulse W          | QDoubleSpinBox | 1       | ms                                              | 0.1 | 30  | 0.1       |
 | V Sensitivity      | QDoubleSpinBox | 2.5     | mV                                              | 0.5 | 10  | 0.5       |
-| VRP                | QSpinBox       | 320     | ms                                              | 150 | 500 | 10        |
 | ARP                | QSpinBox       | 250     | ms                                              | 150 | 500 | 10        |
+| VRP                | QSpinBox       | 320     | ms                                              | 150 | 500 | 10        |
 | PVARP              | QSpinBox       | 250     | ms                                              | 150 | 500 | 10        |
 | Activity Threshold | QComboBox      | Med     | V-Low, Low, Med-Low, Med, Med-High, High, V-High|     |     |           |
 | Reaction Time      | QSpinBox       | 30      | sec                                             | 10  | 50  | 10        |

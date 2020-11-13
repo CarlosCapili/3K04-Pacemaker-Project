@@ -278,7 +278,7 @@ class Ui_MainWindow(object):
         self.quit_btn.setText(_translate("MainWindow", "Quit"))
         self.actionReview.setText(_translate("MainWindow", "Review"))
         self.actionModify.setText(_translate("MainWindow", "Modify"))
-from animated_status_bar import AnimatedStatusBar
+from custom_qt.animated_status_bar import AnimatedStatusBar
 from pyqtgraph import PlotWidget
 
 

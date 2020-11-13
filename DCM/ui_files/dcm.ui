@@ -557,7 +557,7 @@
   <customwidget>
    <class>AnimatedStatusBar</class>
    <extends>QStatusBar</extends>
-   <header>animated_status_bar</header>
+   <header>custom_qt.animated_status_bar</header>
   </customwidget>
   <customwidget>
    <class>PlotWidget</class>

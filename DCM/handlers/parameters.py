@@ -1,8 +1,10 @@
 import json
 from json import JSONDecodeError
-from typing import Dict, List
+from typing import Dict, List, Union
 
 from PyQt5.QtWidgets import QMessageBox, QTableWidget
+
+from custom_qt.delegates import ComboBoxDelegate, DoubleSpinBoxDelegate, SpinBoxDelegate
 
 PARAMETERS_FILE_PATH = "parameters.json"
 
@@ -46,6 +48,26 @@ class ParametersHandler:
                      "Atrial Amplitude", "Atrial Pulse Width", "Ventricular Amplitude", "Ventricular Pulse Width",
                      "Activity Threshold", "Reaction Time", "Response Factor", "Recovery Time"]}
 
+        object_per_param: Dict[str, Union[SpinBoxDelegate, DoubleSpinBoxDelegate, ComboBoxDelegate]] = {
+            "Lower Rate Limit": SpinBoxDelegate(60, 30, 175, 5, "ppm", parent=table),
+            "Upper Rate Limit": SpinBoxDelegate(120, 50, 175, 5, "ppm", parent=table),
+            "Maximum Sensor Rate": SpinBoxDelegate(120, 50, 175, 5, "ppm", parent=table),
+            "Fixed AV Delay": SpinBoxDelegate(150, 70, 300, 10, "ms", parent=table),
+            "Atrial Amplitude": DoubleSpinBoxDelegate(5, 0, 5, 0.1, "V", parent=table),
+            "Atrial Pulse Width": DoubleSpinBoxDelegate(1, 0.1, 30, 0.1, "ms", parent=table),
+            "Atrial Sensitivity": DoubleSpinBoxDelegate(1, 0.5, 10, 0.5, "mV", parent=table),
+            "Ventricular Amplitude": DoubleSpinBoxDelegate(5, 0, 5, 0.1, "V", parent=table),
+            "Ventricular Pulse Width": DoubleSpinBoxDelegate(1, 0.1, 30, 0.1, "ms", parent=table),
+            "Ventricular Sensitivity": DoubleSpinBoxDelegate(2.5, 0.5, 10, 0.5, "mV", parent=table),
+            "ARP": SpinBoxDelegate(250, 150, 500, 10, "ms", parent=table),
+            "VRP": SpinBoxDelegate(320, 150, 500, 10, "ms", parent=table),
+            "PVARP": SpinBoxDelegate(250, 150, 500, 10, "ms", parent=table),
+            "Activity Threshold": ComboBoxDelegate(3, ["V-Low", "Low", "Med-Low", "Med", "Med-High", "High", "V-High"],
+                                                   parent=table),
+            "Reaction Time": SpinBoxDelegate(30, 10, 50, 10, "sec", parent=table),
+            "Response Factor": SpinBoxDelegate(8, 1, 16, 1, "", parent=table),
+            "Recovery Time": SpinBoxDelegate(5, 2, 16, 1, "min", parent=table)}
+
         # Keys are the parameter name, values are the param value or param units respectively
         self.default_params_store = {}
         self.units = {}
@@ -56,6 +78,8 @@ class ParametersHandler:
             key = table.verticalHeaderItem(row).text()
             self.default_params_store[key] = table.item(row, 0).text()
             self.units[key] = table.item(row, 1).text()
+            table.setItemDelegateForRow(row, object_per_param[key])
+            table.openPersistentEditor(table.item(row, 0))
 
         # Try and optionally load existing parameters from file and update GUI with those saved values
         try:
