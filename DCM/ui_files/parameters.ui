@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>630</width>
+    <width>350</width>
     <height>440</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>630</width>
+    <width>350</width>
     <height>440</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>630</width>
+    <width>350</width>
     <height>500</height>
    </size>
   </property>
@@ -258,61 +258,12 @@
        <string>Values</string>
       </property>
      </column>
-     <column>
-      <property name="text">
-       <string>Units</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Min</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Max</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Increment</string>
-      </property>
-     </column>
      <item row="0" column="0">
       <property name="text">
        <string>60</string>
       </property>
       <property name="textAlignment">
        <set>AlignLeading|AlignVCenter</set>
-      </property>
-     </item>
-     <item row="0" column="1">
-      <property name="text">
-       <string>ppm</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="0" column="2">
-      <property name="text">
-       <string>30</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="0" column="3">
-      <property name="text">
-       <string>175</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="0" column="4">
-      <property name="text">
-       <string>5</string>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
@@ -322,35 +273,6 @@
       <property name="text">
        <string>120</string>
       </property>
-     </item>
-     <item row="1" column="1">
-      <property name="text">
-       <string>ppm</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="1" column="2">
-      <property name="text">
-       <string>50</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="1" column="3">
-      <property name="text">
-       <string>175</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="1" column="4">
-      <property name="text">
-       <string>5</string>
-      </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>
@@ -358,35 +280,6 @@
      <item row="2" column="0">
       <property name="text">
        <string>120</string>
-      </property>
-     </item>
-     <item row="2" column="1">
-      <property name="text">
-       <string>ppm</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="2" column="2">
-      <property name="text">
-       <string>50</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="2" column="3">
-      <property name="text">
-       <string>175</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="2" column="4">
-      <property name="text">
-       <string>5</string>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
@@ -396,35 +289,6 @@
       <property name="text">
        <string>150</string>
       </property>
-     </item>
-     <item row="3" column="1">
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="3" column="2">
-      <property name="text">
-       <string>70</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="3" column="3">
-      <property name="text">
-       <string>300</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="3" column="4">
-      <property name="text">
-       <string>10</string>
-      </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>
@@ -432,35 +296,6 @@
      <item row="4" column="0">
       <property name="text">
        <string>5</string>
-      </property>
-     </item>
-     <item row="4" column="1">
-      <property name="text">
-       <string>V</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="4" column="2">
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="4" column="3">
-      <property name="text">
-       <string>5</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="4" column="4">
-      <property name="text">
-       <string>0.1</string>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
@@ -470,35 +305,6 @@
       <property name="text">
        <string>1</string>
       </property>
-     </item>
-     <item row="5" column="1">
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="5" column="2">
-      <property name="text">
-       <string>0.1</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="5" column="3">
-      <property name="text">
-       <string>30</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="5" column="4">
-      <property name="text">
-       <string>0.1</string>
-      </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>
@@ -506,35 +312,6 @@
      <item row="6" column="0">
       <property name="text">
        <string>1</string>
-      </property>
-     </item>
-     <item row="6" column="1">
-      <property name="text">
-       <string>mV</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="6" column="2">
-      <property name="text">
-       <string>0.5</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="6" column="3">
-      <property name="text">
-       <string>10</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="6" column="4">
-      <property name="text">
-       <string>0.5</string>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
@@ -544,35 +321,6 @@
       <property name="text">
        <string>5</string>
       </property>
-     </item>
-     <item row="7" column="1">
-      <property name="text">
-       <string>V</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="7" column="2">
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="7" column="3">
-      <property name="text">
-       <string>5</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="7" column="4">
-      <property name="text">
-       <string>0.1</string>
-      </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>
@@ -580,35 +328,6 @@
      <item row="8" column="0">
       <property name="text">
        <string>1</string>
-      </property>
-     </item>
-     <item row="8" column="1">
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="8" column="2">
-      <property name="text">
-       <string>0.1</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="8" column="3">
-      <property name="text">
-       <string>30</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="8" column="4">
-      <property name="text">
-       <string>0.1</string>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
@@ -618,35 +337,6 @@
       <property name="text">
        <string>2.5</string>
       </property>
-     </item>
-     <item row="9" column="1">
-      <property name="text">
-       <string>mV</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="9" column="2">
-      <property name="text">
-       <string>0.5</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="9" column="3">
-      <property name="text">
-       <string>10</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="9" column="4">
-      <property name="text">
-       <string>0.5</string>
-      </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>
@@ -654,35 +344,6 @@
      <item row="10" column="0">
       <property name="text">
        <string>320</string>
-      </property>
-     </item>
-     <item row="10" column="1">
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="10" column="2">
-      <property name="text">
-       <string>150</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="10" column="3">
-      <property name="text">
-       <string>500</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="10" column="4">
-      <property name="text">
-       <string>10</string>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
@@ -695,47 +356,6 @@
       <property name="textAlignment">
        <set>AlignLeading|AlignVCenter</set>
       </property>
-     </item>
-     <item row="11" column="1">
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="textAlignment">
-       <set>AlignLeading|AlignVCenter</set>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="11" column="2">
-      <property name="text">
-       <string>150</string>
-      </property>
-      <property name="textAlignment">
-       <set>AlignLeading|AlignVCenter</set>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="11" column="3">
-      <property name="text">
-       <string>500</string>
-      </property>
-      <property name="textAlignment">
-       <set>AlignLeading|AlignVCenter</set>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="11" column="4">
-      <property name="text">
-       <string>10</string>
-      </property>
-      <property name="textAlignment">
-       <set>AlignLeading|AlignVCenter</set>
-      </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>
@@ -743,35 +363,6 @@
      <item row="12" column="0">
       <property name="text">
        <string>250</string>
-      </property>
-     </item>
-     <item row="12" column="1">
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="12" column="2">
-      <property name="text">
-       <string>150</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="12" column="3">
-      <property name="text">
-       <string>500</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="12" column="4">
-      <property name="text">
-       <string>10</string>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
@@ -785,70 +376,9 @@
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>
      </item>
-     <item row="13" column="1">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="13" column="2">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="13" column="3">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="13" column="4">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
      <item row="14" column="0">
       <property name="text">
        <string>30</string>
-      </property>
-     </item>
-     <item row="14" column="1">
-      <property name="text">
-       <string>sec</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="14" column="2">
-      <property name="text">
-       <string>10</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="14" column="3">
-      <property name="text">
-       <string>50</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="14" column="4">
-      <property name="text">
-       <string>10</string>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
@@ -858,35 +388,6 @@
       <property name="text">
        <string>8</string>
       </property>
-     </item>
-     <item row="15" column="1">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="15" column="2">
-      <property name="text">
-       <string>1</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="15" column="3">
-      <property name="text">
-       <string>16</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="15" column="4">
-      <property name="text">
-       <string>1</string>
-      </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
       </property>
@@ -894,35 +395,6 @@
      <item row="16" column="0">
       <property name="text">
        <string>5</string>
-      </property>
-     </item>
-     <item row="16" column="1">
-      <property name="text">
-       <string>min</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="16" column="2">
-      <property name="text">
-       <string>2</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="16" column="3">
-      <property name="text">
-       <string>16</string>
-      </property>
-      <property name="flags">
-       <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-      </property>
-     </item>
-     <item row="16" column="4">
-      <property name="text">
-       <string>1</string>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
