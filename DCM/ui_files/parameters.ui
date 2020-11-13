@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>630</width>
-    <height>500</height>
+    <height>440</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,12 +19,12 @@
   <property name="minimumSize">
    <size>
     <width>630</width>
-    <height>325</height>
+    <height>440</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>800</width>
+    <width>630</width>
     <height>500</height>
    </size>
   </property>
@@ -75,6 +75,12 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
      </property>
      <property name="font">
       <font>
@@ -157,7 +163,7 @@
       <bool>false</bool>
      </attribute>
      <attribute name="verticalHeaderStretchLastSection">
-      <bool>true</bool>
+      <bool>false</bool>
      </attribute>
      <row>
       <property name="text">
