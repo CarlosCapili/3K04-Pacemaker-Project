@@ -13,7 +13,7 @@
 | VRP                | QSpinBox       | 320     | ms                                              | 150 | 500 | 10        |
 | ARP                | QSpinBox       | 250     | ms                                              | 150 | 500 | 10        |
 | PVARP              | QSpinBox       | 250     | ms                                              | 150 | 500 | 10        |
-| Activity Threshold | QComboBox      | Med     | -Low, Low, Med-Low, Med, Med-High, High, V-High |     |     |           |
+| Activity Threshold | QComboBox      | Med     | V-Low, Low, Med-Low, Med, Med-High, High, V-High|     |     |           |
 | Reaction Time      | QSpinBox       | 30      | sec                                             | 10  | 50  | 10        |
 | Response Factor    | QSpinBox       | 8       |                                                 | 1   | 16  | 1         |
 | Recovery Time      | QSpinBox       | 5       | min                                             | 2   | 16  | 1         |

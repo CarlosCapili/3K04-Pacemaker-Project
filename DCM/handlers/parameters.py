@@ -18,6 +18,7 @@ class ParametersHandler:
     def __init__(self, table: QTableWidget):
         print("Parameters handler init")
         self.table = table
+        # self.table.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
         # Create dictionary of parameters per pacing mode
         self.params_per_mode = {
@@ -89,6 +90,15 @@ class ParametersHandler:
     def _update_params_gui(self) -> None:
         for row in range(self.table.rowCount()):
             self.table.item(row, 0).setText(self.params_store[self.table.verticalHeaderItem(row).text()])
+
+    def update_row_visibility(self, pacing_mode: str) -> None:
+        params_to_show = self.params_per_mode[pacing_mode]
+
+        for row in range(self.table.rowCount()):
+            if self.table.verticalHeaderItem(row).text() in params_to_show:
+                self.table.showRow(row)
+            else:
+                self.table.hideRow(row)
 
     # Return a pacing mode dependent dict of parameters with the names as keys, and param values with units as values
     def filter_params(self, pacing_mode: str) -> Dict[str, str]:
