@@ -77,7 +77,8 @@ class ParametersHandler:
         for row in range(table.rowCount()):
             key = table.verticalHeaderItem(row).text()
             self.default_params_store[key] = table.item(row, 0).text()
-            self.units[key] = table.item(row, 1).text()
+            self.units[key] = object_per_param[key].unit if not isinstance(object_per_param[key],
+                                                                           ComboBoxDelegate) else ""
             table.setItemDelegateForRow(row, object_per_param[key])
             table.openPersistentEditor(table.item(row, 0))
 
