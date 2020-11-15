@@ -6,6 +6,7 @@
 -ID:/school/rtw/c/src
 -ID:/school/rtw/c/src/ext_mode/common
 -ID:/school/rtw/c/ert
+-IC:/Users/Udeep/Documents/GitHub/3K04-Project-L1-G7/Pacemaker/slprj/ert/_sharedutils
 -IC:/Freescale/KSDK_1.2.0/platform/CMSIS/Include
 -ID:/school/rtw/c/src/ext_mode/serial
 -IC:/ProgramData/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/armcortexmbase/scheduler/include

@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Pacemaker'.
  *
- * Model version                  : 1.77
+ * Model version                  : 1.7
  * Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
- * C/C++ source code generated on : Sun Nov  1 10:08:03 2020
+ * C/C++ source code generated on : Sat Nov 14 20:43:41 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -22,28 +22,6 @@
 #include "rtwtypes.h"
 
 /* Model Code Variants */
-#ifndef DEFINED_TYPEDEF_FOR_Activity_
-#define DEFINED_TYPEDEF_FOR_Activity_
-
-typedef enum {
-  TRIGGERED_A = 0,                     /* Default value */
-  INHIBITED_A,
-  DUAL_A,
-  NONE_A
-} Activity;
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_Adaptive_
-#define DEFINED_TYPEDEF_FOR_Adaptive_
-
-typedef enum {
-  NONE_AD = 0,                         /* Default value */
-  RATE_AD
-} Adaptive;
-
-#endif
-
 #ifndef DEFINED_TYPEDEF_FOR_ChamberPaced_
 #define DEFINED_TYPEDEF_FOR_ChamberPaced_
 
@@ -68,7 +46,29 @@ typedef enum {
 
 #endif
 
-/* Custom Type definition for MATLABSystem: '<S3>/Z_ATR_CTRLOUT' */
+#ifndef DEFINED_TYPEDEF_FOR_Activity_
+#define DEFINED_TYPEDEF_FOR_Activity_
+
+typedef enum {
+  TRIGGERED_A = 0,                     /* Default value */
+  INHIBITED_A,
+  DUAL_A,
+  NONE_A
+} Activity;
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_Adaptive_
+#define DEFINED_TYPEDEF_FOR_Adaptive_
+
+typedef enum {
+  NONE_AD = 0,                         /* Default value */
+  RATE_AD
+} Adaptive;
+
+#endif
+
+/* Custom Type definition for MATLABSystem: '<S5>/Serial Transmit' */
 #include "MW_SVD.h"
 #ifndef struct_tag_bvK2L41g8z1P0jzpdjsJhE
 #define struct_tag_bvK2L41g8z1P0jzpdjsJhE
@@ -86,6 +86,49 @@ struct tag_bvK2L41g8z1P0jzpdjsJhE
 typedef struct tag_bvK2L41g8z1P0jzpdjsJhE b_freedomk64f_Hardware_Pacema_T;
 
 #endif                               /*typedef_b_freedomk64f_Hardware_Pacema_T*/
+
+#ifndef struct_tag_WltE1qT51p3S2KRQQd2Zd
+#define struct_tag_WltE1qT51p3S2KRQQd2Zd
+
+struct tag_WltE1qT51p3S2KRQQd2Zd
+{
+  boolean_T matlabCodegenIsDeleted;
+  int32_T isInitialized;
+  boolean_T isSetupComplete;
+  b_freedomk64f_Hardware_Pacema_T Hw;
+  MW_Handle_Type MW_SCIHANDLE;
+};
+
+#endif                                 /*struct_tag_WltE1qT51p3S2KRQQd2Zd*/
+
+#ifndef typedef_freedomk64f_SCIWrite_Pacemake_T
+#define typedef_freedomk64f_SCIWrite_Pacemake_T
+
+typedef struct tag_WltE1qT51p3S2KRQQd2Zd freedomk64f_SCIWrite_Pacemake_T;
+
+#endif                               /*typedef_freedomk64f_SCIWrite_Pacemake_T*/
+
+#ifndef struct_tag_79weVYaslRFZRGk3pNTXC
+#define struct_tag_79weVYaslRFZRGk3pNTXC
+
+struct tag_79weVYaslRFZRGk3pNTXC
+{
+  boolean_T matlabCodegenIsDeleted;
+  int32_T isInitialized;
+  boolean_T isSetupComplete;
+  b_freedomk64f_Hardware_Pacema_T Hw;
+  MW_Handle_Type MW_SCIHANDLE;
+  real_T SampleTime;
+};
+
+#endif                                 /*struct_tag_79weVYaslRFZRGk3pNTXC*/
+
+#ifndef typedef_freedomk64f_SCIRead_Pacemaker_T
+#define typedef_freedomk64f_SCIRead_Pacemaker_T
+
+typedef struct tag_79weVYaslRFZRGk3pNTXC freedomk64f_SCIRead_Pacemaker_T;
+
+#endif                               /*typedef_freedomk64f_SCIRead_Pacemaker_T*/
 
 #ifndef struct_tag_gY1zYXXyNHJpvdqiHJr34G
 #define struct_tag_gY1zYXXyNHJpvdqiHJr34G
