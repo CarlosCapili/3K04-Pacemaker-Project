@@ -109,10 +109,10 @@ class ComboBoxDelegate(QStyledItemDelegate):
             q = QComboBox(parent)
             q.setPalette(self.palette)
             q.setFrame(False)
-            q.setEditable(False)
             q.setMaxCount(len(self.values))
             q.addItems(self.values)
             q.setCurrentIndex(self.nominal_index)
+            q.setEditable(False)
             return q
         else:
             return super(ComboBoxDelegate, self).createEditor(parent, option, index)
