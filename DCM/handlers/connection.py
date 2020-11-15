@@ -50,8 +50,7 @@ class _SerialHandler(QThread):
             # Check if the serial connection is open with the pacemaker
             if self.conn.is_open:
                 try:
-                    # line = self._readline(self.ECG_NUM_BYTES)  # read one line
-                    line = self._readline(5)
+                    line = self._readline(self.ECG_NUM_BYTES)  # read one line
                     print(f"received from pacemaker: {line}")
                     # self.in_q.put(line)
                 except Exception:
@@ -108,12 +107,12 @@ class _SerialHandler(QThread):
     def send_params_to_pacemaker(self, params_to_send: Dict[str, str]) -> None:
         print(f"send params {params_to_send} (PLACEHOLDER)")
 
-        data = struct.pack("=5BH", 0x16, 0x55, 0xFF, 0xFF, 0xFF, 0x3E8)
+        data = struct.pack(self.PARAMS_FMT_STR, *params_to_send.values())
         print(data)
 
         # Check if the serial connection is open with the pacemaker
-        if self.conn.is_open:
-            self.conn.write(data)
+        # if self.conn.is_open:
+        #     self.conn.write(data)
 
 
 # This class handles the pacemaker connection for the DCM and extends the QThread class to allow for multithreading
@@ -130,6 +129,9 @@ class ConnectionHandler(QThread):
 
     # A signal that's emitted every time we change state
     connect_status_change: pyqtSignal = pyqtSignal(PacemakerState, str)  # the str is the serial_num and/or a msg
+
+    # A signal that's emitted every time we receive ECG data
+    ecg_data_update: pyqtSignal = pyqtSignal(str)  # the str is the serial_num and/or a msg
 
     def __init__(self):
         super().__init__()

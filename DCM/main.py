@@ -126,8 +126,8 @@ class MainController:
         self.dcm_ui.reports_btn.clicked.connect(self.reports_gui.exec_)  # show reports screen when reports is pressed
         self.dcm_ui.set_clock_btn.clicked.connect(self.set_clock_gui.exec_)  # show clock screen when clock is pressed
         self.dcm_ui.new_patient_btn.clicked.connect(self.conn.register_device)  # register pacemaker when btn is pressed
-        self.dcm_ui.pace_btn.clicked.connect(lambda: self.conn.send_data_to_pacemaker(
-            self.get_pace_mode_params()))  # write serial data when btn is pressed
+        # write serial data when btn is pressed
+        self.dcm_ui.pace_btn.clicked.connect(lambda: self.conn.send_data_to_pacemaker(self.params.params_store))
         # update the params GUI table to only show the params for the current pacing mode
         self.dcm_ui.pacing_mode_group.buttonClicked.connect(
             lambda: self.params.update_row_visibility(self.dcm_ui.pacing_mode_group.checkedButton().text()))
@@ -144,7 +144,6 @@ class MainController:
         # Get the params based on the pacing mode, and then generate the respective report based on the pressed btn
         self.reports_ui.egram_btn.clicked.connect(lambda: self.reports.generate_egram(self.get_pace_mode_params()))
         self.reports_ui.brady_btn.clicked.connect(lambda: self.reports.generate_brady(self.get_pace_mode_params()))
-        self.reports_ui.temp_btn.clicked.connect(lambda: self.reports.generate_temp(self.get_pace_mode_params()))
 
     # Link parameters ui elements to their respective functions
     def link_params_buttons(self) -> None:
@@ -155,8 +154,7 @@ class MainController:
     def show_dcm(self) -> None:
         self.welcome_gui.close()
         self.dcm_gui.show()
-        self.graphs.pace_plot()
-        self.graphs.sense_plot()
+        self.graphs.plot_data()
 
     # Get only the parameters required for the current pacing mode
     def get_pace_mode_params(self) -> Dict[str, str]:

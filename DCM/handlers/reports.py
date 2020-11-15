@@ -26,13 +26,6 @@ class ReportsHandler:
         report = "{0}{1}".format(self.header, self._format_params(params))
         self._show_report(report)
 
-    # Handles the generation and presentation of the bradycardia report, may get removed
-    def generate_temp(self, params: Dict[str, str]) -> None:
-        print("generating temp report")
-        report = "{0}{1}".format(self.header, self._format_params(params))
-        print(report)
-        self._show_report(report)
-
     @staticmethod
     def _format_params(params: Dict[str, str]) -> str:
         """
