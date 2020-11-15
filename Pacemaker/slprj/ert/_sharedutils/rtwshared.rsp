@@ -1,0 +1,5 @@
+rtGetInf.o
+rtGetNaN.o
+rt_nonfinite.o
+rt_roundd_snf.o
+rt_roundf_snf.o

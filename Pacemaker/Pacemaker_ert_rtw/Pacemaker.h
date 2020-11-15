@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Pacemaker'.
  *
- * Model version                  : 1.84
+ * Model version                  : 1.7
  * Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
- * C/C++ source code generated on : Fri Nov  6 20:49:07 2020
+ * C/C++ source code generated on : Sat Nov 14 20:43:41 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -20,15 +20,21 @@
 #ifndef RTW_HEADER_Pacemaker_h_
 #define RTW_HEADER_Pacemaker_h_
 #include <math.h>
+#include <string.h>
 #include <stddef.h>
 #ifndef Pacemaker_COMMON_INCLUDES_
 # define Pacemaker_COMMON_INCLUDES_
 #include "rtwtypes.h"
+#include "MW_SCI.h"
 #include "MW_digitalIO.h"
 #include "MW_PWM.h"
 #endif                                 /* Pacemaker_COMMON_INCLUDES_ */
 
 #include "Pacemaker_types.h"
+
+/* Child system includes */
+#include "send_params_private.h"
+#include "send_params.h"
 #include "rt_nonfinite.h"
 #include "rtGetInf.h"
 
@@ -43,9 +49,56 @@
 
 /* Block signals (default storage) */
 typedef struct {
+  uint8_T TxDataLocChar[39];
+  uint8_T RxData[39];
+  uint8_T RxDataLocChar[39];
+  uint32_T TxPinLoc;
+  uint32_T SCIModuleLoc;
+  MW_SCI_StopBits_Type StopBitsValue;
   uint32_T DataTypeConversion4;        /* '<S4>/Data Type Conversion4' */
-  uint32_T DataTypeConversion1;        /* '<S4>/Data Type Conversion1' */
   uint32_T PACING_REF_PWM;             /* '<Root>/Chart' */
+  real32_T AtrialAmp;
+  real32_T AtrialPulseWidth;
+  real32_T VentricularAmp;
+  real32_T VentricularPulseWidth;
+  real32_T AtrialSensitivity;
+  real32_T VentricularSensitivity;
+  real32_T AtrialAmp_g;                /* '<Root>/SerialReceive' */
+  real32_T AtrialPulseWidth_a;         /* '<Root>/SerialReceive' */
+  real32_T VentricularAmp_o;           /* '<Root>/SerialReceive' */
+  real32_T VentricularPulseWidth_i;    /* '<Root>/SerialReceive' */
+  real32_T AtrialSensitivity_d;        /* '<Root>/SerialReceive' */
+  real32_T VentricularSensitivity_j;   /* '<Root>/SerialReceive' */
+  ChamberSensed y2;                    /* '<S4>/MATLAB Function1' */
+  ChamberPaced y1;                     /* '<S4>/MATLAB Function1' */
+  Activity y3;                         /* '<S4>/MATLAB Function1' */
+  uint16_T DataTypeConversion5;        /* '<S4>/Data Type Conversion5' */
+  uint16_T DataTypeConversion1;        /* '<S4>/Data Type Conversion1' */
+  uint16_T VRP;
+  uint16_T ARP;
+  uint16_T PVARP;
+  uint16_T FixAVDelay;
+  uint16_T VRP_g;                      /* '<Root>/SerialReceive' */
+  uint16_T ARP_j;                      /* '<Root>/SerialReceive' */
+  uint16_T PVARP_m;                    /* '<Root>/SerialReceive' */
+  uint16_T FixAVDelay_e;               /* '<Root>/SerialReceive' */
+  uint8_T BytePack1[4];                /* '<S5>/Byte Pack1' */
+  uint8_T BytePack2[4];                /* '<S5>/Byte Pack2' */
+  uint8_T BytePack3[4];                /* '<S5>/Byte Pack3' */
+  uint8_T BytePack4[4];                /* '<S5>/Byte Pack4' */
+  uint8_T BytePack[2];                 /* '<S5>/Byte Pack' */
+  uint8_T BytePack5[2];                /* '<S5>/Byte Pack5' */
+  uint8_T BytePack6[2];                /* '<S5>/Byte Pack6' */
+  uint8_T BytePack7[2];                /* '<S5>/Byte Pack7' */
+  uint8_T BytePack8[4];                /* '<S5>/Byte Pack8' */
+  uint8_T BytePack9[4];                /* '<S5>/Byte Pack9' */
+  uint8_T Mode;                        /* '<Root>/SerialReceive' */
+  uint8_T LRL;                         /* '<Root>/SerialReceive' */
+  uint8_T URL;                         /* '<Root>/SerialReceive' */
+  uint8_T MaxSensorRate;               /* '<Root>/SerialReceive' */
+  uint8_T ReactionTime;                /* '<Root>/SerialReceive' */
+  uint8_T ResponseFactor;              /* '<Root>/SerialReceive' */
+  uint8_T RecoveryTime;                /* '<Root>/SerialReceive' */
   boolean_T ATR_CMP_DETECT;            /* '<S2>/ATR_CMP_DETECT' */
   boolean_T VENT_CMP_DETECT;           /* '<S2>/VENT_CMP_DETECT' */
   boolean_T Z_ATR_CTRL;                /* '<Root>/Chart' */
@@ -63,24 +116,28 @@ typedef struct {
 /* Block states (default storage) for system '<Root>' */
 typedef struct {
   freedomk64f_DigitalRead_Pacem_T obj; /* '<S2>/ATR_CMP_DETECT' */
-  freedomk64f_DigitalRead_Pacem_T obj_n;/* '<S2>/VENT_CMP_DETECT' */
-  freedomk64f_PWMOutput_Pacemak_T obj_e;/* '<S3>/PACING_REF_PWMOUT' */
-  freedomk64f_PWMOutput_Pacemak_T obj_l;/* '<S3>/ATR_CMP_REF_PWM' */
-  freedomk64f_PWMOutput_Pacemak_T obj_n0;/* '<S3>/VENT_CMP_REF_PWM' */
-  freedomk64f_DigitalWrite_Pace_T obj_p;/* '<S3>/Z_ATR_CTRLOUT' */
-  freedomk64f_DigitalWrite_Pace_T obj_o;/* '<S3>/Z_VENT_CTRLOUT' */
-  freedomk64f_DigitalWrite_Pace_T obj_nt;/* '<S3>/ATR_PACE_CTRLOUT' */
-  freedomk64f_DigitalWrite_Pace_T obj_b;/* '<S3>/VENT_PACE_CTRLOUT' */
-  freedomk64f_DigitalWrite_Pace_T obj_j;/* '<S3>/PACE_GND_CTRLOUT' */
-  freedomk64f_DigitalWrite_Pace_T obj_ju;/* '<S3>/ATR_GND_CTRLOUT' */
-  freedomk64f_DigitalWrite_Pace_T obj_jq;/* '<S3>/VENT_GND_CTRLOUT' */
-  freedomk64f_DigitalWrite_Pace_T obj_a;/* '<S3>/PACE_CHARGE_CTRLOUT' */
-  freedomk64f_DigitalWrite_Pace_T obj_pp;/* '<S3>/R_LEDOUT' */
-  freedomk64f_DigitalWrite_Pace_T obj_py;/* '<S3>/B_LEDOUT' */
-  freedomk64f_DigitalWrite_Pace_T obj_pu;/* '<S3>/FRONTEND_CTRL1' */
+  freedomk64f_DigitalRead_Pacem_T obj_l;/* '<S2>/VENT_CMP_DETECT' */
+  freedomk64f_SCIRead_Pacemaker_T obj_d;/* '<Root>/Serial Receive' */
+  freedomk64f_PWMOutput_Pacemak_T obj_m;/* '<S3>/PACING_REF_PWMOUT' */
+  freedomk64f_PWMOutput_Pacemak_T obj_lh;/* '<S3>/ATR_CMP_REF_PWM' */
+  freedomk64f_PWMOutput_Pacemak_T obj_dw;/* '<S3>/VENT_CMP_REF_PWM' */
+  freedomk64f_DigitalWrite_Pace_T obj_a;/* '<S3>/Z_ATR_CTRLOUT' */
+  freedomk64f_DigitalWrite_Pace_T obj_j;/* '<S3>/Z_VENT_CTRLOUT' */
+  freedomk64f_DigitalWrite_Pace_T obj_m1;/* '<S3>/ATR_PACE_CTRLOUT' */
+  freedomk64f_DigitalWrite_Pace_T obj_ac;/* '<S3>/VENT_PACE_CTRLOUT' */
+  freedomk64f_DigitalWrite_Pace_T obj_b;/* '<S3>/PACE_GND_CTRLOUT' */
+  freedomk64f_DigitalWrite_Pace_T obj_o;/* '<S3>/ATR_GND_CTRLOUT' */
+  freedomk64f_DigitalWrite_Pace_T obj_bs;/* '<S3>/VENT_GND_CTRLOUT' */
+  freedomk64f_DigitalWrite_Pace_T obj_h;/* '<S3>/PACE_CHARGE_CTRLOUT' */
+  freedomk64f_DigitalWrite_Pace_T obj_e;/* '<S3>/R_LEDOUT' */
+  freedomk64f_DigitalWrite_Pace_T obj_c;/* '<S3>/B_LEDOUT' */
+  freedomk64f_DigitalWrite_Pace_T obj_p;/* '<S3>/FRONTEND_CTRL1' */
+  freedomk64f_SCIWrite_Pacemake_T obj_ej;/* '<S5>/Serial Transmit' */
   real_T ActiveChamber;                /* '<Root>/Chart' */
   int32_T sfEvent;                     /* '<Root>/Chart' */
   uint32_T temporalCounter_i1;         /* '<Root>/Chart' */
+  uint8_T is_active_c3_Pacemaker;      /* '<Root>/SerialReceive' */
+  uint8_T is_c3_Pacemaker;             /* '<Root>/SerialReceive' */
   uint8_T is_active_c2_Pacemaker;      /* '<Root>/Chart' */
   uint8_T is_c2_Pacemaker;             /* '<Root>/Chart' */
   uint8_T is_Sense;                    /* '<Root>/Chart' */
@@ -91,17 +148,14 @@ typedef struct {
 
 /* Parameters (default storage) */
 struct P_Pacemaker_T_ {
+  real_T SerialReceive_SampleTime;     /* Expression: -1
+                                        * Referenced by: '<Root>/Serial Receive'
+                                        */
   real_T VENT_CMP_DETECT_SampleTime;   /* Expression: SampleTime
                                         * Referenced by: '<S2>/VENT_CMP_DETECT'
                                         */
   real_T ATR_CMP_DETECT_SampleTime;    /* Expression: SampleTime
                                         * Referenced by: '<S2>/ATR_CMP_DETECT'
-                                        */
-  real_T Constant3_Value;              /* Expression: 4
-                                        * Referenced by: '<Root>/Constant3'
-                                        */
-  real_T Gain2_Gain;                   /* Expression: 100
-                                        * Referenced by: '<S4>/Gain2'
                                         */
   real_T Gain_Gain;                    /* Expression: 60000
                                         * Referenced by: '<S4>/Gain'
@@ -112,44 +166,8 @@ struct P_Pacemaker_T_ {
   real_T Constant2_Value;              /* Expression: 1
                                         * Referenced by: '<S3>/Constant2'
                                         */
-  Activity Constant_Value;             /* Expression: Activity.INHIBITED_A
-                                        * Referenced by: '<Root>/Constant'
-                                        */
-  Adaptive Constant1_Value;            /* Expression: Adaptive.NONE_AD
-                                        * Referenced by: '<Root>/Constant1'
-                                        */
-  ChamberPaced Constant11_Value;       /* Expression: ChamberPaced.VENTRICLE_P
-                                        * Referenced by: '<Root>/Constant11'
-                                        */
-  ChamberSensed Constant9_Value;       /* Expression: ChamberSensed.VENTRICLE_S
-                                        * Referenced by: '<Root>/Constant9'
-                                        */
-  uint32_T Constant10_Value;           /* Computed Parameter: Constant10_Value
-                                        * Referenced by: '<Root>/Constant10'
-                                        */
-  uint32_T Constant2_Value_h;          /* Computed Parameter: Constant2_Value_h
-                                        * Referenced by: '<Root>/Constant2'
-                                        */
-  uint32_T Constant4_Value;            /* Computed Parameter: Constant4_Value
-                                        * Referenced by: '<Root>/Constant4'
-                                        */
-  uint32_T Constant5_Value;            /* Computed Parameter: Constant5_Value
-                                        * Referenced by: '<Root>/Constant5'
-                                        */
-  uint32_T Constant6_Value;            /* Computed Parameter: Constant6_Value
-                                        * Referenced by: '<Root>/Constant6'
-                                        */
-  uint32_T Constant7_Value;            /* Computed Parameter: Constant7_Value
-                                        * Referenced by: '<Root>/Constant7'
-                                        */
-  uint32_T Constant8_Value;            /* Computed Parameter: Constant8_Value
-                                        * Referenced by: '<Root>/Constant8'
-                                        */
-  uint32_T Constant12_Value;           /* Computed Parameter: Constant12_Value
-                                        * Referenced by: '<Root>/Constant12'
-                                        */
-  uint32_T Constant13_Value;           /* Computed Parameter: Constant13_Value
-                                        * Referenced by: '<Root>/Constant13'
+  real32_T Gain2_Gain;                 /* Computed Parameter: Gain2_Gain
+                                        * Referenced by: '<S4>/Gain2'
                                         */
 };
 
@@ -201,6 +219,9 @@ extern RT_MODEL_Pacemaker_T *const Pacemaker_M;
  * '<S2>'   : 'Pacemaker/Hardware Input '
  * '<S3>'   : 'Pacemaker/Hardware output'
  * '<S4>'   : 'Pacemaker/Parameters'
+ * '<S5>'   : 'Pacemaker/Parameters echo'
+ * '<S6>'   : 'Pacemaker/SerialReceive'
+ * '<S7>'   : 'Pacemaker/Parameters/MATLAB Function1'
  */
 #endif                                 /* RTW_HEADER_Pacemaker_h_ */
 
