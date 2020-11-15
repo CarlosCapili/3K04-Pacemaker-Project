@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>967</width>
-    <height>704</height>
+    <width>1080</width>
+    <height>594</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -186,7 +186,7 @@
        </widget>
       </item>
       <item>
-       <layout class="QGridLayout" name="gridLayout">
+       <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
          <widget class="QRadioButton" name="aoo_btn">
           <property name="text">
@@ -201,6 +201,32 @@
          </widget>
         </item>
         <item row="1" column="0">
+         <widget class="QRadioButton" name="aoor_btn">
+          <property name="text">
+           <string>AOOR</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">pacing_mode_group</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QRadioButton" name="aair_btn">
+          <property name="text">
+           <string>AAIR</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">pacing_mode_group</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="0" column="1">
          <widget class="QRadioButton" name="aai_btn">
           <property name="text">
            <string>AAI</string>
@@ -213,7 +239,11 @@
           </attribute>
          </widget>
         </item>
-        <item row="1" column="1">
+       </layout>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="1">
          <widget class="QRadioButton" name="vvi_btn">
           <property name="text">
            <string>VVI</string>
@@ -226,10 +256,66 @@
           </attribute>
          </widget>
         </item>
-        <item row="0" column="1">
+        <item row="0" column="0">
          <widget class="QRadioButton" name="voo_btn">
           <property name="text">
            <string>VOO</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">pacing_mode_group</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="voor_btn">
+          <property name="text">
+           <string>VOOR</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">pacing_mode_group</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QRadioButton" name="vvir_btn">
+          <property name="text">
+           <string>VVIR</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">pacing_mode_group</string>
+          </attribute>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="doo_btn">
+          <property name="text">
+           <string>DOO</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">pacing_mode_group</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QRadioButton" name="door_btn">
+          <property name="text">
+           <string>DOOR</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">pacing_mode_group</string>
@@ -450,7 +536,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>967</width>
+     <width>1080</width>
      <height>22</height>
     </rect>
    </property>
@@ -471,7 +557,7 @@
   <customwidget>
    <class>AnimatedStatusBar</class>
    <extends>QStatusBar</extends>
-   <header>animated_status_bar</header>
+   <header>custom_qt.animated_status_bar</header>
   </customwidget>
   <customwidget>
    <class>PlotWidget</class>

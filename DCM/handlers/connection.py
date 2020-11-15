@@ -1,4 +1,5 @@
 import queue
+import struct
 from enum import Enum, unique
 from queue import Queue
 from time import sleep
@@ -6,7 +7,7 @@ from typing import Dict, List, Optional
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
-from serial import Serial
+from serial import Serial, SerialException
 from serial.tools import list_ports
 from serial.tools.list_ports_common import ListPortInfo
 
@@ -28,13 +29,17 @@ class _SerialHandler(QThread):
     conn: Serial
     in_q: Queue
 
+    # https://docs.python.org/3.7/library/struct.html#format-strings
+    PARAMS_FMT_STR, ECG_FMT_STR = "=3B4f4H4B2f", "=4f"
+    PARAMS_NUM_BYTES, ECG_NUM_BYTES = struct.calcsize(PARAMS_FMT_STR), struct.calcsize(ECG_FMT_STR)
+
     def __init__(self):
         super().__init__()
         print("Serial handler init")
 
         self.running = False
         self.buf = bytearray()
-        self.conn = Serial(baudrate=1152000, timeout=1)
+        self.conn = Serial(baudrate=115200, timeout=0)
         self.in_q = queue.Queue()
 
     # Gets called when the thread starts, overrides method in QThread
@@ -44,42 +49,55 @@ class _SerialHandler(QThread):
         while self.running:
             # Check if the serial connection is open with the pacemaker
             if self.conn.is_open:
-                # try:
-                line = self._readline().decode()  # read one line
-                print(f"received from pacemaker: {line}")
-                self.in_q.put(line)
-                # except
+                try:
+                    # line = self._readline(self.ECG_NUM_BYTES)  # read one line
+                    line = self._readline(5)
+                    print(f"received from pacemaker: {line}")
+                    # self.in_q.put(line)
+                except Exception:
+                    pass
+            elif self.conn.port:
+                self._try_to_open_port()
             else:
                 sleep(1)
 
     # Stops the thread
     def stop(self) -> None:
         self.running = False
+        self.conn.close()
 
     # Open the serial connection with the pacemaker on the specified port
     def start_serial_comm(self, port: str) -> None:
-        print(f"opening serial port {port} with pacemaker (PLACEHOLDER)")
+        print(f"opening serial port {port} with pacemaker")
         self.conn.port = port
-        # try:
-        #     self.conn.open()
-        # except SerialException as e:
-        #     raise e
+        self._try_to_open_port()
 
-    # Read the output stream from the pacemaker until a newline is reached
-    def _readline(self):
-        i: int = self.buf.find(b"\n")
+    def stop_serial_comm(self) -> None:
+        self.conn.close()
+        self.conn.port = None
 
-        if i >= 0:
+    def _try_to_open_port(self):
+        try:
+            self.conn.open()
+            print("opened port")
+        except SerialException:
+            pass
+
+    # Read the output stream from the pacemaker
+    def _readline(self, num_bytes_in_buf):
+        i: int = len(self.buf)
+
+        if i >= num_bytes_in_buf:
             r = self.buf[:i + 1]
             self.buf = self.buf[i + 1:]
             return r
 
-        while self.running:
+        while self.running and self.conn.is_open:
             i = max(1, min(2048, self.conn.in_waiting))
             data: Optional[bytes] = self.conn.read(i)
-            i = data.find(b"\n")
+            i = len(self.buf)
 
-            if i >= 0:
+            if i >= num_bytes_in_buf:
                 r = self.buf + data[:i + 1]
                 self.buf[0:] = data[i + 1:]
                 return r
@@ -89,6 +107,13 @@ class _SerialHandler(QThread):
     # Sends the DCM parameters to the pacemaker
     def send_params_to_pacemaker(self, params_to_send: Dict[str, str]) -> None:
         print(f"send params {params_to_send} (PLACEHOLDER)")
+
+        data = struct.pack("=5BH", 0x16, 0x55, 0xFF, 0xFF, 0xFF, 0x3E8)
+        print(data)
+
+        # Check if the serial connection is open with the pacemaker
+        if self.conn.is_open:
+            self.conn.write(data)
 
 
 # This class handles the pacemaker connection for the DCM and extends the QThread class to allow for multithreading
@@ -204,11 +229,11 @@ class ConnectionHandler(QThread):
             self.wanted_state = PacemakerState.NOT_CONNECTED
             self.connect_status_change.emit(PacemakerState.NOT_CONNECTED, removed[0].serial_number)
             self.device = ListPortInfo()
+            self.serial.stop_serial_comm()
 
-    # Called when the Pace Now button is pressed, not fully implemented because of no serial communication
+    # Called when the Pace Now button is pressed
     def send_data_to_pacemaker(self, params: Dict[str, str]) -> None:
         if self.current_state == PacemakerState.REGISTERED:
-            print("sending data to pacemaker (PLACEHOLDER)")
             self.serial.send_params_to_pacemaker(params)
         elif self.current_state == PacemakerState.CONNECTED:
             self._show_alert("Please register the pacemaker first!")

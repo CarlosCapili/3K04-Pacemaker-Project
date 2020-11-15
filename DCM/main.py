@@ -75,7 +75,7 @@ class MainController:
         self.set_clock_ui = setclock.Ui_Dialog()
         self.set_clock_ui.setupUi(self.set_clock_gui)
 
-        # Initialize separate handlers for authentication, pacemaker connection, parameters and reports
+        # Initialize separate handlers for authentication, pacemaker connection, parameters, reports and graphs
         self.auth = AuthHandler(self.show_dcm)
         self.conn = ConnectionHandler()
         self.params = ParametersHandler(self.params_ui.tableWidget)
@@ -91,6 +91,9 @@ class MainController:
         # Start connection thread
         self.conn.connect_status_change.connect(self.dcm_ui.statusbar.handle_conn_anim)
         self.conn.start()
+
+        # Update params GUI table to show default pacing mode params
+        self.params.update_row_visibility(self.dcm_ui.pacing_mode_group.checkedButton().text())
 
         # Show welcome screen GUI
         self.welcome_gui.show()
@@ -125,6 +128,9 @@ class MainController:
         self.dcm_ui.new_patient_btn.clicked.connect(self.conn.register_device)  # register pacemaker when btn is pressed
         self.dcm_ui.pace_btn.clicked.connect(lambda: self.conn.send_data_to_pacemaker(
             self.get_pace_mode_params()))  # write serial data when btn is pressed
+        # update the params GUI table to only show the params for the current pacing mode
+        self.dcm_ui.pacing_mode_group.buttonClicked.connect(
+            lambda: self.params.update_row_visibility(self.dcm_ui.pacing_mode_group.checkedButton().text()))
 
         # Checkboxes
         # show or hide the plots, depending on whether or not the checkbox is checked, when it changes state
@@ -156,6 +162,10 @@ class MainController:
     def get_pace_mode_params(self) -> Dict[str, str]:
         return self.params.filter_params(self.dcm_ui.pacing_mode_group.checkedButton().text())
 
+    # Stop threads spawned by handlers
+    def stop_threads(self):
+        self.conn.stop()
+
 
 if __name__ == '__main__':
     # Initialize PyQt5 application
@@ -163,5 +173,5 @@ if __name__ == '__main__':
     main_controller = MainController()
     app.setStyle('Fusion')
     app.setPalette(main_controller.palette)
-    app.aboutToQuit.connect(main_controller.conn.stop)
+    app.aboutToQuit.connect(main_controller.stop_threads)
     app.exec_()  # run event loop
