@@ -54,6 +54,8 @@ class MainController:
         self.dcm_gui = QMainWindow()
         self.dcm_ui = dcm.Ui_MainWindow()
         self.dcm_ui.setupUi(self.dcm_gui)
+        for i, button in enumerate(self.dcm_ui.pacing_mode_group.buttons()):
+            self.dcm_ui.pacing_mode_group.setId(button, i)
 
         # Setup about screen UI from auto-generated file
         self.about_gui = QDialog()
@@ -126,11 +128,12 @@ class MainController:
         self.dcm_ui.reports_btn.clicked.connect(self.reports_gui.exec_)  # show reports screen when reports is pressed
         self.dcm_ui.set_clock_btn.clicked.connect(self.set_clock_gui.exec_)  # show clock screen when clock is pressed
         self.dcm_ui.new_patient_btn.clicked.connect(self.conn.register_device)  # register pacemaker when btn is pressed
-        self.dcm_ui.pace_btn.clicked.connect(lambda: self.conn.send_data_to_pacemaker(
-            self.get_pace_mode_params()))  # write serial data when btn is pressed
+        # write serial data when btn is pressed
+        self.dcm_ui.pace_btn.clicked.connect(
+            lambda: self.conn.send_data_to_pacemaker(self.params.get_params(self.get_current_pace_index())))
         # update the params GUI table to only show the params for the current pacing mode
         self.dcm_ui.pacing_mode_group.buttonClicked.connect(
-            lambda: self.params.update_row_visibility(self.dcm_ui.pacing_mode_group.checkedButton().text()))
+            lambda: self.params.update_row_visibility(self.get_current_pace_mode()))
 
         # Checkboxes
         # show or hide the plots, depending on whether or not the checkbox is checked, when it changes state
@@ -144,7 +147,6 @@ class MainController:
         # Get the params based on the pacing mode, and then generate the respective report based on the pressed btn
         self.reports_ui.egram_btn.clicked.connect(lambda: self.reports.generate_egram(self.get_pace_mode_params()))
         self.reports_ui.brady_btn.clicked.connect(lambda: self.reports.generate_brady(self.get_pace_mode_params()))
-        self.reports_ui.temp_btn.clicked.connect(lambda: self.reports.generate_temp(self.get_pace_mode_params()))
 
     # Link parameters ui elements to their respective functions
     def link_params_buttons(self) -> None:
@@ -155,12 +157,17 @@ class MainController:
     def show_dcm(self) -> None:
         self.welcome_gui.close()
         self.dcm_gui.show()
-        self.graphs.pace_plot()
-        self.graphs.sense_plot()
+        self.graphs.plot_data()
 
     # Get only the parameters required for the current pacing mode
     def get_pace_mode_params(self) -> Dict[str, str]:
-        return self.params.filter_params(self.dcm_ui.pacing_mode_group.checkedButton().text())
+        return self.params.filter_params(self.get_current_pace_mode())
+
+    def get_current_pace_index(self) -> int:
+        return self.dcm_ui.pacing_mode_group.checkedId()
+
+    def get_current_pace_mode(self) -> str:
+        return self.dcm_ui.pacing_mode_group.checkedButton().text()
 
     # Stop threads spawned by handlers
     def stop_threads(self):

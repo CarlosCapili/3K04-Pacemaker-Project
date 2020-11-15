@@ -3,7 +3,7 @@ import struct
 from enum import Enum, unique
 from queue import Queue
 from time import sleep
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
@@ -29,9 +29,17 @@ class _SerialHandler(QThread):
     conn: Serial
     in_q: Queue
 
+    # A signal that's emitted every time we receive ECG data
+    ecg_data_update: pyqtSignal = pyqtSignal(str)  # the str is the serial_num and/or a msg
+
     # https://docs.python.org/3.7/library/struct.html#format-strings
-    PARAMS_FMT_STR, ECG_FMT_STR = "=3B4f4H4B2f", "=4f"
+    PARAMS_FMT_STR, ECG_FMT_STR = "=3B6f4H5B", "=4f"
     PARAMS_NUM_BYTES, ECG_NUM_BYTES = struct.calcsize(PARAMS_FMT_STR), struct.calcsize(ECG_FMT_STR)
+    PARAMS_ORDER = ["Pacing Mode", "Lower Rate Limit", "Upper Rate Limit", "Atrial Amplitude", "Atrial Pulse Width",
+                    "Atrial Sensitivity", "Ventricular Amplitude", "Ventricular Pulse Width", "Ventricular Sensitivity",
+                    "VRP", "ARP", "PVARP", "Fixed AV Delay", "Maximum Sensor Rate", "Reaction Time", "Response Factor",
+                    "Recovery Time", "Activity Threshold"]
+    ECG_ORDER = ["Atrial Pace Amp", "Vent Pace Amp", "Atrial Sense Amp", "Vent Sense Amp"]
 
     def __init__(self):
         super().__init__()
@@ -50,8 +58,7 @@ class _SerialHandler(QThread):
             # Check if the serial connection is open with the pacemaker
             if self.conn.is_open:
                 try:
-                    # line = self._readline(self.ECG_NUM_BYTES)  # read one line
-                    line = self._readline(5)
+                    line = self._readline(self.ECG_NUM_BYTES)  # read one line
                     print(f"received from pacemaker: {line}")
                     # self.in_q.put(line)
                 except Exception:
@@ -105,15 +112,13 @@ class _SerialHandler(QThread):
                 self.buf.extend(data)
 
     # Sends the DCM parameters to the pacemaker
-    def send_params_to_pacemaker(self, params_to_send: Dict[str, str]) -> None:
-        print(f"send params {params_to_send} (PLACEHOLDER)")
-
-        data = struct.pack("=5BH", 0x16, 0x55, 0xFF, 0xFF, 0xFF, 0x3E8)
-        print(data)
+    def send_params_to_pacemaker(self, params_to_send: Dict[str, Union[int, float]]) -> None:
+        sent_data = struct.pack(self.PARAMS_FMT_STR, *[params_to_send[key] for key in self.PARAMS_ORDER])
+        print(sent_data)
 
         # Check if the serial connection is open with the pacemaker
         if self.conn.is_open:
-            self.conn.write(data)
+            self.conn.write(sent_data)
 
 
 # This class handles the pacemaker connection for the DCM and extends the QThread class to allow for multithreading
@@ -232,7 +237,7 @@ class ConnectionHandler(QThread):
             self.serial.stop_serial_comm()
 
     # Called when the Pace Now button is pressed
-    def send_data_to_pacemaker(self, params: Dict[str, str]) -> None:
+    def send_data_to_pacemaker(self, params: Dict[str, Union[int, float]]) -> None:
         if self.current_state == PacemakerState.REGISTERED:
             self.serial.send_params_to_pacemaker(params)
         elif self.current_state == PacemakerState.CONNECTED:

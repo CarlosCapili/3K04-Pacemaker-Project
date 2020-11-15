@@ -31,13 +31,10 @@ class GraphsHandler(QThread):
         self.atri_sense_plot = atri_plot.plot(pen=(0, 229, 255))
         self.vent_sense_plot = vent_plot.plot(pen=(0, 229, 255))
 
-    # Plot the pace data on the graphs
-    def pace_plot(self) -> None:
+    # Plot the pace and sense data on the graphs
+    def plot_data(self) -> None:
         self.atri_pace_plot.setData(self.atri_data_pace)
         self.vent_pace_plot.setData(self.vent_data_pace)
-
-    # Plot the sense data on the graphs
-    def sense_plot(self) -> None:
         self.atri_sense_plot.setData(self.vent_data_sense)
         self.vent_sense_plot.setData(self.atri_data_sense)
 

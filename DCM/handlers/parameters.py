@@ -48,7 +48,7 @@ class ParametersHandler:
                      "Atrial Amplitude", "Atrial Pulse Width", "Ventricular Amplitude", "Ventricular Pulse Width",
                      "Activity Threshold", "Reaction Time", "Response Factor", "Recovery Time"]}
 
-        object_per_param: Dict[str, Union[SpinBoxDelegate, DoubleSpinBoxDelegate, ComboBoxDelegate]] = {
+        self.object_per_param: Dict[str, Union[SpinBoxDelegate, DoubleSpinBoxDelegate, ComboBoxDelegate]] = {
             "Lower Rate Limit": SpinBoxDelegate(60, 30, 175, 5, "ppm", parent=table),
             "Upper Rate Limit": SpinBoxDelegate(120, 50, 175, 5, "ppm", parent=table),
             "Maximum Sensor Rate": SpinBoxDelegate(120, 50, 175, 5, "ppm", parent=table),
@@ -77,9 +77,9 @@ class ParametersHandler:
         for row in range(table.rowCount()):
             key = table.verticalHeaderItem(row).text()
             self.default_params_store[key] = table.item(row, 0).text()
-            self.units[key] = object_per_param[key].unit if not isinstance(object_per_param[key],
-                                                                           ComboBoxDelegate) else ""
-            table.setItemDelegateForRow(row, object_per_param[key])
+            self.units[key] = self.object_per_param[key].unit if not isinstance(self.object_per_param[key],
+                                                                                ComboBoxDelegate) else ""
+            table.setItemDelegateForRow(row, self.object_per_param[key])
             table.openPersistentEditor(table.item(row, 0))
 
         # Try and optionally load existing parameters from file and update GUI with those saved values
@@ -130,3 +130,15 @@ class ParametersHandler:
         mode_params = {key: f"{self.params_store[key]}{self.units[key]}" for key in self.params_per_mode[pacing_mode]}
         mode_params["Pacing Mode"] = pacing_mode
         return mode_params
+
+    def get_params(self, pace_mode: int) -> Dict[str, Union[int, float]]:
+        typed_params = {"Pacing Mode": pace_mode}
+
+        for key, value in self.params_store.items():
+            if isinstance(self.object_per_param[key], SpinBoxDelegate) or \
+                    isinstance(self.object_per_param[key], ComboBoxDelegate):
+                typed_params[key] = int(value)
+            elif isinstance(self.object_per_param[key], DoubleSpinBoxDelegate):
+                typed_params[key] = float(value)
+
+        return typed_params
