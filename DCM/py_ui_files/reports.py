@@ -49,22 +49,6 @@ class Ui_ReportsWindow(object):
         self.brady_btn.setAutoRepeatDelay(300)
         self.brady_btn.setObjectName("brady_btn")
         self.verticalLayout.addWidget(self.brady_btn)
-        self.temp_btn = QtWidgets.QPushButton(ReportsWindow)
-        self.temp_btn.setEnabled(False)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.temp_btn.sizePolicy().hasHeightForWidth())
-        self.temp_btn.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(26)
-        self.temp_btn.setFont(font)
-        self.temp_btn.setCheckable(False)
-        self.temp_btn.setAutoExclusive(False)
-        self.temp_btn.setDefault(False)
-        self.temp_btn.setFlat(False)
-        self.temp_btn.setObjectName("temp_btn")
-        self.verticalLayout.addWidget(self.temp_btn)
         self.gridLayout.addLayout(self.verticalLayout, 0, 0, 1, 1)
 
         self.retranslateUi(ReportsWindow)
@@ -75,7 +59,6 @@ class Ui_ReportsWindow(object):
         ReportsWindow.setWindowTitle(_translate("ReportsWindow", "Reports"))
         self.egram_btn.setText(_translate("ReportsWindow", "Electrogram"))
         self.brady_btn.setText(_translate("ReportsWindow", "Bradycardia Parameters"))
-        self.temp_btn.setText(_translate("ReportsWindow", "Temporary Parameters"))
 
 
 if __name__ == "__main__":
