@@ -3,10 +3,10 @@ classdef ChamberPaced < Simulink.IntEnumType
     %   Possible choices refer to the atrium,ventricle, both or neither
     
     enumeration
-        ATRIUM(0)
-        VENTRICLE(1)
-        DUAL(2)
-        NONE(3)
+        ATRIUM_P(0)
+        VENTRICLE_P(1)
+        DUAL_P(2)
+        NONE_P(3)
     end
 end
 
