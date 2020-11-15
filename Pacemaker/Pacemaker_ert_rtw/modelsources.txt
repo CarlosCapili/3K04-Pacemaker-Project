@@ -1,3 +1,0 @@
-  Pacemaker.c
-send_params.c
-
