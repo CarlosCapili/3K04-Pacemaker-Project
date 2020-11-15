@@ -66,7 +66,7 @@ class DoubleSpinBoxDelegate(QStyledItemDelegate):
         if index.column() == 0:
             q = QDoubleSpinBox(parent)
             q.setFrame(False)
-            q.lineEdit().setReadOnly(True)
+            q.setDecimals(1)
             q.setValue(self.nominal)
             q.setRange(self.min, self.max)
             q.setSingleStep(self.step)
