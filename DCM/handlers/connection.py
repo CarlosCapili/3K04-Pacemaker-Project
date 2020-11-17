@@ -28,6 +28,8 @@ class _SerialHandler(QThread):
     buf: bytearray
     conn: Serial
     in_q: Queue
+    num_bytes_to_read: int
+    sent_data: bytes
 
     # A signal that's emitted every time we receive ECG data
     ecg_data_update: pyqtSignal = pyqtSignal(str)  # the str is the serial_num and/or a msg
@@ -49,6 +51,8 @@ class _SerialHandler(QThread):
         self.buf = bytearray()
         self.conn = Serial(baudrate=115200, timeout=0)
         self.in_q = queue.Queue()
+        self.num_bytes_to_read = 1
+        self.sent_data = bytes()
 
     # Gets called when the thread starts, overrides method in QThread
     def run(self):
@@ -58,9 +62,14 @@ class _SerialHandler(QThread):
             # Check if the serial connection is open with the pacemaker
             if self.conn.is_open:
                 try:
-                    line = self._readline(self.ECG_NUM_BYTES)  # read one line
+                    line = self._readline()  # read one line
                     print(f"received from pacemaker: {line}")
-                    # self.in_q.put(line)
+
+                    if self.num_bytes_to_read == self.PARAMS_NUM_BYTES:
+                        self._verify_params(line)
+                    elif self.num_bytes_to_read == self.ECG_NUM_BYTES:
+                        self.ecg_data_update.emit(line)
+
                 except Exception:
                     pass
             elif self.conn.port:
@@ -91,34 +100,43 @@ class _SerialHandler(QThread):
             pass
 
     # Read the output stream from the pacemaker
-    def _readline(self, num_bytes_in_buf):
+    def _readline(self) -> bytearray:
         i: int = len(self.buf)
 
-        if i >= num_bytes_in_buf:
+        if i >= self.num_bytes_to_read:
             r = self.buf[:i + 1]
             self.buf = self.buf[i + 1:]
             return r
 
+        self.num_bytes_to_read = 1
         while self.running and self.conn.is_open:
-            i = max(1, min(2048, self.conn.in_waiting))
-            data: Optional[bytes] = self.conn.read(i)
+            data: Optional[bytes] = self.conn.read(self.num_bytes_to_read)
             i = len(self.buf)
 
-            if i >= num_bytes_in_buf:
+            if data and self.num_bytes_to_read == 1:
+                self.num_bytes_to_read = self.ECG_NUM_BYTES if data[0] == 0 else self.PARAMS_NUM_BYTES
+                continue
+
+            if i >= self.num_bytes_to_read:
                 r = self.buf + data[:i + 1]
                 self.buf[0:] = data[i + 1:]
                 return r
             else:
                 self.buf.extend(data)
 
+    def _verify_params(self, received_params: bytes):
+        print(self.sent_data == received_params)
+        if self.sent_data != received_params:
+            print("params are not the same")
+
     # Sends the DCM parameters to the pacemaker
     def send_params_to_pacemaker(self, params_to_send: Dict[str, Union[int, float]]) -> None:
-        sent_data = struct.pack(self.PARAMS_FMT_STR, *[params_to_send[key] for key in self.PARAMS_ORDER])
-        print(sent_data)
+        self.sent_data = struct.pack(self.PARAMS_FMT_STR, *[params_to_send[key] for key in self.PARAMS_ORDER])
+        print(self.sent_data)
 
         # Check if the serial connection is open with the pacemaker
         if self.conn.is_open:
-            self.conn.write(sent_data)
+            self.conn.write(self.sent_data)
 
 
 # This class handles the pacemaker connection for the DCM and extends the QThread class to allow for multithreading

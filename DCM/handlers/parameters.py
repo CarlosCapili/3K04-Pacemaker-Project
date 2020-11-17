@@ -48,6 +48,8 @@ class ParametersHandler:
                      "Atrial Amplitude", "Atrial Pulse Width", "Ventricular Amplitude", "Ventricular Pulse Width",
                      "Activity Threshold", "Reaction Time", "Response Factor", "Recovery Time"]}
 
+        self.activ_thresh_vals = ["V-Low", "Low", "Med-Low", "Med", "Med-High", "High", "V-High"]
+
         self.object_per_param: Dict[str, Union[SpinBoxDelegate, DoubleSpinBoxDelegate, ComboBoxDelegate]] = {
             "Lower Rate Limit": SpinBoxDelegate(60, 30, 175, 5, "ppm", parent=table),
             "Upper Rate Limit": SpinBoxDelegate(120, 50, 175, 5, "ppm", parent=table),
@@ -62,8 +64,7 @@ class ParametersHandler:
             "ARP": SpinBoxDelegate(250, 150, 500, 10, "ms", parent=table),
             "VRP": SpinBoxDelegate(320, 150, 500, 10, "ms", parent=table),
             "PVARP": SpinBoxDelegate(250, 150, 500, 10, "ms", parent=table),
-            "Activity Threshold": ComboBoxDelegate(3, ["V-Low", "Low", "Med-Low", "Med", "Med-High", "High", "V-High"],
-                                                   parent=table),
+            "Activity Threshold": ComboBoxDelegate(3, self.activ_thresh_vals, parent=table),
             "Reaction Time": SpinBoxDelegate(30, 10, 50, 10, "sec", parent=table),
             "Response Factor": SpinBoxDelegate(8, 1, 16, 1, "", parent=table),
             "Recovery Time": SpinBoxDelegate(5, 2, 16, 1, "min", parent=table)}
@@ -129,6 +130,8 @@ class ParametersHandler:
     def filter_params(self, pacing_mode: str) -> Dict[str, str]:
         mode_params = {key: f"{self.params_store[key]}{self.units[key]}" for key in self.params_per_mode[pacing_mode]}
         mode_params["Pacing Mode"] = pacing_mode
+        if "Activity Threshold" in mode_params:
+            mode_params["Activity Threshold"] = self.activ_thresh_vals[int(mode_params["Activity Threshold"])]
         return mode_params
 
     def get_params(self, pace_mode: int) -> Dict[str, Union[int, float]]:
