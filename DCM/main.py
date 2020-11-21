@@ -2,10 +2,10 @@ from typing import Dict
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QPalette
-from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QStackedWidget)
+from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QMessageBox, QStackedWidget)
 
 from handlers.auth import AuthHandler
-from handlers.connection import ConnectionHandler
+from handlers.connection import ConnectionHandler, PacemakerState
 from handlers.graphs import GraphsHandler
 from handlers.parameters import ParametersHandler
 from handlers.reports import ReportsHandler
@@ -27,6 +27,7 @@ class MainController:
     dcm_ui: Ui_MainWindow
     about_gui: QDialog
     about_ui: Ui_aboutWindow
+    about_header: Dict[str, str]
     params_gui: QDialog
     params_ui: Ui_parametersWindow
     reports_gui: QDialog
@@ -61,6 +62,9 @@ class MainController:
         self.about_gui = QDialog()
         self.about_ui = about.Ui_aboutWindow()
         self.about_ui.setupUi(self.about_gui)
+        self.about_table = self.about_ui.tableWidget
+        self.about_header = {self.about_table.verticalHeaderItem(row).text(): self.about_table.item(row, 0).text() for
+                             row in range(self.about_table.rowCount())}
 
         # Setup parameter screen UI from auto-generated file
         self.params_gui = QDialog()
@@ -81,7 +85,7 @@ class MainController:
         self.auth = AuthHandler(self.show_dcm)
         self.conn = ConnectionHandler()
         self.params = ParametersHandler(self.params_ui.tableWidget)
-        self.reports = ReportsHandler(self.about_ui.tableWidget)
+        self.reports = ReportsHandler()
         self.graphs = GraphsHandler(self.dcm_ui.atrialPlots, self.dcm_ui.ventricularPlots)
 
         # Link elements to actions
@@ -91,7 +95,9 @@ class MainController:
         self.link_params_buttons()
 
         # Start connection thread
-        self.conn.connect_status_change.connect(self.dcm_ui.statusbar.handle_conn_anim)
+        self.conn.connect_status_change.connect(self.handle_pace_conn)
+        self.conn.serial.ecg_data_update.connect(self.graphs.update_data)
+        self.conn.serial.diff_params_received.connect(self._show_alert)
         self.conn.start()
 
         # Update params GUI table to show default pacing mode params
@@ -146,28 +152,48 @@ class MainController:
     def link_reports_buttons(self) -> None:
         # Get the params based on the pacing mode, and then generate the respective report based on the pressed btn
         self.reports_ui.egram_btn.clicked.connect(lambda: self.reports.generate_egram(self.get_pace_mode_params()))
-        self.reports_ui.brady_btn.clicked.connect(lambda: self.reports.generate_brady(self.get_pace_mode_params()))
+        self.reports_ui.brady_btn.clicked.connect(
+            lambda: self.reports.generate_brady(self.about_header, self.get_pace_mode_params()))
 
     # Link parameters ui elements to their respective functions
     def link_params_buttons(self) -> None:
         self.params_ui.confirm_btn.clicked.connect(self.params.confirm)  # update stored params and write them to a file
         self.params_ui.reset_btn.clicked.connect(self.params.reset)  # reset stored and shown params to GUI defaults
 
-    # Upon successful user registration or login, close the welcome screen and show the dcm
-    def show_dcm(self) -> None:
+    # Upon successful user registration or login, close the welcome screen, show the dcm and load params for user
+    def show_dcm(self, username: str) -> None:
         self.welcome_gui.close()
         self.dcm_gui.show()
-        self.graphs.plot_data()
+        self.params.update_params_on_user_auth(username)
+
+    # Upon successful pacemaker connection, update the status bar animation and the About window table
+    def handle_pace_conn(self, conn_state: PacemakerState, msg: str) -> None:
+        self.dcm_ui.statusbar.handle_conn_anim(conn_state, msg)
+        self.about_header["Serial number"] = msg if conn_state != PacemakerState.NOT_CONNECTED else "None"
+        for row in range(self.about_table.rowCount()):
+            self.about_table.item(row, 0).setText(self.about_header[self.about_table.verticalHeaderItem(row).text()])
 
     # Get only the parameters required for the current pacing mode
     def get_pace_mode_params(self) -> Dict[str, str]:
         return self.params.filter_params(self.get_current_pace_mode())
 
+    # Get current pacing mode index in button group
     def get_current_pace_index(self) -> int:
         return self.dcm_ui.pacing_mode_group.checkedId()
 
+    # Get current pacing mode name
     def get_current_pace_mode(self) -> str:
         return self.dcm_ui.pacing_mode_group.checkedButton().text()
+
+    @staticmethod
+    def _show_alert(msg: str) -> None:
+        """
+        Displays an error message with the specified text
+
+        :param msg: the text to show
+        """
+        qm = QMessageBox()
+        QMessageBox.critical(qm, "Connection", msg, QMessageBox.Ok, QMessageBox.Ok)
 
     # Stop threads spawned by handlers
     def stop_threads(self):

@@ -11,9 +11,8 @@ from PyQt5.QtWidgets import QComboBox, QDoubleSpinBox, QSpinBox, QStyleOptionVie
 
 
 class SpinBoxDelegate(QStyledItemDelegate):
-    def __init__(self, nominal: int, min_val: int, max_val: int, step: int, unit: str, parent=None):
+    def __init__(self, min_val: int, max_val: int, step: int, unit: str, parent=None):
         QStyledItemDelegate.__init__(self, parent)
-        self.nominal = nominal
         self.min = min_val
         self.max = max_val
         self.step = step
@@ -24,7 +23,6 @@ class SpinBoxDelegate(QStyledItemDelegate):
             q = QSpinBox(parent)
             q.setFrame(False)
             q.lineEdit().setReadOnly(True)
-            q.setValue(self.nominal)
             q.setRange(self.min, self.max)
             q.setSingleStep(self.step)
             q.setSuffix(self.unit)
@@ -34,8 +32,7 @@ class SpinBoxDelegate(QStyledItemDelegate):
 
     def setEditorData(self, editor: QWidget, index: QModelIndex) -> None:
         if index.column() == 0:
-            value = int(index.model().data(index, Qt.EditRole))
-            editor.setValue(value)
+            editor.setValue(int(index.model().data(index, Qt.EditRole)))
         else:
             return super(SpinBoxDelegate, self).setEditorData(editor, index)
 
@@ -54,9 +51,8 @@ class SpinBoxDelegate(QStyledItemDelegate):
 
 
 class DoubleSpinBoxDelegate(QStyledItemDelegate):
-    def __init__(self, nominal: float, min_val: float, max_val: float, step: float, unit: str, parent=None):
+    def __init__(self, min_val: float, max_val: float, step: float, unit: str, parent=None):
         QStyledItemDelegate.__init__(self, parent)
-        self.nominal = nominal
         self.min = min_val
         self.max = max_val
         self.step = step
@@ -67,7 +63,6 @@ class DoubleSpinBoxDelegate(QStyledItemDelegate):
             q = QDoubleSpinBox(parent)
             q.setFrame(False)
             q.setDecimals(1)
-            q.setValue(self.nominal)
             q.setRange(self.min, self.max)
             q.setSingleStep(self.step)
             q.setSuffix(self.unit)
@@ -77,8 +72,7 @@ class DoubleSpinBoxDelegate(QStyledItemDelegate):
 
     def setEditorData(self, editor: QWidget, index: QModelIndex) -> None:
         if index.column() == 0:
-            value = float(index.model().data(index, Qt.EditRole))
-            editor.setValue(value)
+            editor.setValue(float(index.model().data(index, Qt.EditRole)))
         else:
             return super(DoubleSpinBoxDelegate, self).setEditorData(editor, index)
 
@@ -97,9 +91,8 @@ class DoubleSpinBoxDelegate(QStyledItemDelegate):
 
 
 class ComboBoxDelegate(QStyledItemDelegate):
-    def __init__(self, nominal_index: int, values: List[str], parent=None):
+    def __init__(self, values: List[str], parent=None):
         QStyledItemDelegate.__init__(self, parent)
-        self.nominal_index = nominal_index
         self.values = values
         self.palette = QPalette()
         self.palette.setColor(QPalette.Text, Qt.white)
@@ -111,21 +104,20 @@ class ComboBoxDelegate(QStyledItemDelegate):
             q.setFrame(False)
             q.setMaxCount(len(self.values))
             q.addItems(self.values)
-            q.setCurrentIndex(self.nominal_index)
             q.setEditable(False)
             return q
         else:
             return super(ComboBoxDelegate, self).createEditor(parent, option, index)
 
-    def setEditorData(self, editor: QWidget, index: QModelIndex) -> None:
+    def setEditorData(self, editor: QComboBox, index: QModelIndex) -> None:
         if index.column() == 0:
-            editor.setCurrentIndex(int(index.model().data(index)))
+            editor.setCurrentText(index.model().data(index, Qt.EditRole))
         else:
             return super(ComboBoxDelegate, self).setEditorData(editor, index)
 
-    def setModelData(self, editor: QWidget, model: QAbstractItemModel, index: QModelIndex) -> None:
+    def setModelData(self, editor: QComboBox, model: QAbstractItemModel, index: QModelIndex) -> None:
         if index.column() == 0:
-            model.setData(index, editor.currentIndex())
+            model.setData(index, editor.currentText())
         else:
             return super(ComboBoxDelegate, self).setModelData(editor, model, index)
 

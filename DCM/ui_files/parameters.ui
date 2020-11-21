@@ -217,15 +217,12 @@
      </row>
      <row>
       <property name="text">
-       <string>VRP</string>
+       <string>ARP</string>
       </property>
      </row>
      <row>
       <property name="text">
-       <string>ARP</string>
-      </property>
-      <property name="textAlignment">
-       <set>AlignLeading|AlignVCenter</set>
+       <string>VRP</string>
       </property>
      </row>
      <row>
@@ -343,7 +340,10 @@
      </item>
      <item row="10" column="0">
       <property name="text">
-       <string>320</string>
+       <string>250</string>
+      </property>
+      <property name="textAlignment">
+       <set>AlignLeading|AlignVCenter</set>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
@@ -351,10 +351,7 @@
      </item>
      <item row="11" column="0">
       <property name="text">
-       <string>250</string>
-      </property>
-      <property name="textAlignment">
-       <set>AlignLeading|AlignVCenter</set>
+       <string>320</string>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
@@ -370,7 +367,7 @@
      </item>
      <item row="13" column="0">
       <property name="text">
-       <string>0</string>
+       <string>Med</string>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>

@@ -1,29 +1,22 @@
-from typing import Dict
+from typing import Dict, List, Union
 
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QMessageBox, QTableWidget
+from PyQt5.QtWidgets import QMessageBox
 
 
 # This class handles generating and displaying all the reports for the DCM
 class ReportsHandler:
-    header: str
-
-    def __init__(self, table: QTableWidget):
+    def __init__(self):
         print("Reports handler init")
 
-        # Get report header data from the About section, so that we're not hard-coding values multiple times
-        header = {table.verticalHeaderItem(row).text(): table.item(row, 0).text() for row in range(table.rowCount())}
-        self.header = self._format_params(header)
-
     # Handles the generation and presentation of the electrogram report, not implemented yet
-    def generate_egram(self, params: Dict[str, str]) -> None:
+    def generate_egram(self, values: Dict[str, Union[str, List[float]]]) -> None:
         print("generating egram report")
-        print(params["Pacing Mode"])
+        print(values["Pacing Mode"])
 
     # Handles the generation and presentation of the bradycardia report
-    def generate_brady(self, params: Dict[str, str]) -> None:
-        print("generating brady report")
-        report = "{0}{1}".format(self.header, self._format_params(params))
+    def generate_brady(self, header: Dict[str, str], params: Dict[str, str]) -> None:
+        report = "{0}{1}".format(self._format_params(header), self._format_params(params))
         self._show_report(report)
 
     @staticmethod

@@ -33,7 +33,7 @@ class AuthHandler:
             # Check if password is correct
             if password == self.cred_store[username]:
                 print("Welcome back.")
-                self.on_success()
+                self.on_success(username)
             else:
                 print("Incorrect password!")
                 self._show_alert("Incorrect password!")
@@ -58,7 +58,7 @@ class AuthHandler:
                 with open(CREDENTIAL_FILE_PATH, mode='w+') as f:  # write credential store to file
                     json.dump(self.cred_store, f)
 
-                self.on_success()
+                self.on_success(username)
 
     @staticmethod
     def _show_alert(msg: str) -> None:
