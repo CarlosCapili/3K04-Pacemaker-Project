@@ -2,7 +2,7 @@ from typing import Dict
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QPalette
-from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QMessageBox, QStackedWidget)
+from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QMessageBox, QStackedWidget, QTableWidget)
 
 from handlers.auth import AuthHandler
 from handlers.connection import ConnectionHandler, PacemakerState
@@ -27,6 +27,7 @@ class MainController:
     dcm_ui: Ui_MainWindow
     about_gui: QDialog
     about_ui: Ui_aboutWindow
+    about_table: QTableWidget
     about_header: Dict[str, str]
     params_gui: QDialog
     params_ui: Ui_parametersWindow
