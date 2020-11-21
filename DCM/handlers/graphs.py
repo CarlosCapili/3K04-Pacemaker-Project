@@ -56,22 +56,38 @@ class GraphsHandler:
         self.atri_sense_plot.setData(self.atri_data_sense)
         self.vent_sense_plot.setData(self.vent_data_sense)
 
-    # Show the pace data on the graphs
-    def pace_show(self) -> None:
-        self.atri_pace_plot.show()
-        self.vent_pace_plot.show()
+    # Show/hide the pace data on the graphs
+    def pace_vis(self, show: bool) -> None:
+        if show:
+            self.atri_pace_plot.show()
+            self.vent_pace_plot.show()
+        else:
+            self.atri_pace_plot.hide()
+            self.vent_pace_plot.hide()
 
-    # Show the sense data on the graphs
-    def sense_show(self) -> None:
-        self.atri_sense_plot.show()
-        self.vent_sense_plot.show()
+    # Show/hide the sense data on the graphs
+    def sense_vis(self, show: bool) -> None:
+        if show:
+            self.atri_sense_plot.show()
+            self.vent_sense_plot.show()
+        else:
+            self.atri_sense_plot.hide()
+            self.vent_sense_plot.hide()
 
-    # Hide the pace data on the graphs
-    def pace_hide(self) -> None:
-        self.atri_pace_plot.hide()
-        self.vent_pace_plot.hide()
+    # Show/hide the atrial data on the graphs
+    def atri_vis(self, show: bool) -> None:
+        if show:
+            self.atri_pace_plot.show()
+            self.atri_sense_plot.show()
+        else:
+            self.atri_pace_plot.hide()
+            self.atri_sense_plot.hide()
 
-    # Hide the sense data on the graphs
-    def sense_hide(self) -> None:
-        self.atri_sense_plot.hide()
-        self.vent_sense_plot.hide()
+    # Show/hide the ventricular data on the graphs
+    def vent_vis(self, show: bool) -> None:
+        if show:
+            self.vent_pace_plot.show()
+            self.vent_sense_plot.show()
+        else:
+            self.vent_pace_plot.hide()
+            self.vent_sense_plot.hide()

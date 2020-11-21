@@ -143,10 +143,10 @@ class MainController:
 
         # Checkboxes
         # show or hide the plots, depending on whether or not the checkbox is checked, when it changes state
-        self.dcm_ui.pace_box.stateChanged.connect(
-            lambda: self.graphs.pace_show() if self.dcm_ui.pace_box.isChecked() else self.graphs.pace_hide())
-        self.dcm_ui.sense_box.stateChanged.connect(
-            lambda: self.graphs.sense_show() if self.dcm_ui.sense_box.isChecked() else self.graphs.sense_hide())
+        self.dcm_ui.pace_box.stateChanged.connect(lambda: self.graphs.pace_vis(self.dcm_ui.pace_box.isChecked()))
+        self.dcm_ui.sense_box.stateChanged.connect(lambda: self.graphs.sense_vis(self.dcm_ui.sense_box.isChecked()))
+        self.dcm_ui.atrial_box.stateChanged.connect(lambda: self.graphs.atri_vis(self.dcm_ui.atrial_box.isChecked()))
+        self.dcm_ui.vent_box.stateChanged.connect(lambda: self.graphs.vent_vis(self.dcm_ui.vent_box.isChecked()))
 
     # Link reports ui elements to their respective functions
     def link_reports_buttons(self) -> None:
