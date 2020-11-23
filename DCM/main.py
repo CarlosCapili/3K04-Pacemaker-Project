@@ -53,8 +53,12 @@ class MainController:
         self.dcm_gui = QMainWindow()
         self.dcm_ui = dcm.Ui_MainWindow()
         self.dcm_ui.setupUi(self.dcm_gui)
-        self.dcm_ui.atrial_plots.setRange(xRange=[0, 50], yRange=[0, 5])
-        self.dcm_ui.ventricular_plots.setRange(xRange=[0, 50], yRange=[0, 5])
+        self.dcm_ui.atrial_plots.setRange(xRange=[0, 50], yRange=[0, 5], disableAutoRange=True)
+        self.dcm_ui.atrial_plots.plotItem.hideButtons()
+        self.dcm_ui.atrial_plots.plotItem.setMenuEnabled(False)
+        self.dcm_ui.ventricular_plots.setRange(xRange=[0, 50], yRange=[0, 5], disableAutoRange=True)
+        self.dcm_ui.ventricular_plots.plotItem.hideButtons()
+        self.dcm_ui.ventricular_plots.plotItem.setMenuEnabled(False)
         for i, button in enumerate(self.dcm_ui.pacing_mode_group.buttons()):
             self.dcm_ui.pacing_mode_group.setId(button, i)
 
