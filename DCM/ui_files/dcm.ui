@@ -152,7 +152,7 @@
          </widget>
         </item>
         <item>
-         <widget class="PlotWidget" name="ventricular_plots"/>
+         <widget class="PlotWidget" name="vent_plots"/>
         </item>
        </layout>
       </item>
