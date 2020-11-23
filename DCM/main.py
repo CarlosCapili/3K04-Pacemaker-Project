@@ -56,6 +56,8 @@ class MainController:
         self.dcm_gui = QMainWindow()
         self.dcm_ui = dcm.Ui_MainWindow()
         self.dcm_ui.setupUi(self.dcm_gui)
+        self.dcm_ui.atrial_plots.setRange(xRange=[0, 50], yRange=[0, 5])
+        self.dcm_ui.ventricular_plots.setRange(xRange=[0, 50], yRange=[0, 5])
         for i, button in enumerate(self.dcm_ui.pacing_mode_group.buttons()):
             self.dcm_ui.pacing_mode_group.setId(button, i)
 
@@ -87,7 +89,7 @@ class MainController:
         self.conn = ConnectionHandler()
         self.params = ParametersHandler(self.params_ui.tableWidget)
         self.reports = ReportsHandler()
-        self.graphs = GraphsHandler(self.dcm_ui.atrialPlots, self.dcm_ui.ventricularPlots)
+        self.graphs = GraphsHandler(self.dcm_ui.atrial_plots, self.dcm_ui.ventricular_plots)
 
         # Link elements to actions
         self.link_welcome_buttons()
@@ -203,6 +205,7 @@ class MainController:
 
 if __name__ == '__main__':
     # Initialize PyQt5 application
+    QApplication.setAttribute(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
     app = QApplication([])
     main_controller = MainController()
     app.setStyle('Fusion')

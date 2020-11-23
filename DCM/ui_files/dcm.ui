@@ -160,7 +160,7 @@
          </widget>
         </item>
         <item>
-         <widget class="PlotWidget" name="atrialPlots"/>
+         <widget class="PlotWidget" name="atrial_plots"/>
         </item>
         <item>
          <widget class="QLabel" name="label_2">
@@ -178,7 +178,7 @@
          </widget>
         </item>
         <item>
-         <widget class="PlotWidget" name="ventricularPlots"/>
+         <widget class="PlotWidget" name="ventricular_plots"/>
         </item>
        </layout>
       </item>

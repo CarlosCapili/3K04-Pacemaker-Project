@@ -70,7 +70,7 @@ class _SerialHandler(QThread):
             if self._conn.is_open:
                 try:
                     line = self._readline()  # read one line
-                    print(f"received from pacemaker: {line}")
+                    # print(f"inwait: {self._conn.in_waiting} received from pacemaker: {line}")
 
                     if self._num_bytes_to_read == self.PARAMS_NUM_BYTES:
                         self._verify_params(line)

@@ -19,11 +19,11 @@ class GraphsHandler:
     def __init__(self, atri_plot: PlotWidget, vent_plot: PlotWidget):
         print("Graphs handler init")
 
-        # For right now, generate random sample data to plot
-        self.atri_data_pace = np.random.normal(size=50)
-        self.vent_data_pace = np.random.normal(size=50)
-        self.atri_data_sense = np.random.normal(size=50)
-        self.vent_data_sense = np.random.normal(size=50)
+        # Initialize graphs to 0
+        self.atri_data_pace = np.zeros(51)
+        self.vent_data_pace = np.zeros(51)
+        self.atri_data_sense = np.zeros(51)
+        self.vent_data_sense = np.zeros(51)
 
         # Create new sense and pace plots for the atrial and ventricular graphs, pace plots are red, sense are blue
         self.atri_pace_plot = atri_plot.plot(pen=(252, 93, 93))
