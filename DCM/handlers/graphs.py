@@ -16,14 +16,14 @@ class GraphsHandler:
     atri_sense_plot: PlotDataItem
     vent_sense_plot: PlotDataItem
 
-    def __init__(self, atri_plot: PlotWidget, vent_plot: PlotWidget):
+    def __init__(self, atri_plot: PlotWidget, vent_plot: PlotWidget, data_size: int):
         print("Graphs handler init")
 
         # Initialize graphs to 0
-        self.atri_data_pace = np.zeros(51)
-        self.vent_data_pace = np.zeros(51)
-        self.atri_data_sense = np.zeros(51)
-        self.vent_data_sense = np.zeros(51)
+        self.atri_data_pace = np.zeros(data_size)
+        self.vent_data_pace = np.zeros(data_size)
+        self.atri_data_sense = np.zeros(data_size)
+        self.vent_data_sense = np.zeros(data_size)
 
         # Create new sense and pace plots for the atrial and ventricular graphs, pace plots are red, sense are blue
         self.atri_pace_plot = atri_plot.plot(pen=(252, 93, 93))
