@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>360</width>
-    <height>120</height>
+    <height>150</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,13 +19,13 @@
   <property name="minimumSize">
    <size>
     <width>360</width>
-    <height>120</height>
+    <height>150</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>360</width>
-    <height>120</height>
+    <height>150</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
      <x>0</x>
      <y>0</y>
      <width>360</width>
-     <height>120</height>
+     <height>150</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -49,13 +49,13 @@
    <property name="minimumSize">
     <size>
      <width>360</width>
-     <height>120</height>
+     <height>150</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>360</width>
-     <height>120</height>
+     <height>150</height>
     </size>
    </property>
    <property name="font">
@@ -90,7 +90,12 @@
    </row>
    <row>
     <property name="text">
-     <string>Serial number</string>
+     <string>DCM Serial number</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Device Serial Number</string>
     </property>
    </row>
    <row>
@@ -133,6 +138,11 @@
     </property>
    </item>
    <item row="3" column="0">
+    <property name="flags">
+     <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+    </property>
+   </item>
+   <item row="4" column="0">
     <property name="text">
      <string>McMaster University</string>
     </property>

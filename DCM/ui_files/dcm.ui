@@ -89,16 +89,6 @@
             </item>
             <item>
              <layout class="QGridLayout" name="gridLayout_6">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="atrial_box">
-                <property name="text">
-                 <string>Atrial</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
               <item row="1" column="0">
                <widget class="QCheckBox" name="vent_box">
                 <property name="text">
@@ -109,26 +99,10 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QCheckBox" name="pace_box">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="atrial_box">
                 <property name="text">
-                 <string>Pace</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-                <property name="autoRepeat">
-                 <bool>false</bool>
-                </property>
-                <property name="tristate">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QCheckBox" name="sense_box">
-                <property name="text">
-                 <string>Sense</string>
+                 <string>Atrial</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
@@ -533,7 +507,7 @@
      <x>0</x>
      <y>0</y>
      <width>1080</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
