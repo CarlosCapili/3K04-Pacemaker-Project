@@ -277,36 +277,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="set_clock_btn">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>150</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>500</width>
-          <height>60</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Set Clock</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="new_patient_btn">
         <property name="enabled">
          <bool>true</bool>

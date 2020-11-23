@@ -9,12 +9,11 @@ from handlers.connection import ConnectionHandler, PacemakerState
 from handlers.graphs import GraphsHandler
 from handlers.parameters import ParametersHandler
 from handlers.reports import ReportsHandler
-from py_ui_files import (about, dcm, parameters, reports, setclock, welcomescreen)  # auto-generated files
+from py_ui_files import (about, dcm, parameters, reports, welcomescreen)  # auto-generated files
 from py_ui_files.about import Ui_aboutWindow
 from py_ui_files.dcm import Ui_MainWindow
 from py_ui_files.parameters import Ui_parametersWindow
 from py_ui_files.reports import Ui_ReportsWindow
-from py_ui_files.setclock import Ui_Dialog
 from py_ui_files.welcomescreen import Ui_Welcome
 
 
@@ -33,8 +32,6 @@ class MainController:
     params_ui: Ui_parametersWindow
     reports_gui: QDialog
     reports_ui: Ui_ReportsWindow
-    set_clock_gui: QDialog
-    set_clock_ui: Ui_Dialog
     auth: AuthHandler
     conn: ConnectionHandler
     params: ParametersHandler
@@ -78,11 +75,6 @@ class MainController:
         self.reports_gui = QDialog()
         self.reports_ui = reports.Ui_ReportsWindow()
         self.reports_ui.setupUi(self.reports_gui)
-
-        # Setup set-clock screen UI from auto-generated file
-        self.set_clock_gui = QDialog()
-        self.set_clock_ui = setclock.Ui_Dialog()
-        self.set_clock_ui.setupUi(self.set_clock_gui)
 
         # Initialize separate handlers for authentication, pacemaker connection, parameters, reports and graphs
         self.auth = AuthHandler(self.show_dcm)
@@ -135,7 +127,6 @@ class MainController:
         self.dcm_ui.about_btn.clicked.connect(self.about_gui.exec_)  # show about screen when about is pressed
         self.dcm_ui.parameters_btn.clicked.connect(self.params_gui.exec_)  # show params screen when params is pressed
         self.dcm_ui.reports_btn.clicked.connect(self.reports_gui.exec_)  # show reports screen when reports is pressed
-        self.dcm_ui.set_clock_btn.clicked.connect(self.set_clock_gui.exec_)  # show clock screen when clock is pressed
         self.dcm_ui.new_patient_btn.clicked.connect(self.conn.register_device)  # register pacemaker when btn is pressed
         # write serial data when btn is pressed
         self.dcm_ui.pace_btn.clicked.connect(
