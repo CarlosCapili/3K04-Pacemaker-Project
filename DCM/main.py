@@ -56,7 +56,7 @@ class MainController:
         for i, button in enumerate(self.dcm_ui.pacing_mode_group.buttons()):
             self.dcm_ui.pacing_mode_group.setId(button, i)
 
-        data_size = 101
+        data_size = 2001
         self.dcm_ui.atrial_plots.setRange(xRange=[-1, data_size], yRange=[-0.5, 5.5], padding=0)
         self.dcm_ui.atrial_plots.setLimits(xMin=-1, xMax=data_size, maxXRange=data_size + 1, yMin=-0.5, yMax=5.5)
         self.dcm_ui.atrial_plots.setMouseEnabled(x=True, y=False)
@@ -114,7 +114,7 @@ class MainController:
         # Start connection thread
         self.conn.connect_status_change.connect(self.handle_pace_conn)
         self.conn.serial.ecg_data_update.connect(self.graphs.update_data)
-        self.conn.serial.diff_params_received.connect(self._show_alert)
+        self.conn.serial.params_received.connect(self._show_alert)
         self.conn.start()
 
         # Update params GUI table to show default pacing mode params
@@ -159,8 +159,6 @@ class MainController:
 
         # Checkboxes
         # show or hide the plots, depending on whether or not the checkbox is checked, when it changes state
-        self.dcm_ui.pace_box.stateChanged.connect(lambda: self.graphs.pace_vis(self.dcm_ui.pace_box.isChecked()))
-        self.dcm_ui.sense_box.stateChanged.connect(lambda: self.graphs.sense_vis(self.dcm_ui.sense_box.isChecked()))
         self.dcm_ui.atrial_box.stateChanged.connect(lambda: self.graphs.atri_vis(self.dcm_ui.atrial_box.isChecked()))
         self.dcm_ui.vent_box.stateChanged.connect(lambda: self.graphs.vent_vis(self.dcm_ui.vent_box.isChecked()))
 
@@ -185,7 +183,7 @@ class MainController:
     # Upon successful pacemaker connection, update the status bar animation and the About window table
     def handle_pace_conn(self, conn_state: PacemakerState, msg: str) -> None:
         self.dcm_ui.statusbar.handle_conn_anim(conn_state, msg)
-        self.about_header["Serial number"] = msg if conn_state != PacemakerState.NOT_CONNECTED else "None"
+        self.about_header["Device Serial Number"] = msg if conn_state != PacemakerState.NOT_CONNECTED else "None"
         for row in range(self.about_table.rowCount()):
             self.about_table.item(row, 0).setText(self.about_header[self.about_table.verticalHeaderItem(row).text()])
 
@@ -202,14 +200,17 @@ class MainController:
         return self.dcm_ui.pacing_mode_group.checkedButton().text()
 
     @staticmethod
-    def _show_alert(msg: str) -> None:
+    def _show_alert(success: bool, msg: str) -> None:
         """
         Displays an error message with the specified text
 
         :param msg: the text to show
         """
         qm = QMessageBox()
-        QMessageBox.critical(qm, "Connection", msg, QMessageBox.Ok, QMessageBox.Ok)
+        if success:
+            QMessageBox.information(qm, "Connection", msg, QMessageBox.Ok, QMessageBox.Ok)
+        else:
+            QMessageBox.critical(qm, "Connection", msg, QMessageBox.Ok, QMessageBox.Ok)
 
     # Stop threads spawned by handlers
     def stop_threads(self):
