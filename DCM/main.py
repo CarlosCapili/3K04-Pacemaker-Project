@@ -80,13 +80,13 @@ class MainController:
         # Setup egram screen UI from auto-generated file
         self.egram_report_gui = QDialog()
         self.egram_report_ui = egram_report.Ui_Dialog()
-        self.egram_report_ui.setupUi(self.reports_gui)
+        self.egram_report_ui.setupUi(self.egram_report_gui)
 
         # Initialize separate handlers for authentication, pacemaker connection, parameters, reports and graphs
         self.auth = AuthHandler(self.show_dcm)
         self.conn = ConnectionHandler()
         self.params = ParametersHandler(self.params_ui.tableWidget)
-        self.reports = ReportsHandler()
+        self.reports = ReportsHandler(self.egram_report_ui)
         self.graphs = GraphsHandler(self.dcm_ui.atrial_plots, self.dcm_ui.vent_plots, data_size=2001)
 
         # Link elements to actions
@@ -149,7 +149,7 @@ class MainController:
     # Link reports ui elements to their respective functions
     def link_reports_buttons(self) -> None:
         # Get the params based on the pacing mode, and then generate the respective report based on the pressed btn
-        self.reports_ui.egram_btn.clicked.connect(self.egram_report_gui.show)
+        self.reports_ui.egram_btn.clicked.connect(self.show_egram_report)
         self.reports_ui.brady_btn.clicked.connect(
             lambda: self.reports.generate_brady(self.about_header, self.get_pace_mode_params()))
 
@@ -164,10 +164,15 @@ class MainController:
         self.dcm_gui.show()
         self.params.update_params_on_user_auth(username)
 
+    # Upon successful user registration or login, close the welcome screen, show the dcm and load params for user
+    def show_egram_report(self) -> None:
+        self.reports.generate_egram(self.about_header)
+        self.egram_report_gui.exec_()
+
     # Upon successful pacemaker connection, update the status bar animation and the About window table
     def handle_pace_conn(self, conn_state: PacemakerState, msg: str) -> None:
         self.dcm_ui.statusbar.handle_conn_anim(conn_state, msg)
-        self.about_header["Device Serial Number"] = msg if conn_state != PacemakerState.NOT_CONNECTED else "None"
+        self.about_header["Device serial number"] = msg if conn_state != PacemakerState.NOT_CONNECTED else "None"
         for row in range(self.about_table.rowCount()):
             self.about_table.item(row, 0).setText(self.about_header[self.about_table.verticalHeaderItem(row).text()])
 

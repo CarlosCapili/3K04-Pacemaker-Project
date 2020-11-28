@@ -1,21 +1,27 @@
-from typing import Dict, List, Union
+import datetime
+from typing import Dict
 
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMessageBox
 
+from py_ui_files.egram_report import Ui_Dialog
+
 
 # This class handles generating and displaying all the reports for the DCM
 class ReportsHandler:
-    def __init__(self):
+    def __init__(self, egram_report_ui: Ui_Dialog):
         print("Reports handler init")
+        self._egram_report_ui = egram_report_ui
 
     # Handles the generation and presentation of the electrogram report, not implemented yet
-    def generate_egram(self, values: Dict[str, Union[str, List[float]]]) -> None:
+    def generate_egram(self, header: Dict[str, str]) -> None:
         print("generating egram report")
-        print(values["Pacing Mode"])
+        self._egram_report_ui.header_label.setText(self._format_params(header))
 
     # Handles the generation and presentation of the bradycardia report
     def generate_brady(self, header: Dict[str, str], params: Dict[str, str]) -> None:
+        header["Report name"] = "Bradycardia"
+        header["Date and Time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         report = "{0}{1}".format(self._format_params(header), self._format_params(params))
         self._show_report(report)
 

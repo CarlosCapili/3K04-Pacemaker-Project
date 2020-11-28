@@ -48,6 +48,11 @@ class GraphsHandler:
 
         self._plot_data()
 
+    # Plot the pace and sense data on the graphs
+    def _plot_data(self) -> None:
+        self.atri_plot.setData(self.atri_data)
+        self.vent_plot.setData(self.vent_data)
+
     # Update and plot new received data
     def update_data(self, atri_data: tuple, vent_data: tuple):
         size = len(atri_data)
@@ -59,11 +64,6 @@ class GraphsHandler:
         self.vent_data[-size:] = vent_data
 
         self._plot_data()
-
-    # Plot the pace and sense data on the graphs
-    def _plot_data(self) -> None:
-        self.atri_plot.setData(self.atri_data)
-        self.vent_plot.setData(self.vent_data)
 
     # Show/hide the atrial data on the graphs
     def atri_vis(self, show: bool) -> None:
