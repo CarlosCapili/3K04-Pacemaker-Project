@@ -9,9 +9,10 @@ from handlers.connection import ConnectionHandler, PacemakerState
 from handlers.graphs import GraphsHandler
 from handlers.parameters import ParametersHandler
 from handlers.reports import ReportsHandler
-from py_ui_files import (about, dcm, parameters, reports, welcomescreen)  # auto-generated files
+from py_ui_files import (about, dcm, egram_report, parameters, reports, welcomescreen)  # auto-generated files
 from py_ui_files.about import Ui_aboutWindow
 from py_ui_files.dcm import Ui_MainWindow
+from py_ui_files.egram_report import Ui_Dialog
 from py_ui_files.parameters import Ui_parametersWindow
 from py_ui_files.reports import Ui_ReportsWindow
 from py_ui_files.welcomescreen import Ui_Welcome
@@ -32,6 +33,8 @@ class MainController:
     params_ui: Ui_parametersWindow
     reports_gui: QDialog
     reports_ui: Ui_ReportsWindow
+    egram_report_gui: QDialog
+    egram_report_ui: Ui_Dialog
     auth: AuthHandler
     conn: ConnectionHandler
     params: ParametersHandler
@@ -56,30 +59,6 @@ class MainController:
         for i, button in enumerate(self.dcm_ui.pacing_mode_group.buttons()):
             self.dcm_ui.pacing_mode_group.setId(button, i)
 
-        data_size = 2001
-        self.dcm_ui.atrial_plots.setRange(xRange=[-1, data_size], yRange=[-0.5, 5.5], padding=0)
-        self.dcm_ui.atrial_plots.setLimits(xMin=-1, xMax=data_size, maxXRange=data_size + 1, yMin=-0.5, yMax=5.5)
-        self.dcm_ui.atrial_plots.setMouseEnabled(x=True, y=False)
-        self.dcm_ui.atrial_plots.enableAutoRange(x=False, y=True)
-        self.dcm_ui.atrial_plots.setAutoVisible(x=False, y=True)
-        self.dcm_ui.atrial_plots.showGrid(x=True, y=True)
-        self.dcm_ui.atrial_plots.hideButtons()
-        self.dcm_ui.atrial_plots.setMenuEnabled(False)
-        self.dcm_ui.atrial_plots.setLabel('left', "Amplitude", units='V', **{'color': '#FFF', 'font-size': '10pt'})
-        self.dcm_ui.atrial_plots.setLabel('bottom', "Time-ish", units='s', **{'color': '#FFF', 'font-size': '10pt'})
-        self.dcm_ui.atrial_plots.getAxis('bottom').setHeight(30)
-        self.dcm_ui.vent_plots.setRange(xRange=[-1, data_size], yRange=[-0.5, 5.5], padding=0)
-        self.dcm_ui.vent_plots.setLimits(xMin=-1, xMax=data_size, maxXRange=data_size + 1, yMin=-0.5, yMax=5.5)
-        self.dcm_ui.vent_plots.setMouseEnabled(x=True, y=False)
-        self.dcm_ui.vent_plots.enableAutoRange(x=False, y=True)
-        self.dcm_ui.vent_plots.setAutoVisible(x=False, y=True)
-        self.dcm_ui.vent_plots.showGrid(x=True, y=True)
-        self.dcm_ui.vent_plots.hideButtons()
-        self.dcm_ui.vent_plots.setMenuEnabled(False)
-        self.dcm_ui.vent_plots.setLabel('left', "Amplitude", units='V', **{'color': '#FFF', 'font-size': '10pt'})
-        self.dcm_ui.vent_plots.setLabel('bottom', "Time-ish", units='s', **{'color': '#FFF', 'font-size': '10pt'})
-        self.dcm_ui.vent_plots.getAxis('bottom').setHeight(30)
-
         # Setup about screen UI from auto-generated file
         self.about_gui = QDialog()
         self.about_ui = about.Ui_aboutWindow()
@@ -98,12 +77,17 @@ class MainController:
         self.reports_ui = reports.Ui_ReportsWindow()
         self.reports_ui.setupUi(self.reports_gui)
 
+        # Setup egram screen UI from auto-generated file
+        self.egram_report_gui = QDialog()
+        self.egram_report_ui = egram_report.Ui_Dialog()
+        self.egram_report_ui.setupUi(self.reports_gui)
+
         # Initialize separate handlers for authentication, pacemaker connection, parameters, reports and graphs
         self.auth = AuthHandler(self.show_dcm)
         self.conn = ConnectionHandler()
         self.params = ParametersHandler(self.params_ui.tableWidget)
         self.reports = ReportsHandler()
-        self.graphs = GraphsHandler(self.dcm_ui.atrial_plots, self.dcm_ui.vent_plots, data_size)
+        self.graphs = GraphsHandler(self.dcm_ui.atrial_plots, self.dcm_ui.vent_plots, data_size=2001)
 
         # Link elements to actions
         self.link_welcome_buttons()
@@ -165,7 +149,7 @@ class MainController:
     # Link reports ui elements to their respective functions
     def link_reports_buttons(self) -> None:
         # Get the params based on the pacing mode, and then generate the respective report based on the pressed btn
-        self.reports_ui.egram_btn.clicked.connect(lambda: self.reports.generate_egram(self.get_pace_mode_params()))
+        self.reports_ui.egram_btn.clicked.connect(self.egram_report_gui.show)
         self.reports_ui.brady_btn.clicked.connect(
             lambda: self.reports.generate_brady(self.about_header, self.get_pace_mode_params()))
 

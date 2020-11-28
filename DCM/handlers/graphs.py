@@ -13,6 +13,31 @@ class GraphsHandler:
     def __init__(self, atri_plot: PlotWidget, vent_plot: PlotWidget, data_size: int):
         print("Graphs handler init")
 
+        # noinspection PyArgumentList
+        atri_plot.setRange(xRange=[-1, data_size], yRange=[-0.5, 5.5], padding=0)
+        atri_plot.setLimits(xMin=-1, xMax=data_size, maxXRange=data_size + 1, yMin=-0.5, yMax=5.5)
+        atri_plot.setMouseEnabled(x=True, y=False)
+        atri_plot.enableAutoRange(x=False, y=True)
+        atri_plot.setAutoVisible(x=False, y=True)
+        atri_plot.showGrid(x=True, y=True)
+        atri_plot.hideButtons()
+        atri_plot.setMenuEnabled(False)
+        atri_plot.setLabel('left', "Amplitude", units='V', **{'color': '#FFF', 'font-size': '10pt'})
+        atri_plot.setLabel('bottom', "Time-ish", units='s', **{'color': '#FFF', 'font-size': '10pt'})
+        atri_plot.getAxis('bottom').setHeight(30)
+        # noinspection PyArgumentList
+        vent_plot.setRange(xRange=[-1, data_size], yRange=[-0.5, 5.5], padding=0)
+        vent_plot.setLimits(xMin=-1, xMax=data_size, maxXRange=data_size + 1, yMin=-0.5, yMax=5.5)
+        vent_plot.setMouseEnabled(x=True, y=False)
+        vent_plot.enableAutoRange(x=False, y=True)
+        vent_plot.setAutoVisible(x=False, y=True)
+        vent_plot.showGrid(x=True, y=True)
+        vent_plot.hideButtons()
+        vent_plot.setMenuEnabled(False)
+        vent_plot.setLabel('left', "Amplitude", units='V', **{'color': '#FFF', 'font-size': '10pt'})
+        vent_plot.setLabel('bottom', "Time-ish", units='s', **{'color': '#FFF', 'font-size': '10pt'})
+        vent_plot.getAxis('bottom').setHeight(30)
+
         # Initialize graphs to 0
         self.atri_data = np.zeros(data_size)
         self.vent_data = np.zeros(data_size)
@@ -24,7 +49,7 @@ class GraphsHandler:
         self._plot_data()
 
     # Update and plot new received data
-    def update_data(self, atri_data, vent_data):
+    def update_data(self, atri_data: tuple, vent_data: tuple):
         size = len(atri_data)
         self.atri_data[:-size] = self.atri_data[size:]
         self.atri_data[-size:] = atri_data

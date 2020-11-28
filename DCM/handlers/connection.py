@@ -1,5 +1,5 @@
-import struct
 from enum import Enum, unique
+from struct import calcsize, pack, unpack_from
 from threading import Lock
 from time import sleep
 from typing import Dict, List, Optional, Union
@@ -29,15 +29,16 @@ class _SerialHandler(QThread):
     _sent_data: bytes
 
     # A signal that's emitted every time we receive ECG data
-    ecg_data_update: pyqtSignal = pyqtSignal(list, list)
+    ecg_data_update: pyqtSignal = pyqtSignal(tuple, tuple)
 
-    # A signal that's emitted upon failed param verification with the pacemaker
+    # A signal that's emitted upon param verification with the pacemaker
     params_received: pyqtSignal = pyqtSignal(bool, str)
 
     # https://docs.python.org/3.7/library/struct.html#format-strings
-    PARAMS_FMT_STR, ECG_FMT_STR, ECG_PACKET = "=3B6f4H5B", "=50f", "=2f"
-    PARAMS_NUM_BYTES, ECG_NUM_BYTES = struct.calcsize(PARAMS_FMT_STR), struct.calcsize(ECG_FMT_STR)
-    REQUEST_ECG = struct.pack("=B39x", 0x55)
+    _num_floats = 20
+    PARAMS_FMT_STR, ECG_FMT_STR, ECG_DATA_STR = "=3B6f4H5B", f"={_num_floats}f", f"={_num_floats // 2}f"
+    PARAMS_NUM_BYTES, ECG_NUM_BYTES, ECG_DATA = calcsize(PARAMS_FMT_STR), calcsize(ECG_FMT_STR), calcsize(ECG_DATA_STR)
+    REQUEST_ECG = pack("=B39x", 0x55)
     PARAMS_ORDER = ["Pacing Mode", "Lower Rate Limit", "Upper Rate Limit", "Atrial Amplitude", "Atrial Pulse Width",
                     "Atrial Sensitivity", "Ventricular Amplitude", "Ventricular Pulse Width", "Ventricular Sensitivity",
                     "VRP", "ARP", "PVARP", "Fixed AV Delay", "Maximum Sensor Rate", "Reaction Time", "Response Factor",
@@ -58,7 +59,6 @@ class _SerialHandler(QThread):
     # Gets called when the thread starts, overrides method in QThread
     def run(self):
         self._running = True
-        a_data, v_data = [], []
 
         while self._running:
             # Check if the serial connection is open with the pacemaker
@@ -76,15 +76,12 @@ class _SerialHandler(QThread):
                     control_byte = line[0]
                     line = line[1:]
 
+                    # If we've received ECG data, elif we've received params data
                     if control_byte == 0:
-                        for packet in struct.iter_unpack(self.ECG_PACKET, line):
-                            a_data.append(packet[0])
-                            v_data.append(packet[1])
+                        a_data = unpack_from(self.ECG_DATA_STR, line, 0)
+                        v_data = unpack_from(self.ECG_DATA_STR, line, self.ECG_DATA)
 
                         self.ecg_data_update.emit(a_data, v_data)
-
-                        a_data.clear()
-                        v_data.clear()
                     elif control_byte == 1:
                         self._verify_params(line)
 
@@ -154,7 +151,7 @@ class _SerialHandler(QThread):
     # Updates the parameters to send to the pacemaker, and enables the send flag
     def send_params_to_pacemaker(self, params_to_send: Dict[str, Union[int, float]]) -> None:
         with self._lock:
-            self._sent_data = struct.pack(self.PARAMS_FMT_STR, *[params_to_send[key] for key in self.PARAMS_ORDER])
+            self._sent_data = pack(self.PARAMS_FMT_STR, *[params_to_send[key] for key in self.PARAMS_ORDER])
             self._send_params = True
 
 
