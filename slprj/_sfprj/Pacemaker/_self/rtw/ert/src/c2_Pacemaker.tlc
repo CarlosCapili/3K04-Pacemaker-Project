@@ -1,0 +1,95 @@
+%implements "chartSource" "C"
+%function ChartConfig(block, system) void
+  %createrecord chartConfiguration { ...
+          executeAtInitialization  0 ...
+  }
+  %return chartConfiguration
+%endfunction
+%function ChartDataMap(block, system) void
+  %createrecord ChartDataElements {\
+    NumChartData   11 \
+    ChartDataDefaults {\
+      RecordType   "ChartData"\
+      Dimensions   []\
+      IsTestPoint  0\
+    }\
+    ChartData {\
+      Name         "sfEvent"\
+      Description  "ActiveChartEvent"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_active_c2_Pacemaker"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_c2_Pacemaker"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_Sense"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Sense"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_Ventricle"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Sense.Ventricle"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_Atrium"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Sense.Atrium"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_Pace"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Pace"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "ActiveChamber"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "ActiveChamber"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "pulseWidth"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "pulseWidth"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "pulseAmp"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "pulseAmp"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "temporalCounter_i1"\
+      Description  "TemporalCounter"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+  }
+  %return ChartDataElements
+%endfunction
