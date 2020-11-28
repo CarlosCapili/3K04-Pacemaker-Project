@@ -65,6 +65,9 @@ class GraphsHandler:
 
         self._plot_data()
 
+    def get_plot_snapshot(self):
+        pass
+
     # Show/hide the atrial data on the graphs
     def atri_vis(self, show: bool) -> None:
         self.atri_plot.show() if show else self.atri_plot.hide()
