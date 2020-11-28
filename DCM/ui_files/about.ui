@@ -90,12 +90,12 @@
    </row>
    <row>
     <property name="text">
-     <string>DCM Serial number</string>
+     <string>DCM serial number</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Device Serial Number</string>
+     <string>Device serial number</string>
     </property>
    </row>
    <row>
@@ -138,6 +138,9 @@
     </property>
    </item>
    <item row="3" column="0">
+    <property name="text">
+     <string/>
+    </property>
     <property name="flags">
      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
     </property>
