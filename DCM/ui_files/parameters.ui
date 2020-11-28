@@ -308,7 +308,7 @@
      </item>
      <item row="6" column="0">
       <property name="text">
-       <string>1</string>
+       <string>3</string>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
@@ -332,7 +332,7 @@
      </item>
      <item row="9" column="0">
       <property name="text">
-       <string>2.5</string>
+       <string>3</string>
       </property>
       <property name="flags">
        <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
