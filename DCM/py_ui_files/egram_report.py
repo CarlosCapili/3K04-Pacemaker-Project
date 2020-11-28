@@ -14,12 +14,14 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(920, 617)
+        Dialog.resize(920, 647)
+        Dialog.setMinimumSize(QtCore.QSize(920, 647))
+        Dialog.setMaximumSize(QtCore.QSize(920, 647))
         self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName("verticalLayout")
         self.header_label = QtWidgets.QLabel(Dialog)
-        self.header_label.setMinimumSize(QtCore.QSize(0, 70))
-        self.header_label.setMaximumSize(QtCore.QSize(16777215, 70))
+        self.header_label.setMinimumSize(QtCore.QSize(0, 100))
+        self.header_label.setMaximumSize(QtCore.QSize(16777215, 100))
         self.header_label.setAlignment(QtCore.Qt.AlignCenter)
         self.header_label.setObjectName("header_label")
         self.verticalLayout.addWidget(self.header_label)
@@ -60,10 +62,10 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Electrogram Report"))
         self.header_label.setText(_translate("Dialog", "Header info"))
         self.label.setText(_translate("Dialog", "Atrial Plot"))
-        self.label_2.setText(_translate("Dialog", "Ventricular Data"))
+        self.label_2.setText(_translate("Dialog", "Ventricular Plot"))
         self.export_btn.setText(_translate("Dialog", "Export"))
 
 
