@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Pacemaker'.
  *
- * Model version                  : 1.75
+ * Model version                  : 1.76
  * Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
- * C/C++ source code generated on : Sat Nov 28 14:29:25 2020
+ * C/C++ source code generated on : Sat Nov 28 14:35:24 2020
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -1297,7 +1297,8 @@ void Pacemaker_step1(void)             /* Sample time: [0.002s, 0.0s] */
      case Pacemaker_IN_SenseActivity:
       if (rtb_FXOS87006AxesSensor_idx_0 <= 0.0) {
         Pacemaker_B.SquareRoot = (real_T)(uint8_T)(Pacemaker_B.RecoveryTime ==
-          0U ? MAX_uint32_T : (uint32_T)status / Pacemaker_B.RecoveryTime) / 2.0;
+          0U ? MAX_uint32_T : (uint32_T)status / Pacemaker_B.RecoveryTime) /
+          60.0;
         if (Pacemaker_B.HeartRate - Pacemaker_B.SquareRoot *
             Pacemaker_DW.noActivityTime <= Pacemaker_B.LRL) {
           Pacemaker_DW.is_c4_Pacemaker = Pacemaker_IN_ReturnToLowerRate;
