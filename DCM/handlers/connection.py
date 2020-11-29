@@ -38,7 +38,7 @@ class _SerialHandler(QThread):
     _num_floats = 20
     PARAMS_FMT_STR, ECG_FMT_STR, ECG_DATA_STR = "=3BfB2fBf4H5B", f"={_num_floats}f", f"={_num_floats // 2}f"
     PARAMS_NUM_BYTES, ECG_NUM_BYTES, ECG_DATA = calcsize(PARAMS_FMT_STR), calcsize(ECG_FMT_STR), calcsize(ECG_DATA_STR)
-    REQUEST_ECG = pack("=B39x", 0x55)
+    REQUEST_ECG = pack("=B33x", 0x55)
     PARAMS_ORDER = ["Pacing Mode", "Lower Rate Limit", "Upper Rate Limit", "Atrial Amplitude", "Atrial Pulse Width",
                     "Atrial Sensitivity", "Ventricular Amplitude", "Ventricular Pulse Width", "Ventricular Sensitivity",
                     "VRP", "ARP", "PVARP", "Fixed AV Delay", "Maximum Sensor Rate", "Reaction Time", "Response Factor",
