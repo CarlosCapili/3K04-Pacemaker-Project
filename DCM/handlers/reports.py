@@ -46,7 +46,7 @@ class ReportsHandler:
             if QFileInfo(file_name).suffix() == "":
                 file_name += ".pdf"
 
-            printer = QPrinter(QPrinter.HighResolution)
+            printer = QPrinter(QPrinter.ScreenResolution)
             printer.setOrientation(QPrinter.Landscape)
             printer.setOutputFormat(QPrinter.PdfFormat)
             printer.setOutputFileName(file_name)
