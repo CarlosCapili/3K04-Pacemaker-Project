@@ -2,19 +2,19 @@ from typing import Dict
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QPalette
-from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QStackedWidget)
+from PyQt5.QtWidgets import (QApplication, QDialog, QMainWindow, QMessageBox, QStackedWidget, QTableWidget)
 
 from handlers.auth import AuthHandler
-from handlers.connection import ConnectionHandler
+from handlers.connection import ConnectionHandler, PacemakerState
 from handlers.graphs import GraphsHandler
 from handlers.parameters import ParametersHandler
 from handlers.reports import ReportsHandler
-from py_ui_files import (about, dcm, parameters, reports, setclock, welcomescreen)  # auto-generated files
+from py_ui_files import (about, dcm, egram_report, parameters, reports, welcomescreen)  # auto-generated files
 from py_ui_files.about import Ui_aboutWindow
 from py_ui_files.dcm import Ui_MainWindow
+from py_ui_files.egram_report import Ui_Dialog
 from py_ui_files.parameters import Ui_parametersWindow
 from py_ui_files.reports import Ui_ReportsWindow
-from py_ui_files.setclock import Ui_Dialog
 from py_ui_files.welcomescreen import Ui_Welcome
 
 
@@ -27,12 +27,14 @@ class MainController:
     dcm_ui: Ui_MainWindow
     about_gui: QDialog
     about_ui: Ui_aboutWindow
+    about_table: QTableWidget
+    about_header: Dict[str, str]
     params_gui: QDialog
     params_ui: Ui_parametersWindow
     reports_gui: QDialog
     reports_ui: Ui_ReportsWindow
-    set_clock_gui: QDialog
-    set_clock_ui: Ui_Dialog
+    egram_report_gui: QDialog
+    egram_report_ui: Ui_Dialog
     auth: AuthHandler
     conn: ConnectionHandler
     params: ParametersHandler
@@ -61,6 +63,9 @@ class MainController:
         self.about_gui = QDialog()
         self.about_ui = about.Ui_aboutWindow()
         self.about_ui.setupUi(self.about_gui)
+        self.about_table = self.about_ui.tableWidget
+        self.about_header = {self.about_table.verticalHeaderItem(row).text(): self.about_table.item(row, 0).text() for
+                             row in range(self.about_table.rowCount())}
 
         # Setup parameter screen UI from auto-generated file
         self.params_gui = QDialog()
@@ -72,17 +77,17 @@ class MainController:
         self.reports_ui = reports.Ui_ReportsWindow()
         self.reports_ui.setupUi(self.reports_gui)
 
-        # Setup set-clock screen UI from auto-generated file
-        self.set_clock_gui = QDialog()
-        self.set_clock_ui = setclock.Ui_Dialog()
-        self.set_clock_ui.setupUi(self.set_clock_gui)
+        # Setup egram screen UI from auto-generated file
+        self.egram_report_gui = QDialog()
+        self.egram_report_ui = egram_report.Ui_Dialog()
+        self.egram_report_ui.setupUi(self.egram_report_gui)
 
         # Initialize separate handlers for authentication, pacemaker connection, parameters, reports and graphs
         self.auth = AuthHandler(self.show_dcm)
         self.conn = ConnectionHandler()
         self.params = ParametersHandler(self.params_ui.tableWidget)
-        self.reports = ReportsHandler(self.about_ui.tableWidget)
-        self.graphs = GraphsHandler(self.dcm_ui.atrialPlots, self.dcm_ui.ventricularPlots)
+        self.reports = ReportsHandler(self.egram_report_ui)
+        self.graphs = GraphsHandler(self.dcm_ui.atrial_plots, self.dcm_ui.vent_plots, data_size=2001)
 
         # Link elements to actions
         self.link_welcome_buttons()
@@ -91,7 +96,9 @@ class MainController:
         self.link_params_buttons()
 
         # Start connection thread
-        self.conn.connect_status_change.connect(self.dcm_ui.statusbar.handle_conn_anim)
+        self.conn.connect_status_change.connect(self.handle_pace_conn)
+        self.conn.serial.ecg_data_update.connect(self.graphs.update_data)
+        self.conn.serial.params_received.connect(self._show_alert)
         self.conn.start()
 
         # Update params GUI table to show default pacing mode params
@@ -126,7 +133,6 @@ class MainController:
         self.dcm_ui.about_btn.clicked.connect(self.about_gui.exec_)  # show about screen when about is pressed
         self.dcm_ui.parameters_btn.clicked.connect(self.params_gui.exec_)  # show params screen when params is pressed
         self.dcm_ui.reports_btn.clicked.connect(self.reports_gui.exec_)  # show reports screen when reports is pressed
-        self.dcm_ui.set_clock_btn.clicked.connect(self.set_clock_gui.exec_)  # show clock screen when clock is pressed
         self.dcm_ui.new_patient_btn.clicked.connect(self.conn.register_device)  # register pacemaker when btn is pressed
         # write serial data when btn is pressed
         self.dcm_ui.pace_btn.clicked.connect(
@@ -137,37 +143,63 @@ class MainController:
 
         # Checkboxes
         # show or hide the plots, depending on whether or not the checkbox is checked, when it changes state
-        self.dcm_ui.pace_box.stateChanged.connect(
-            lambda: self.graphs.pace_show() if self.dcm_ui.pace_box.isChecked() else self.graphs.pace_hide())
-        self.dcm_ui.sense_box.stateChanged.connect(
-            lambda: self.graphs.sense_show() if self.dcm_ui.sense_box.isChecked() else self.graphs.sense_hide())
+        self.dcm_ui.atrial_box.stateChanged.connect(lambda: self.graphs.atri_vis(self.dcm_ui.atrial_box.isChecked()))
+        self.dcm_ui.vent_box.stateChanged.connect(lambda: self.graphs.vent_vis(self.dcm_ui.vent_box.isChecked()))
 
     # Link reports ui elements to their respective functions
     def link_reports_buttons(self) -> None:
         # Get the params based on the pacing mode, and then generate the respective report based on the pressed btn
-        self.reports_ui.egram_btn.clicked.connect(lambda: self.reports.generate_egram(self.get_pace_mode_params()))
-        self.reports_ui.brady_btn.clicked.connect(lambda: self.reports.generate_brady(self.get_pace_mode_params()))
+        self.reports_ui.egram_btn.clicked.connect(self.show_egram_report)
+        self.reports_ui.brady_btn.clicked.connect(
+            lambda: self.reports.generate_brady(self.about_header, self.get_pace_mode_params()))
 
     # Link parameters ui elements to their respective functions
     def link_params_buttons(self) -> None:
         self.params_ui.confirm_btn.clicked.connect(self.params.confirm)  # update stored params and write them to a file
         self.params_ui.reset_btn.clicked.connect(self.params.reset)  # reset stored and shown params to GUI defaults
 
-    # Upon successful user registration or login, close the welcome screen and show the dcm
-    def show_dcm(self) -> None:
+    # Upon successful user registration or login, close the welcome screen, show the dcm and load params for user
+    def show_dcm(self, username: str) -> None:
         self.welcome_gui.close()
         self.dcm_gui.show()
-        self.graphs.plot_data()
+        self.params.update_params_on_user_auth(username)
+
+    # Upon successful user registration or login, close the welcome screen, show the dcm and load params for user
+    def show_egram_report(self) -> None:
+        self.reports.generate_egram(self.about_header)
+        self.egram_report_gui.exec_()
+
+    # Upon successful pacemaker connection, update the status bar animation and the About window table
+    def handle_pace_conn(self, conn_state: PacemakerState, msg: str) -> None:
+        self.dcm_ui.statusbar.handle_conn_anim(conn_state, msg)
+        self.about_header["Device serial number"] = msg if conn_state != PacemakerState.NOT_CONNECTED else "None"
+        for row in range(self.about_table.rowCount()):
+            self.about_table.item(row, 0).setText(self.about_header[self.about_table.verticalHeaderItem(row).text()])
 
     # Get only the parameters required for the current pacing mode
     def get_pace_mode_params(self) -> Dict[str, str]:
         return self.params.filter_params(self.get_current_pace_mode())
 
+    # Get current pacing mode index in button group
     def get_current_pace_index(self) -> int:
         return self.dcm_ui.pacing_mode_group.checkedId()
 
+    # Get current pacing mode name
     def get_current_pace_mode(self) -> str:
         return self.dcm_ui.pacing_mode_group.checkedButton().text()
+
+    @staticmethod
+    def _show_alert(success: bool, msg: str) -> None:
+        """
+        Displays an error message with the specified text
+
+        :param msg: the text to show
+        """
+        qm = QMessageBox()
+        if success:
+            QMessageBox.information(qm, "Connection", msg, QMessageBox.Ok, QMessageBox.Ok)
+        else:
+            QMessageBox.critical(qm, "Connection", msg, QMessageBox.Ok, QMessageBox.Ok)
 
     # Stop threads spawned by handlers
     def stop_threads(self):
@@ -176,6 +208,7 @@ class MainController:
 
 if __name__ == '__main__':
     # Initialize PyQt5 application
+    QApplication.setAttribute(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
     app = QApplication([])
     main_controller = MainController()
     app.setStyle('Fusion')

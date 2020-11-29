@@ -15,6 +15,22 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
+    <item row="1" column="0">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Minimum</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
     <item row="0" column="1" rowspan="3">
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
@@ -65,30 +81,35 @@
              </spacer>
             </item>
             <item>
-             <widget class="QCheckBox" name="pace_box">
+             <widget class="QLabel" name="label_3">
               <property name="text">
-               <string>Pace Leads</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-              <property name="autoRepeat">
-               <bool>false</bool>
-              </property>
-              <property name="tristate">
-               <bool>false</bool>
+               <string>Leads:</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="sense_box">
-              <property name="text">
-               <string>Sense Leads</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
+             <layout class="QGridLayout" name="gridLayout_6">
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="vent_box">
+                <property name="text">
+                 <string>Ventricular</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="atrial_box">
+                <property name="text">
+                 <string>Atrial</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
@@ -113,7 +134,7 @@
          </widget>
         </item>
         <item>
-         <widget class="PlotWidget" name="atrialPlots" />
+         <widget class="PlotWidget" name="atrial_plots"/>
         </item>
         <item>
          <widget class="QLabel" name="label_2">
@@ -131,27 +152,11 @@
          </widget>
         </item>
         <item>
-         <widget class="PlotWidget" name="ventricularPlots" />
+         <widget class="PlotWidget" name="vent_plots"/>
         </item>
        </layout>
       </item>
      </layout>
-    </item>
-    <item row="1" column="0">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Minimum</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
     </item>
     <item row="2" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -242,36 +247,6 @@
         </property>
         <property name="text">
          <string>About</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="set_clock_btn">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>150</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>500</width>
-          <height>60</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Set Clock</string>
         </property>
        </widget>
       </item>
@@ -536,7 +511,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="AnimatedStatusBar" name="statusbar" />
+  <widget class="AnimatedStatusBar" name="statusbar"/>
   <action name="actionReview">
    <property name="text">
     <string>Review</string>
@@ -560,9 +535,9 @@
    <header>pyqtgraph</header>
   </customwidget>
  </customwidgets>
- <resources />
- <connections />
+ <resources/>
+ <connections/>
  <buttongroups>
-  <buttongroup name="pacing_mode_group" />
+  <buttongroup name="pacing_mode_group"/>
  </buttongroups>
 </ui>

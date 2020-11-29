@@ -1,7 +1,6 @@
-import queue
-import struct
 from enum import Enum, unique
-from queue import Queue
+from struct import calcsize, pack, unpack_from
+from threading import Lock
 from time import sleep
 from typing import Dict, List, Optional, Union
 
@@ -21,104 +20,139 @@ class PacemakerState(Enum):
 
 
 # This class is a private class that handles the serial communication with the pacemaker
-# It is just a placeholder and not fully implemented, because that happens in Assignment 2
 # https://github.com/pyserial/pyserial/issues/216#issuecomment-369414522
 class _SerialHandler(QThread):
-    running: bool
-    buf: bytearray
-    conn: Serial
-    in_q: Queue
+    _running: bool
+    _buf: bytearray
+    _conn: Serial
+    _num_bytes_to_read: int
+    _sent_data: bytes
 
     # A signal that's emitted every time we receive ECG data
-    ecg_data_update: pyqtSignal = pyqtSignal(str)  # the str is the serial_num and/or a msg
+    ecg_data_update: pyqtSignal = pyqtSignal(tuple, tuple)
+
+    # A signal that's emitted upon param verification with the pacemaker
+    params_received: pyqtSignal = pyqtSignal(bool, str)
 
     # https://docs.python.org/3.7/library/struct.html#format-strings
-    PARAMS_FMT_STR, ECG_FMT_STR = "=3B6f4H5B", "=4f"
-    PARAMS_NUM_BYTES, ECG_NUM_BYTES = struct.calcsize(PARAMS_FMT_STR), struct.calcsize(ECG_FMT_STR)
+    _num_floats = 20
+    PARAMS_FMT_STR, ECG_FMT_STR, ECG_DATA_STR = "=3B6f4H5B", f"={_num_floats}f", f"={_num_floats // 2}f"
+    PARAMS_NUM_BYTES, ECG_NUM_BYTES, ECG_DATA = calcsize(PARAMS_FMT_STR), calcsize(ECG_FMT_STR), calcsize(ECG_DATA_STR)
+    REQUEST_ECG = pack("=B39x", 0x55)
     PARAMS_ORDER = ["Pacing Mode", "Lower Rate Limit", "Upper Rate Limit", "Atrial Amplitude", "Atrial Pulse Width",
                     "Atrial Sensitivity", "Ventricular Amplitude", "Ventricular Pulse Width", "Ventricular Sensitivity",
                     "VRP", "ARP", "PVARP", "Fixed AV Delay", "Maximum Sensor Rate", "Reaction Time", "Response Factor",
                     "Recovery Time", "Activity Threshold"]
-    ECG_ORDER = ["Atrial Pace Amp", "Vent Pace Amp", "Atrial Sense Amp", "Vent Sense Amp"]
 
     def __init__(self):
         super().__init__()
         print("Serial handler init")
 
-        self.running = False
-        self.buf = bytearray()
-        self.conn = Serial(baudrate=115200, timeout=0)
-        self.in_q = queue.Queue()
+        self._running = False
+        self._buf = bytearray()
+        self._conn = Serial(baudrate=115200, timeout=0)
+        self._num_bytes_to_read = self.ECG_NUM_BYTES + 1
+        self._sent_data = bytes()
+        self._send_params = False
+        self._lock = Lock()
 
     # Gets called when the thread starts, overrides method in QThread
     def run(self):
-        self.running = True
+        self._running = True
 
-        while self.running:
+        while self._running:
             # Check if the serial connection is open with the pacemaker
-            if self.conn.is_open:
+            if self._conn.is_open:
                 try:
-                    line = self._readline(self.ECG_NUM_BYTES)  # read one line
-                    print(f"received from pacemaker: {line}")
-                    # self.in_q.put(line)
+                    with self._lock:
+                        if self._send_params:
+                            self._send_params = False
+                            self._conn.write(self._sent_data)
+                        else:
+                            self._conn.write(self.REQUEST_ECG)
+
+                    line = self._readline()  # read one packet of num_bytes_to_read size
+
+                    control_byte = line[0]
+                    line = line[1:]
+
+                    # If we've received ECG data, elif we've received params data
+                    if control_byte == 0:
+                        a_data = unpack_from(self.ECG_DATA_STR, line, 0)
+                        v_data = unpack_from(self.ECG_DATA_STR, line, self.ECG_DATA)
+
+                        self.ecg_data_update.emit(a_data, v_data)
+                    elif control_byte == 1:
+                        self._verify_params(line)
+
                 except Exception:
                     pass
-            elif self.conn.port:
+            elif self._conn.port:
                 self._try_to_open_port()
             else:
                 sleep(1)
 
-    # Stops the thread
-    def stop(self) -> None:
-        self.running = False
-        self.conn.close()
+    # Read the output stream of the pacemaker
+    def _readline(self) -> bytearray:
+        i: int = len(self._buf)
 
-    # Open the serial connection with the pacemaker on the specified port
-    def start_serial_comm(self, port: str) -> None:
-        print(f"opening serial port {port} with pacemaker")
-        self.conn.port = port
-        self._try_to_open_port()
-
-    def stop_serial_comm(self) -> None:
-        self.conn.close()
-        self.conn.port = None
-
-    def _try_to_open_port(self):
-        try:
-            self.conn.open()
-            print("opened port")
-        except SerialException:
-            pass
-
-    # Read the output stream from the pacemaker
-    def _readline(self, num_bytes_in_buf):
-        i: int = len(self.buf)
-
-        if i >= num_bytes_in_buf:
-            r = self.buf[:i + 1]
-            self.buf = self.buf[i + 1:]
+        if i >= self._num_bytes_to_read:
+            r = self._buf[:self._num_bytes_to_read]
+            self._buf = self._buf[self._num_bytes_to_read:]
             return r
 
-        while self.running and self.conn.is_open:
-            i = max(1, min(2048, self.conn.in_waiting))
-            data: Optional[bytes] = self.conn.read(i)
-            i = len(self.buf)
+        while self._running and self._conn.is_open:
+            data: Optional[bytes] = self._conn.read(self._num_bytes_to_read)
+            i = len(self._buf)
 
-            if i >= num_bytes_in_buf:
-                r = self.buf + data[:i + 1]
-                self.buf[0:] = data[i + 1:]
+            if i >= self._num_bytes_to_read:
+                r = self._buf[:self._num_bytes_to_read]
+                self._buf = self._buf[self._num_bytes_to_read:] + data
                 return r
             else:
-                self.buf.extend(data)
+                self._buf.extend(data)
 
-    # Sends the DCM parameters to the pacemaker
+    # Attempt to open serial port with pacemaker
+    def _try_to_open_port(self) -> None:
+        with self._lock:
+            try:
+                self._conn.open()
+                print("opened port")
+            except SerialException:
+                pass
+
+    # Verify that the params sent to the pacemaker are the ones received
+    def _verify_params(self, received_params: bytes) -> None:
+        if self._sent_data != bytes(received_params[:self.PARAMS_NUM_BYTES]):
+            self.params_received.emit(False, "The received parameters were not the same as the sent ones!\nPlease "
+                                             "restart the DCM/Pacemaker or try a different Pacemaker!")
+        else:
+            self.params_received.emit(True, "Successfully sent parameters!")
+
+    # Stops the thread
+    def stop(self) -> None:
+        with self._lock:
+            self._running = False
+            self._conn.close()
+
+    # Set the serial connection port to that of the pacemaker, and clear the buffer
+    def start_serial_comm(self, port: str) -> None:
+        print(f"opening serial port {port} with pacemaker")
+        self._buf = bytearray()
+        with self._lock:
+            self._conn.port = port
+
+    # Safely close the serial connection and clear the port
+    def stop_serial_comm(self) -> None:
+        with self._lock:
+            self._conn.close()
+            self._conn.port = None
+
+    # Updates the parameters to send to the pacemaker, and enables the send flag
     def send_params_to_pacemaker(self, params_to_send: Dict[str, Union[int, float]]) -> None:
-        sent_data = struct.pack(self.PARAMS_FMT_STR, *[params_to_send[key] for key in self.PARAMS_ORDER])
-        print(sent_data)
-
-        # Check if the serial connection is open with the pacemaker
-        if self.conn.is_open:
-            self.conn.write(sent_data)
+        with self._lock:
+            self._sent_data = pack(self.PARAMS_FMT_STR, *[params_to_send[key] for key in self.PARAMS_ORDER])
+            self._send_params = True
 
 
 # This class handles the pacemaker connection for the DCM and extends the QThread class to allow for multithreading

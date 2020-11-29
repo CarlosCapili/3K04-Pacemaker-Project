@@ -1,0 +1,87 @@
+=== Build (Elapsed: 3 sec) ===
+    ### Starting build procedure for: Pacemaker
+    ### Generating code and artifacts to 'Model specific' folder structure
+    ### Generating code into build folder: C:\Users\shaqe\Documents\GitHub\3K04-Project-L1-G7\Pacemaker\Pacemaker_ert_rtw
+    Warning:'Input Port 3 (Left:3)' of 'Pacemaker/SerialReceive' is not connected.
+    Warning:'Output Port 1' of 'Pacemaker/Parameters/MaxSensorRate' is not connected.
+    Warning:'Output Port 1' of 'Pacemaker/Parameters/ReactionTime' is not connected.
+    Warning:'Output Port 1' of 'Pacemaker/Parameters/ResponseFactor' is not connected.
+    Warning:'Output Port 1' of 'Pacemaker/Parameters/RecoveryTime' is not connected.
+    Warning:'Output Port 1' of 'Pacemaker/Parameters/ActivityThreshold' is not connected.
+    Error:Simulink does not have enough information to determine output sizes for this block. If you think the errors below are inaccurate, try specifying types for the block inputs and/or sizes for the block outputs.
+    Error:Size mismatch (size [1 x 1] ~= size [4 x 1]).
+    The size to the left is the size of the left-hand side of the assignment.
+    
+    State 'SettingParameters' in Chart 'Pacemaker/SerialReceive':
+    
+        AtrialAmp = typecast(RX_R(4:7),'single');
+    ​
+    Error:Size mismatch (size [1 x 1] ~= size [4 x 1]).
+    The size to the left is the size of the left-hand side of the assignment.
+    
+    State 'SettingParameters' in Chart 'Pacemaker/SerialReceive':
+    
+        AtrialPulseWidth = typecast(RX_R(8:11),'single');
+    ​
+    Error:Size mismatch (size [1 x 1] ~= size [4 x 1]).
+    The size to the left is the size of the left-hand side of the assignment.
+    
+    State 'SettingParameters' in Chart 'Pacemaker/SerialReceive':
+    
+        AtrialSensitivity= typecast(RX_R(12:15),'single');
+    ​
+    Error:Size mismatch (size [1 x 1] ~= size [4 x 1]).
+    The size to the left is the size of the left-hand side of the assignment.
+    
+    State 'SettingParameters' in Chart 'Pacemaker/SerialReceive':
+    
+        VentricularAmp = typecast(RX_R(16:19),'single');
+    ​
+    Error:Size mismatch (size [1 x 1] ~= size [4 x 1]).
+    The size to the left is the size of the left-hand side of the assignment.
+    
+    State 'SettingParameters' in Chart 'Pacemaker/SerialReceive':
+    
+        VentricularPulseWidth = typecast(RX_R(20:23),'single');
+    ​
+    Error:Size mismatch (size [1 x 1] ~= size [4 x 1]).
+    The size to the left is the size of the left-hand side of the assignment.
+    
+    State 'SettingParameters' in Chart 'Pacemaker/SerialReceive':
+    
+        VentricularSensitivity = typecast(RX_R(24:27),'single');
+    ​
+    Error:Size mismatch (size [1 x 1] ~= size [8 x 1]).
+    The size to the left is the size of the left-hand side of the assignment.
+    
+    State 'SettingParameters' in Chart 'Pacemaker/SerialReceive':
+    
+        VRP = typecast(RX_R(28:29),'uint16');
+    ​
+    Error:Size mismatch (size [1 x 1] ~= size [8 x 1]).
+    The size to the left is the size of the left-hand side of the assignment.
+    
+    State 'SettingParameters' in Chart 'Pacemaker/SerialReceive':
+    
+        ARP = typecast(RX_R(30:31),'uint16');
+    ​
+    Error:Size mismatch (size [1 x 1] ~= size [8 x 1]).
+    The size to the left is the size of the left-hand side of the assignment.
+    
+    State 'SettingParameters' in Chart 'Pacemaker/SerialReceive':
+    
+        PVARP = typecast(RX_R(32:33),'uint16');
+    ​
+    Error:Size mismatch (size [1 x 1] ~= size [8 x 1]).
+    The size to the left is the size of the left-hand side of the assignment.
+    
+    State 'SettingParameters' in Chart 'Pacemaker/SerialReceive':
+    
+        FixAVDelay = typecast(RX_R(34:35),'uint16');
+    ​
+    Error:Error while generating code for chart SerialReceive.
+    ### Build procedure for Pacemaker aborted due to an error.
+    Error:Compilation of model 'Pacemaker' failed while trying to resolve underspecified signal dimensions.
+    Caused by:
+        Error while generating code for chart SerialReceive.
+        Error occurred in 'Pacemaker/SerialReceive'.
