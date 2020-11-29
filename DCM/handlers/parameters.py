@@ -6,8 +6,6 @@ from PyQt5.QtWidgets import QMessageBox, QTableWidget
 
 from custom_qt.delegates import ComboBoxDelegate, DoubleSpinBoxDelegate, SpinBoxDelegate
 
-PARAMETERS_FILE_PATH = "parameters.json"
-
 
 # This class handles the parameters for the DCM
 class ParametersHandler:
@@ -19,6 +17,8 @@ class ParametersHandler:
     _user_params_store: Dict[str, str]
     _username: str
     _params_store: Dict[str, Dict[str, str]]
+
+    _PARAMETERS_FILE_PATH = "parameters.json"
 
     def __init__(self, table: QTableWidget):
         print("Parameters handler init")
@@ -96,11 +96,12 @@ class ParametersHandler:
         # Try and optionally load existing parameters from file and update GUI with those saved values
         self._params_store = {}
         try:
-            with open(PARAMETERS_FILE_PATH, mode='r') as f:
+            with open(self._PARAMETERS_FILE_PATH, mode='r') as f:
                 self._params_store.update(json.load(f))
         except (FileNotFoundError, JSONDecodeError):
             pass
 
+    # Update the parameter values to the user-specific ones based on the user that is authenticated
     def update_params_on_user_auth(self, username: str):
         self._username = username
         self._user_params_store = self._params_store.get(username, self._default_params_store)
@@ -122,6 +123,7 @@ class ParametersHandler:
             self._update_params_file()
             self._update_params_gui()
 
+    # Update which rows/params are visible in the table GUI based on the pacing mode
     def update_row_visibility(self, pacing_mode: str) -> None:
         params_to_show = self._params_per_mode[pacing_mode]
 
@@ -133,7 +135,7 @@ class ParametersHandler:
 
     # Write params store to file, creating a new one if it doesn't exist
     def _update_params_file(self) -> None:
-        with open(PARAMETERS_FILE_PATH, mode='w+') as f:
+        with open(self._PARAMETERS_FILE_PATH, mode='w+') as f:
             self._params_store[self._username] = self._user_params_store
             json.dump(self._params_store, f)
 
@@ -149,6 +151,7 @@ class ParametersHandler:
         mode_params["Pacing Mode"] = pace_mode
         return mode_params
 
+    # Return all the parameters, casted to their respective data type
     def get_params(self, pace_mode: int) -> Dict[str, Union[int, float]]:
         typed_params = {"Pacing Mode": pace_mode}
 
