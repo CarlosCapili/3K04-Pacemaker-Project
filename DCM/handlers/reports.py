@@ -1,23 +1,31 @@
-import datetime
 import itertools
+from datetime import datetime
 from typing import Dict
 
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtCore import QFileInfo
+from PyQt5.QtGui import QFont, QPainter
+from PyQt5.QtPrintSupport import QPrinter
+from PyQt5.QtWidgets import QDialog, QFileDialog, QMessageBox
 
 from py_ui_files.egram_report import Ui_Dialog
 
 
 # This class handles generating and displaying all the reports for the DCM
 class ReportsHandler:
+    _egram_report_ui: Ui_Dialog
+    _report_gen_time: str
+
     def __init__(self, egram_report_ui: Ui_Dialog):
         print("Reports handler init")
         self._egram_report_ui = egram_report_ui
+        self._report_gen_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     # Handles the generation and presentation of the electrogram report
     def generate_egram(self, header: Dict[str, str], atri_snap, vent_snap) -> None:
         header["Report name"] = "Electrogram"
-        header["Date and Time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        now = datetime.now()
+        header["Date and Time"] = now.strftime('%Y-%m-%d %H:%M:%S')
+        self._report_gen_time = now.strftime("%Y_%m_%d-%H_%M_%S")
 
         i = iter(header.items())
         # right label always has less than or equal the number of elements of the left label
@@ -29,10 +37,39 @@ class ReportsHandler:
         self._egram_report_ui.atri_label.setPixmap(atri_snap)
         self._egram_report_ui.vent_label.setPixmap(vent_snap)
 
+    def export_pdf(self, widget: QDialog):
+        file_name, _ = QFileDialog.getSaveFileName(widget, "Export Egram Report",
+                                                   f"egram_report_{self._report_gen_time}.pdf",
+                                                   "PDF files (.pdf);;All Files ()")
+
+        if file_name:
+            if QFileInfo(file_name).suffix() == "":
+                file_name += ".pdf"
+
+            printer = QPrinter(QPrinter.HighResolution)
+            printer.setOrientation(QPrinter.Landscape)
+            printer.setOutputFormat(QPrinter.PdfFormat)
+            printer.setOutputFileName(file_name)
+            printer.setPageMargins(0, 0, 0, 0, QPrinter.Point)
+            painter = QPainter(printer)
+
+            # scale widget
+            x_scale = printer.pageRect().width() * 1.0 / widget.width()
+            y_scale = printer.pageRect().height() * 1.0 / widget.height()
+            scale = min(x_scale, y_scale)
+            painter.translate(printer.paperRect().center())
+            painter.scale(scale, scale)
+            painter.translate(-widget.width() / 2, -widget.height() / 2)
+
+            widget.render(painter)
+            painter.end()
+
     # Handles the generation and presentation of the bradycardia report
     def generate_brady(self, header: Dict[str, str], params: Dict[str, str]) -> None:
         header["Report name"] = "Bradycardia"
-        header["Date and Time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        now = datetime.now()
+        header["Date and Time"] = now.strftime('%Y-%m-%d %H:%M:%S')
+        self._report_gen_time = now.strftime("%Y_%m_%d-%H_%M_%S")
         report = "{0}{1}".format(self._format_params(header), self._format_params(params))
         self._show_report(report)
 

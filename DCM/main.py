@@ -153,6 +153,9 @@ class MainController:
         self.reports_ui.brady_btn.clicked.connect(
             lambda: self.reports.generate_brady(self.about_header, self.get_pace_mode_params()))
 
+        # Get the params based on the pacing mode, and then generate the respective report based on the pressed btn
+        self.egram_report_ui.export_btn.clicked.connect(lambda: self.reports.export_pdf(self.egram_report_gui))
+
     # Link parameters ui elements to their respective functions
     def link_params_buttons(self) -> None:
         self.params_ui.confirm_btn.clicked.connect(self.params.confirm)  # update stored params and write them to a file
