@@ -43,10 +43,10 @@ class Ui_Dialog(object):
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 4, 0, 1, 1)
-        self.vent_report_plot = QtWidgets.QGraphicsView(Dialog)
+        self.vent_report_plot = ImageView(Dialog)
         self.vent_report_plot.setObjectName("vent_report_plot")
         self.gridLayout.addWidget(self.vent_report_plot, 5, 0, 1, 1)
-        self.atrial_report_plot = QtWidgets.QGraphicsView(Dialog)
+        self.atrial_report_plot = ImageView(Dialog)
         self.atrial_report_plot.setObjectName("atrial_report_plot")
         self.gridLayout.addWidget(self.atrial_report_plot, 3, 0, 1, 1)
         self.export_btn = QtWidgets.QPushButton(Dialog)
@@ -67,6 +67,7 @@ class Ui_Dialog(object):
         self.label.setText(_translate("Dialog", "Atrial Plot"))
         self.label_2.setText(_translate("Dialog", "Ventricular Plot"))
         self.export_btn.setText(_translate("Dialog", "Export"))
+from pyqtgraph import ImageView
 
 
 if __name__ == "__main__":
