@@ -93,10 +93,10 @@
       </widget>
      </item>
      <item row="5" column="0">
-      <widget class="QGraphicsView" name="vent_report_plot"/>
+      <widget class="ImageView" name="vent_report_plot"/>
      </item>
      <item row="3" column="0">
-      <widget class="QGraphicsView" name="atrial_report_plot"/>
+      <widget class="ImageView" name="atrial_report_plot"/>
      </item>
      <item row="6" column="0">
       <widget class="QPushButton" name="export_btn">
@@ -114,6 +114,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ImageView</class>
+   <extends>QGraphicsView</extends>
+   <header>pyqtgraph</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
