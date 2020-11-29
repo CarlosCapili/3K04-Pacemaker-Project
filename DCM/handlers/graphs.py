@@ -1,5 +1,3 @@
-from typing import List
-
 import numpy as np
 from numpy import ndarray
 from pyqtgraph import PlotDataItem, PlotWidget
@@ -66,9 +64,6 @@ class GraphsHandler:
         self.vent_data[-size:] = vent_data
 
         self._plot_data()
-
-    def get_plots_snapshot(self) -> List[any, any]:
-        pass
 
     # Show/hide the atrial data on the graphs
     def atri_vis(self, show: bool) -> None:

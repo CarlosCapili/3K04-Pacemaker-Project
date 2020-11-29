@@ -19,6 +19,8 @@ class ReportsHandler:
         header["Report name"] = "Electrogram"
         header["Date and Time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         self._egram_report_ui.header_label.setText(self._format_params(header))
+        # self._egram_report_ui.atrial_report_plot.setImage(atri_snap)
+        # self._egram_report_ui.vent_report_plot.setImage(vent_snap)
 
     # Handles the generation and presentation of the bradycardia report
     def generate_brady(self, header: Dict[str, str], params: Dict[str, str]) -> None:

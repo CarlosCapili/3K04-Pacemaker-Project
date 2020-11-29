@@ -166,7 +166,7 @@ class MainController:
 
     # Upon successful user registration or login, close the welcome screen, show the dcm and load params for user
     def show_egram_report(self) -> None:
-        self.reports.generate_egram(self.about_header)
+        self.reports.generate_egram(self.about_header, self.dcm_ui.atrial_plots.grab(), self.dcm_ui.vent_plots.grab())
         self.egram_report_gui.exec_()
 
     # Upon successful pacemaker connection, update the status bar animation and the About window table

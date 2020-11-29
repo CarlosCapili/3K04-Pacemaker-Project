@@ -1,6 +1,6 @@
 import json
 from json import JSONDecodeError
-from typing import Callable, Dict, Final
+from typing import Callable, Dict
 
 from PyQt5.QtWidgets import QMessageBox
 
@@ -10,7 +10,7 @@ class AuthHandler:
     _on_success: Callable[[str], None]
     _cred_store: Dict[str, str]
 
-    _CREDENTIAL_FILE_PATH: Final = "credentials.json"
+    _CREDENTIAL_FILE_PATH = "credentials.json"
 
     def __init__(self, on_success: Callable[[str], None]):
         print("Auth handler init")
