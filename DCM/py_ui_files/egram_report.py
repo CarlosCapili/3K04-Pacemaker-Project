@@ -27,6 +27,16 @@ class Ui_Dialog(object):
         self.verticalLayout.addWidget(self.header_label)
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
+        self.vent_label = QtWidgets.QLabel(Dialog)
+        self.vent_label.setMinimumSize(QtCore.QSize(900, 209))
+        self.vent_label.setMaximumSize(QtCore.QSize(900, 209))
+        self.vent_label.setObjectName("vent_label")
+        self.gridLayout.addWidget(self.vent_label, 5, 0, 1, 1)
+        self.atri_label = QtWidgets.QLabel(Dialog)
+        self.atri_label.setMinimumSize(QtCore.QSize(900, 209))
+        self.atri_label.setMaximumSize(QtCore.QSize(900, 209))
+        self.atri_label.setObjectName("atri_label")
+        self.gridLayout.addWidget(self.atri_label, 3, 0, 1, 1)
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setMinimumSize(QtCore.QSize(0, 26))
         font = QtGui.QFont()
@@ -43,12 +53,6 @@ class Ui_Dialog(object):
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 4, 0, 1, 1)
-        self.vent_report_plot = ImageView(Dialog)
-        self.vent_report_plot.setObjectName("vent_report_plot")
-        self.gridLayout.addWidget(self.vent_report_plot, 5, 0, 1, 1)
-        self.atrial_report_plot = ImageView(Dialog)
-        self.atrial_report_plot.setObjectName("atrial_report_plot")
-        self.gridLayout.addWidget(self.atrial_report_plot, 3, 0, 1, 1)
         self.export_btn = QtWidgets.QPushButton(Dialog)
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -64,10 +68,11 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Electrogram Report"))
         self.header_label.setText(_translate("Dialog", "Header info"))
+        self.vent_label.setText(_translate("Dialog", "TextLabel"))
+        self.atri_label.setText(_translate("Dialog", "TextLabel"))
         self.label.setText(_translate("Dialog", "Atrial Plot"))
         self.label_2.setText(_translate("Dialog", "Ventricular Plot"))
         self.export_btn.setText(_translate("Dialog", "Export"))
-from pyqtgraph import ImageView
 
 
 if __name__ == "__main__":
