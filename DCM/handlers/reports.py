@@ -14,7 +14,7 @@ class ReportsHandler:
         self._egram_report_ui = egram_report_ui
 
     # Handles the generation and presentation of the electrogram report, not implemented yet
-    def generate_egram(self, header: Dict[str, str]) -> None:
+    def generate_egram(self, header: Dict[str, str], atri_snap, vent_snap) -> None:
         print("generating egram report")
         header["Report name"] = "Electrogram"
         header["Date and Time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')

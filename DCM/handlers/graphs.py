@@ -1,3 +1,5 @@
+from typing import List
+
 import numpy as np
 from numpy import ndarray
 from pyqtgraph import PlotDataItem, PlotWidget
@@ -23,7 +25,7 @@ class GraphsHandler:
         atri_plot.hideButtons()
         atri_plot.setMenuEnabled(False)
         atri_plot.setLabel('left', "Amplitude", units='V', **{'color': '#FFF', 'font-size': '10pt'})
-        atri_plot.setLabel('bottom', "Time-ish", units='s', **{'color': '#FFF', 'font-size': '10pt'})
+        atri_plot.setLabel('bottom', "Time", units='s', **{'color': '#FFF', 'font-size': '10pt'})
         atri_plot.getAxis('bottom').setHeight(30)
         # noinspection PyArgumentList
         vent_plot.setRange(xRange=[-1, data_size], yRange=[-0.5, 5.5], padding=0)
@@ -35,7 +37,7 @@ class GraphsHandler:
         vent_plot.hideButtons()
         vent_plot.setMenuEnabled(False)
         vent_plot.setLabel('left', "Amplitude", units='V', **{'color': '#FFF', 'font-size': '10pt'})
-        vent_plot.setLabel('bottom', "Time-ish", units='s', **{'color': '#FFF', 'font-size': '10pt'})
+        vent_plot.setLabel('bottom', "Time", units='s', **{'color': '#FFF', 'font-size': '10pt'})
         vent_plot.getAxis('bottom').setHeight(30)
 
         # Initialize graphs to 0
@@ -65,7 +67,7 @@ class GraphsHandler:
 
         self._plot_data()
 
-    def get_plot_snapshot(self):
+    def get_plots_snapshot(self) -> List[any, any]:
         pass
 
     # Show/hide the atrial data on the graphs
