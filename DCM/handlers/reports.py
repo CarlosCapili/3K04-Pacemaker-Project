@@ -15,12 +15,11 @@ class ReportsHandler:
 
     # Handles the generation and presentation of the electrogram report, not implemented yet
     def generate_egram(self, header: Dict[str, str], atri_snap, vent_snap) -> None:
-        print("generating egram report")
         header["Report name"] = "Electrogram"
         header["Date and Time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        self._egram_report_ui.header_label.setText(self._format_params(header))
-        # self._egram_report_ui.atrial_report_plot.setImage(atri_snap)
-        # self._egram_report_ui.vent_report_plot.setImage(vent_snap)
+        # self._egram_report_ui.header_label_left.setText(self._format_params(header.))
+        self._egram_report_ui.atri_label.setPixmap(atri_snap)
+        self._egram_report_ui.vent_label.setPixmap(vent_snap)
 
     # Handles the generation and presentation of the bradycardia report
     def generate_brady(self, header: Dict[str, str], params: Dict[str, str]) -> None:
