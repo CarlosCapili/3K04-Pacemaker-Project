@@ -22,7 +22,7 @@ class Ui_Dialog(object):
         self.header_label = QtWidgets.QLabel(Dialog)
         self.header_label.setMinimumSize(QtCore.QSize(0, 100))
         self.header_label.setMaximumSize(QtCore.QSize(16777215, 100))
-        self.header_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.header_label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.header_label.setObjectName("header_label")
         self.verticalLayout.addWidget(self.header_label)
         self.gridLayout = QtWidgets.QGridLayout()
