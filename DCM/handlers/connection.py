@@ -36,7 +36,7 @@ class _SerialHandler(QThread):
 
     # https://docs.python.org/3.7/library/struct.html#format-strings
     _num_floats = 20
-    PARAMS_FMT_STR, ECG_FMT_STR, ECG_DATA_STR = "=3B6f4H5B", f"={_num_floats}f", f"={_num_floats // 2}f"
+    PARAMS_FMT_STR, ECG_FMT_STR, ECG_DATA_STR = "=3BfB2fBf4H5B", f"={_num_floats}f", f"={_num_floats // 2}f"
     PARAMS_NUM_BYTES, ECG_NUM_BYTES, ECG_DATA = calcsize(PARAMS_FMT_STR), calcsize(ECG_FMT_STR), calcsize(ECG_DATA_STR)
     REQUEST_ECG = pack("=B39x", 0x55)
     PARAMS_ORDER = ["Pacing Mode", "Lower Rate Limit", "Upper Rate Limit", "Atrial Amplitude", "Atrial Pulse Width",
