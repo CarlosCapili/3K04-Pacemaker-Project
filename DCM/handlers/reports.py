@@ -1,4 +1,5 @@
 import datetime
+import itertools
 from typing import Dict
 
 from PyQt5.QtGui import QFont
@@ -13,11 +14,18 @@ class ReportsHandler:
         print("Reports handler init")
         self._egram_report_ui = egram_report_ui
 
-    # Handles the generation and presentation of the electrogram report, not implemented yet
+    # Handles the generation and presentation of the electrogram report
     def generate_egram(self, header: Dict[str, str], atri_snap, vent_snap) -> None:
         header["Report name"] = "Electrogram"
         header["Date and Time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        # self._egram_report_ui.header_label_left.setText(self._format_params(header.))
+
+        i = iter(header.items())
+        # right label always has less than or equal the number of elements of the left label
+        right, left = dict(itertools.islice(i, len(header) // 2)), dict(i)
+
+        self._egram_report_ui.header_label_left.setText(self._plain_format_params(left))
+        self._egram_report_ui.header_label_right.setText(self._plain_format_params(right))
+
         self._egram_report_ui.atri_label.setPixmap(atri_snap)
         self._egram_report_ui.vent_label.setPixmap(vent_snap)
 
@@ -39,6 +47,16 @@ class ReportsHandler:
         :return: string of evenly spaced parameters separated by a colon, with each param on a new line
         """
         return "".join([f"{key:>25}: {value:<25}\n" for key, value in params.items()])
+
+    @staticmethod
+    def _plain_format_params(params: Dict[str, str]) -> str:
+        """
+        Formats the dictionary of parameters as a string, with each parameter name/value on a new line.
+
+        :param params: dict of params, with param names as keys and param values as values
+        :return: string of parameters separated by a colon, with each param on a new line
+        """
+        return "".join([f"{key}: {value}\n" for key, value in params.items()])
 
     @staticmethod
     def _show_report(report: str) -> None:
