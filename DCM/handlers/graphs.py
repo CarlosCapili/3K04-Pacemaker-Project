@@ -1,62 +1,79 @@
+from typing import List
+
 import numpy as np
-from PyQt5.QtCore import QThread
 from numpy import ndarray
 from pyqtgraph import PlotDataItem, PlotWidget
 
 
 # This class handles the graphs for the DCM and extends the QThread class to allow for multithreading
-class GraphsHandler(QThread):
-    atri_data_pace: ndarray
-    vent_data_pace: ndarray
-    atri_data_sense: ndarray
-    vent_data_sense: ndarray
-    atri_pace_plot: PlotDataItem
-    vent_pace_plot: PlotDataItem
-    atri_sense_plot: PlotDataItem
-    vent_sense_plot: PlotDataItem
+class GraphsHandler:
+    atri_data: ndarray
+    vent_data: ndarray
+    atri_plot: PlotDataItem
+    vent_plot: PlotDataItem
 
-    def __init__(self, atri_plot: PlotWidget, vent_plot: PlotWidget):
-        super().__init__()
+    def __init__(self, atri_plot: PlotWidget, vent_plot: PlotWidget, data_size: int):
         print("Graphs handler init")
 
-        # For right now, generate random sample data to plot
-        self.atri_data_pace = np.random.normal(size=100)
-        self.vent_data_pace = np.random.normal(size=100)
-        self.atri_data_sense = np.random.normal(size=100)
-        self.vent_data_sense = np.random.normal(size=100)
+        # noinspection PyArgumentList
+        atri_plot.setRange(xRange=[-1, data_size], yRange=[-0.5, 5.5], padding=0)
+        atri_plot.setLimits(xMin=-1, xMax=data_size, maxXRange=data_size + 1, yMin=-0.5, yMax=5.5)
+        atri_plot.setMouseEnabled(x=True, y=False)
+        atri_plot.enableAutoRange(x=False, y=True)
+        atri_plot.setAutoVisible(x=False, y=True)
+        atri_plot.showGrid(x=True, y=True)
+        atri_plot.hideButtons()
+        atri_plot.setMenuEnabled(False)
+        atri_plot.setLabel('left', "Amplitude", units='V', **{'color': '#FFF', 'font-size': '10pt'})
+        atri_plot.setLabel('bottom', "Time", units='s', **{'color': '#FFF', 'font-size': '10pt'})
+        atri_plot.getAxis('bottom').setHeight(30)
+        # noinspection PyArgumentList
+        vent_plot.setRange(xRange=[-1, data_size], yRange=[-0.5, 5.5], padding=0)
+        vent_plot.setLimits(xMin=-1, xMax=data_size, maxXRange=data_size + 1, yMin=-0.5, yMax=5.5)
+        vent_plot.setMouseEnabled(x=True, y=False)
+        vent_plot.enableAutoRange(x=False, y=True)
+        vent_plot.setAutoVisible(x=False, y=True)
+        vent_plot.showGrid(x=True, y=True)
+        vent_plot.hideButtons()
+        vent_plot.setMenuEnabled(False)
+        vent_plot.setLabel('left', "Amplitude", units='V', **{'color': '#FFF', 'font-size': '10pt'})
+        vent_plot.setLabel('bottom', "Time", units='s', **{'color': '#FFF', 'font-size': '10pt'})
+        vent_plot.getAxis('bottom').setHeight(30)
+
+        # Initialize graphs to 0
+        self.atri_data = np.zeros(data_size)
+        self.vent_data = np.zeros(data_size)
 
         # Create new sense and pace plots for the atrial and ventricular graphs, pace plots are red, sense are blue
-        self.atri_pace_plot = atri_plot.plot(pen=(252, 93, 93))
-        self.vent_pace_plot = vent_plot.plot(pen=(252, 93, 93))
-        self.atri_sense_plot = atri_plot.plot(pen=(0, 229, 255))
-        self.vent_sense_plot = vent_plot.plot(pen=(0, 229, 255))
+        self.atri_plot = atri_plot.plot(pen=(0, 229, 255))
+        self.vent_plot = vent_plot.plot(pen=(0, 229, 255))
 
-    # Plot the pace data on the graphs
-    def pace_plot(self) -> None:
-        self.atri_pace_plot.setData(self.atri_data_pace)
-        self.vent_pace_plot.setData(self.vent_data_pace)
+        self._plot_data()
 
-    # Plot the sense data on the graphs
-    def sense_plot(self) -> None:
-        self.atri_sense_plot.setData(self.vent_data_sense)
-        self.vent_sense_plot.setData(self.atri_data_sense)
+    # Plot the pace and sense data on the graphs
+    def _plot_data(self) -> None:
+        self.atri_plot.setData(self.atri_data)
+        self.vent_plot.setData(self.vent_data)
 
-    # Show the pace data on the graphs
-    def pace_show(self) -> None:
-        self.atri_pace_plot.show()
-        self.vent_pace_plot.show()
+    # Update and plot new received data
+    def update_data(self, atri_data: tuple, vent_data: tuple):
+        size = len(atri_data)
+        self.atri_data[:-size] = self.atri_data[size:]
+        self.atri_data[-size:] = atri_data
 
-    # Show the sense data on the graphs
-    def sense_show(self) -> None:
-        self.atri_sense_plot.show()
-        self.vent_sense_plot.show()
+        size = len(vent_data)
+        self.vent_data[:-size] = self.vent_data[size:]
+        self.vent_data[-size:] = vent_data
 
-    # Hide the pace data on the graphs
-    def pace_hide(self) -> None:
-        self.atri_pace_plot.hide()
-        self.vent_pace_plot.hide()
+        self._plot_data()
 
-    # Hide the sense data on the graphs
-    def sense_hide(self) -> None:
-        self.atri_sense_plot.hide()
-        self.vent_sense_plot.hide()
+    def get_plots_snapshot(self) -> List[any, any]:
+        pass
+
+    # Show/hide the atrial data on the graphs
+    def atri_vis(self, show: bool) -> None:
+        self.atri_plot.show() if show else self.atri_plot.hide()
+
+    # Show/hide the ventricular data on the graphs
+    def vent_vis(self, show: bool) -> None:
+        self.vent_plot.show() if show else self.vent_plot.hide()

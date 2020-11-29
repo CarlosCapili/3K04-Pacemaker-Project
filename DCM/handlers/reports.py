@@ -1,36 +1,30 @@
+import datetime
 from typing import Dict
 
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QMessageBox, QTableWidget
+from PyQt5.QtWidgets import QMessageBox
+
+from py_ui_files.egram_report import Ui_Dialog
 
 
 # This class handles generating and displaying all the reports for the DCM
 class ReportsHandler:
-    header: str
-
-    def __init__(self, table: QTableWidget):
+    def __init__(self, egram_report_ui: Ui_Dialog):
         print("Reports handler init")
-
-        # Get report header data from the About section, so that we're not hard-coding values multiple times
-        header = {table.verticalHeaderItem(row).text(): table.item(row, 0).text() for row in range(table.rowCount())}
-        self.header = self._format_params(header)
+        self._egram_report_ui = egram_report_ui
 
     # Handles the generation and presentation of the electrogram report, not implemented yet
-    def generate_egram(self, params: Dict[str, str]) -> None:
+    def generate_egram(self, header: Dict[str, str], atri_snap, vent_snap) -> None:
         print("generating egram report")
-        print(params["Pacing Mode"])
+        header["Report name"] = "Electrogram"
+        header["Date and Time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self._egram_report_ui.header_label.setText(self._format_params(header))
 
     # Handles the generation and presentation of the bradycardia report
-    def generate_brady(self, params: Dict[str, str]) -> None:
-        print("generating brady report")
-        report = "{0}{1}".format(self.header, self._format_params(params))
-        self._show_report(report)
-
-    # Handles the generation and presentation of the bradycardia report, may get removed
-    def generate_temp(self, params: Dict[str, str]) -> None:
-        print("generating temp report")
-        report = "{0}{1}".format(self.header, self._format_params(params))
-        print(report)
+    def generate_brady(self, header: Dict[str, str], params: Dict[str, str]) -> None:
+        header["Report name"] = "Bradycardia"
+        header["Date and Time"] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        report = "{0}{1}".format(self._format_params(header), self._format_params(params))
         self._show_report(report)
 
     @staticmethod
