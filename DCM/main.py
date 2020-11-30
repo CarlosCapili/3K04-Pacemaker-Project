@@ -21,25 +21,25 @@ from py_ui_files.welcomescreen import Ui_Welcome
 # This class handles all the linking between the frontend (GUI/UI) and the backend (handlers)
 class MainController:
     palette: QPalette
-    welcome_gui: QStackedWidget
-    welcome_ui: Ui_Welcome
-    dcm_gui: QMainWindow
-    dcm_ui: Ui_MainWindow
-    about_gui: QDialog
-    about_ui: Ui_aboutWindow
-    about_table: QTableWidget
-    about_header: Dict[str, str]
-    params_gui: QDialog
-    params_ui: Ui_parametersWindow
-    reports_gui: QDialog
-    reports_ui: Ui_ReportsWindow
-    egram_report_gui: QDialog
-    egram_report_ui: Ui_Dialog
-    auth: AuthHandler
-    conn: ConnectionHandler
-    params: ParametersHandler
-    reports: ReportsHandler
-    graphs: GraphsHandler
+    _welcome_gui: QStackedWidget
+    _welcome_ui: Ui_Welcome
+    _dcm_gui: QMainWindow
+    _dcm_ui: Ui_MainWindow
+    _about_gui: QDialog
+    _about_ui: Ui_aboutWindow
+    _about_table: QTableWidget
+    _about_header: Dict[str, str]
+    _params_gui: QDialog
+    _params_ui: Ui_parametersWindow
+    _reports_gui: QDialog
+    _reports_ui: Ui_ReportsWindow
+    _egram_report_gui: QDialog
+    _egram_report_ui: Ui_Dialog
+    _auth: AuthHandler
+    _conn: ConnectionHandler
+    _params: ParametersHandler
+    _reports: ReportsHandler
+    _graphs: GraphsHandler
 
     def __init__(self):
         # Set theme to dark mode
@@ -48,46 +48,46 @@ class MainController:
         self.palette.setColor(QPalette.WindowText, Qt.white)
 
         # Setup welcome screen UI from auto-generated file
-        self.welcome_gui = QStackedWidget()
-        self.welcome_ui = welcomescreen.Ui_Welcome()
-        self.welcome_ui.setupUi(self.welcome_gui)
+        self._welcome_gui = QStackedWidget()
+        self._welcome_ui = welcomescreen.Ui_Welcome()
+        self._welcome_ui.setupUi(self._welcome_gui)
 
         # Setup dcm screen UI from auto-generated file
-        self.dcm_gui = QMainWindow()
-        self.dcm_ui = dcm.Ui_MainWindow()
-        self.dcm_ui.setupUi(self.dcm_gui)
-        for i, button in enumerate(self.dcm_ui.pacing_mode_group.buttons()):
-            self.dcm_ui.pacing_mode_group.setId(button, i)
+        self._dcm_gui = QMainWindow()
+        self._dcm_ui = dcm.Ui_MainWindow()
+        self._dcm_ui.setupUi(self._dcm_gui)
+        for i, button in enumerate(self._dcm_ui.pacing_mode_group.buttons()):
+            self._dcm_ui.pacing_mode_group.setId(button, i)
 
         # Setup about screen UI from auto-generated file
-        self.about_gui = QDialog()
-        self.about_ui = about.Ui_aboutWindow()
-        self.about_ui.setupUi(self.about_gui)
-        self.about_table = self.about_ui.tableWidget
-        self.about_header = {self.about_table.verticalHeaderItem(row).text(): self.about_table.item(row, 0).text() for
-                             row in range(self.about_table.rowCount())}
+        self._about_gui = QDialog()
+        self._about_ui = about.Ui_aboutWindow()
+        self._about_ui.setupUi(self._about_gui)
+        self._about_table = self._about_ui.tableWidget
+        self._about_header = {self._about_table.verticalHeaderItem(row).text(): self._about_table.item(row, 0).text()
+                              for row in range(self._about_table.rowCount())}
 
         # Setup parameter screen UI from auto-generated file
-        self.params_gui = QDialog()
-        self.params_ui = parameters.Ui_parametersWindow()
-        self.params_ui.setupUi(self.params_gui)
+        self._params_gui = QDialog()
+        self._params_ui = parameters.Ui_parametersWindow()
+        self._params_ui.setupUi(self._params_gui)
 
         # Setup reports screen UI from auto-generated file
-        self.reports_gui = QDialog()
-        self.reports_ui = reports.Ui_ReportsWindow()
-        self.reports_ui.setupUi(self.reports_gui)
+        self._reports_gui = QDialog()
+        self._reports_ui = reports.Ui_ReportsWindow()
+        self._reports_ui.setupUi(self._reports_gui)
 
         # Setup egram screen UI from auto-generated file
-        self.egram_report_gui = QDialog()
-        self.egram_report_ui = egram_report.Ui_Dialog()
-        self.egram_report_ui.setupUi(self.egram_report_gui)
+        self._egram_report_gui = QDialog()
+        self._egram_report_ui = egram_report.Ui_Dialog()
+        self._egram_report_ui.setupUi(self._egram_report_gui)
 
         # Initialize separate handlers for authentication, pacemaker connection, parameters, reports and graphs
-        self.auth = AuthHandler(self.show_dcm)
-        self.conn = ConnectionHandler()
-        self.params = ParametersHandler(self.params_ui.tableWidget)
-        self.reports = ReportsHandler(self.egram_report_ui)
-        self.graphs = GraphsHandler(self.dcm_ui.atrial_plots, self.dcm_ui.vent_plots, data_size=2001)
+        self._auth = AuthHandler(self.show_dcm)
+        self._conn = ConnectionHandler()
+        self._params = ParametersHandler(self._params_ui.tableWidget)
+        self._reports = ReportsHandler(self._egram_report_ui)
+        self._graphs = GraphsHandler(self._dcm_ui.atrial_plots, self._dcm_ui.vent_plots, data_size=2001)
 
         # Link elements to actions
         self.link_welcome_buttons()
@@ -96,97 +96,101 @@ class MainController:
         self.link_params_buttons()
 
         # Start connection thread
-        self.conn.connect_status_change.connect(self.handle_pace_conn)
-        self.conn.serial.ecg_data_update.connect(self.graphs.update_data)
-        self.conn.serial.params_received.connect(self._show_alert)
-        self.conn.start()
+        self._conn.connect_status_change.connect(self.handle_pace_conn)
+        self._conn.serial.ecg_data_update.connect(self._graphs.update_data)
+        self._conn.serial.params_received.connect(self._show_alert)
+        self._conn.start()
 
         # Update params GUI table to show default pacing mode params
-        self.params.update_row_visibility(self.dcm_ui.pacing_mode_group.checkedButton().text())
+        self._params.update_row_visibility(self._dcm_ui.pacing_mode_group.checkedButton().text())
 
         # Show welcome screen GUI
-        self.welcome_gui.show()
+        self._welcome_gui.show()
 
     # Link welcome screen ui elements to their respective functions
     def link_welcome_buttons(self) -> None:
         # Welcome screen
         # show register and login screens when those buttons are pressed, respectively
-        self.welcome_ui.reg_btn.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(1))
-        self.welcome_ui.log_btn.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(2))
+        self._welcome_ui.reg_btn.clicked.connect(lambda: self._welcome_gui.setCurrentIndex(1))
+        self._welcome_ui.log_btn.clicked.connect(lambda: self._welcome_gui.setCurrentIndex(2))
 
         # Register screen
         # register user and go back to welcome screen when those buttons are pressed, respectively
-        self.welcome_ui.reg_submit_btn.clicked.connect(
-            lambda: self.auth.register(self.welcome_ui.reg_user.text(), self.welcome_ui.reg_pass.text()))
-        self.welcome_ui.reg_back_btn.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(0))
+        self._welcome_ui.reg_submit_btn.clicked.connect(
+            lambda: self._auth.register(self._welcome_ui.reg_user.text(), self._welcome_ui.reg_pass.text()))
+        self._welcome_ui.reg_back_btn.clicked.connect(lambda: self._welcome_gui.setCurrentIndex(0))
 
         # Login screen
         # login user and go back to welcome screen when those buttons are pressed, respectively
-        self.welcome_ui.log_submit_btn.clicked.connect(
-            lambda: self.auth.login(self.welcome_ui.log_user.text(), self.welcome_ui.log_pass.text()))
-        self.welcome_ui.log_back_btn.clicked.connect(lambda: self.welcome_gui.setCurrentIndex(0))
+        self._welcome_ui.log_submit_btn.clicked.connect(
+            lambda: self._auth.login(self._welcome_ui.log_user.text(), self._welcome_ui.log_pass.text()))
+        self._welcome_ui.log_back_btn.clicked.connect(lambda: self._welcome_gui.setCurrentIndex(0))
 
     # Link dcm ui elements to their respective functions
     def link_dcm_elements(self) -> None:
         # Buttons
-        self.dcm_ui.quit_btn.clicked.connect(self.dcm_gui.close)  # close dcm and quit program when quit is pressed
-        self.dcm_ui.about_btn.clicked.connect(self.about_gui.exec_)  # show about screen when about is pressed
-        self.dcm_ui.parameters_btn.clicked.connect(self.params_gui.exec_)  # show params screen when params is pressed
-        self.dcm_ui.reports_btn.clicked.connect(self.reports_gui.exec_)  # show reports screen when reports is pressed
-        self.dcm_ui.new_patient_btn.clicked.connect(self.conn.register_device)  # register pacemaker when btn is pressed
+        self._dcm_ui.quit_btn.clicked.connect(self._dcm_gui.close)  # close dcm and quit program when quit is pressed
+        self._dcm_ui.about_btn.clicked.connect(self._about_gui.exec_)  # show about screen when about is pressed
+        self._dcm_ui.parameters_btn.clicked.connect(self._params_gui.exec_)  # show params screen when params is pressed
+        self._dcm_ui.reports_btn.clicked.connect(self._reports_gui.exec_)  # show reports screen when reports is pressed
+        self._dcm_ui.new_patient_btn.clicked.connect(self._conn.register_device)  # register pacemaker on btn press
         # write serial data when btn is pressed
-        self.dcm_ui.pace_btn.clicked.connect(
-            lambda: self.conn.send_data_to_pacemaker(self.params.get_params(self.get_current_pace_index())))
+        self._dcm_ui.pace_btn.clicked.connect(
+            lambda: self._conn.send_data_to_pacemaker(self._params.get_params(self.get_current_pace_index())))
         # update the params GUI table to only show the params for the current pacing mode
-        self.dcm_ui.pacing_mode_group.buttonClicked.connect(
-            lambda: self.params.update_row_visibility(self.get_current_pace_mode()))
+        self._dcm_ui.pacing_mode_group.buttonClicked.connect(
+            lambda: self._params.update_row_visibility(self.get_current_pace_mode()))
 
         # Checkboxes
         # show or hide the plots, depending on whether or not the checkbox is checked, when it changes state
-        self.dcm_ui.atrial_box.stateChanged.connect(lambda: self.graphs.atri_vis(self.dcm_ui.atrial_box.isChecked()))
-        self.dcm_ui.vent_box.stateChanged.connect(lambda: self.graphs.vent_vis(self.dcm_ui.vent_box.isChecked()))
+        self._dcm_ui.atrial_box.stateChanged.connect(lambda: self._graphs.atri_vis(self._dcm_ui.atrial_box.isChecked()))
+        self._dcm_ui.vent_box.stateChanged.connect(lambda: self._graphs.vent_vis(self._dcm_ui.vent_box.isChecked()))
 
     # Link reports ui elements to their respective functions
     def link_reports_buttons(self) -> None:
         # Get the params based on the pacing mode, and then generate the respective report based on the pressed btn
-        self.reports_ui.egram_btn.clicked.connect(self.show_egram_report)
-        self.reports_ui.brady_btn.clicked.connect(
-            lambda: self.reports.generate_brady(self.about_header, self.get_pace_mode_params()))
+        self._reports_ui.egram_btn.clicked.connect(self.show_egram_report)
+        self._reports_ui.brady_btn.clicked.connect(
+            lambda: self._reports.generate_brady(self._about_header, self.get_pace_mode_params()))
+
+        # Get the params based on the pacing mode, and then generate the respective report based on the pressed btn
+        self._egram_report_ui.export_btn.clicked.connect(lambda: self._reports.export_pdf(self._egram_report_gui))
 
     # Link parameters ui elements to their respective functions
     def link_params_buttons(self) -> None:
-        self.params_ui.confirm_btn.clicked.connect(self.params.confirm)  # update stored params and write them to a file
-        self.params_ui.reset_btn.clicked.connect(self.params.reset)  # reset stored and shown params to GUI defaults
+        self._params_ui.confirm_btn.clicked.connect(self._params.confirm)  # update stored params and write them to disk
+        self._params_ui.reset_btn.clicked.connect(self._params.reset)  # reset stored and shown params to GUI defaults
 
     # Upon successful user registration or login, close the welcome screen, show the dcm and load params for user
     def show_dcm(self, username: str) -> None:
-        self.welcome_gui.close()
-        self.dcm_gui.show()
-        self.params.update_params_on_user_auth(username)
+        self._welcome_gui.close()
+        self._dcm_gui.show()
+        self._params.update_params_on_user_auth(username)
 
     # Upon successful user registration or login, close the welcome screen, show the dcm and load params for user
     def show_egram_report(self) -> None:
-        self.reports.generate_egram(self.about_header)
-        self.egram_report_gui.exec_()
+        self._reports.generate_egram(self._about_header, self._dcm_ui.atrial_plots.grab(),
+                                     self._dcm_ui.vent_plots.grab())
+        self._egram_report_gui.exec_()
 
     # Upon successful pacemaker connection, update the status bar animation and the About window table
     def handle_pace_conn(self, conn_state: PacemakerState, msg: str) -> None:
-        self.dcm_ui.statusbar.handle_conn_anim(conn_state, msg)
-        self.about_header["Device serial number"] = msg if conn_state != PacemakerState.NOT_CONNECTED else "None"
-        for row in range(self.about_table.rowCount()):
-            self.about_table.item(row, 0).setText(self.about_header[self.about_table.verticalHeaderItem(row).text()])
+        self._dcm_ui.statusbar.handle_conn_anim(conn_state, msg)
+        self._about_header["Device serial number"] = msg if conn_state != PacemakerState.NOT_CONNECTED else "None"
+        for row in range(self._about_table.rowCount()):
+            self._about_table.item(row, 0).setText(self._about_header[self._about_table.verticalHeaderItem(row).text()])
 
     # Get only the parameters required for the current pacing mode
     def get_pace_mode_params(self) -> Dict[str, str]:
-        return self.params.filter_params(self.get_current_pace_mode())
+        return self._params.filter_params(self.get_current_pace_mode())
 
     # Get current pacing mode index in button group
     def get_current_pace_index(self) -> int:
-        return self.dcm_ui.pacing_mode_group.checkedId()
+        return self._dcm_ui.pacing_mode_group.checkedId()
 
     # Get current pacing mode name
     def get_current_pace_mode(self) -> str:
-        return self.dcm_ui.pacing_mode_group.checkedButton().text()
+        return self._dcm_ui.pacing_mode_group.checkedButton().text()
 
     @staticmethod
     def _show_alert(success: bool, msg: str) -> None:
@@ -203,7 +207,7 @@ class MainController:
 
     # Stop threads spawned by handlers
     def stop_threads(self):
-        self.conn.stop()
+        self._conn.stop()
 
 
 if __name__ == '__main__':

@@ -27,29 +27,94 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="header_label">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Header info</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="header_label_left">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>100</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>100</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Header info</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="header_label_right">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Header info 2</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
+     <item row="5" column="0">
+      <widget class="QLabel" name="vent_label">
+       <property name="minimumSize">
+        <size>
+         <width>900</width>
+         <height>209</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>900</width>
+         <height>209</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="atri_label">
+       <property name="minimumSize">
+        <size>
+         <width>900</width>
+         <height>209</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>900</width>
+         <height>209</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label">
        <property name="minimumSize">
@@ -91,12 +156,6 @@
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QGraphicsView" name="vent_report_plot"/>
-     </item>
-     <item row="3" column="0">
-      <widget class="QGraphicsView" name="atrial_report_plot"/>
      </item>
      <item row="6" column="0">
       <widget class="QPushButton" name="export_btn">

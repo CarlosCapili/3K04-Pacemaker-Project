@@ -7,8 +7,8 @@ from handlers.connection import PacemakerState
 
 # This class extends the status bar widget to allow for animations
 class AnimatedStatusBar(QStatusBar):
-    no_conn_anim: QSequentialAnimationGroup
-    conn_anim: QSequentialAnimationGroup
+    _no_conn_anim: QSequentialAnimationGroup
+    _conn_anim: QSequentialAnimationGroup
 
     def __init__(self, parent=None):
         QStatusBar.__init__(self, parent)
@@ -39,11 +39,11 @@ class AnimatedStatusBar(QStatusBar):
         stay_red.setDuration(1000)
 
         # Setup animation group for no connection
-        self.no_conn_anim = QSequentialAnimationGroup()
-        self.no_conn_anim.addAnimation(fade_out)
-        self.no_conn_anim.addAnimation(fade_in)
-        self.no_conn_anim.addAnimation(stay_red)
-        self.no_conn_anim.setLoopCount(-1)  # loop infinitely
+        self._no_conn_anim = QSequentialAnimationGroup()
+        self._no_conn_anim.addAnimation(fade_out)
+        self._no_conn_anim.addAnimation(fade_in)
+        self._no_conn_anim.addAnimation(stay_red)
+        self._no_conn_anim.setLoopCount(-1)  # loop infinitely
 
         # Setup fade out animation for green
         fade_out = QPropertyAnimation(self, b"back_color")
@@ -64,28 +64,28 @@ class AnimatedStatusBar(QStatusBar):
         stay_green.setDuration(1000)
 
         # Setup animation group for a connection
-        self.conn_anim = QSequentialAnimationGroup()
-        self.conn_anim.addAnimation(fade_out)
-        self.conn_anim.addAnimation(fade_in)
-        self.conn_anim.addAnimation(stay_green)
-        self.conn_anim.setLoopCount(-1)
+        self._conn_anim = QSequentialAnimationGroup()
+        self._conn_anim.addAnimation(fade_out)
+        self._conn_anim.addAnimation(fade_in)
+        self._conn_anim.addAnimation(stay_green)
+        self._conn_anim.setLoopCount(-1)
 
     # Depending on the pacemaker connection state, display the corresponding animation/colour and the passed in
     # message on the status bar
     def handle_conn_anim(self, conn_state: PacemakerState, msg: str) -> None:
         if conn_state == PacemakerState.NOT_CONNECTED:
-            self.no_conn_anim.start()
-            self.conn_anim.stop()
+            self._no_conn_anim.start()
+            self._conn_anim.stop()
             self.showMessage(f"Not connected to pacemaker {msg}")
         elif conn_state == PacemakerState.CONNECTED:
-            self.no_conn_anim.stop()
-            self.conn_anim.start()
+            self._no_conn_anim.stop()
+            self._conn_anim.start()
             self.showMessage(f"Connected to pacemaker {msg}")
         elif conn_state == PacemakerState.REGISTERED:
-            self.no_conn_anim.stop()
-            self.conn_anim.stop()
-            self.pal.setColor(self.backgroundRole(), QColor("green"))
-            self.setPalette(self.pal)
+            self._no_conn_anim.stop()
+            self._conn_anim.stop()
+            self._pal.setColor(self.backgroundRole(), QColor("green"))
+            self.setPalette(self._pal)
             self.showMessage(f"Registered pacemaker {msg}")
 
     # Return the current background color of the status bar
@@ -94,11 +94,11 @@ class AnimatedStatusBar(QStatusBar):
 
     # Set the background color of the status bar
     def _set_back_color(self, color: QColor) -> None:
-        self.pal.setColor(self.backgroundRole(), color)
-        self.setPalette(self.pal)
+        self._pal.setColor(self.backgroundRole(), color)
+        self.setPalette(self._pal)
 
     # Define properties of the status bar, used in animations
-    pal: QPalette = QPalette()
+    _pal: QPalette = QPalette()
     back_color: pyqtProperty = pyqtProperty(QColor, _get_back_color, _set_back_color)
 
 
