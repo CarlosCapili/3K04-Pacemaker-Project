@@ -64,7 +64,7 @@ class _SerialHandler(QThread):
         self._running = True
 
         while self._running:
-            # Check if the serial connection is open with the pacemaker
+            # Check if the serial connection with the pacemaker is open
             if self._conn.is_open:
                 try:
                     with self._lock:
@@ -154,7 +154,7 @@ class _SerialHandler(QThread):
             self._conn.close()
             self._conn.port = None
 
-    # Updates the parameters to send to the pacemaker, and enables the send flag
+    # Update the parameters to send to the pacemaker, and enable the send flag
     def send_params_to_pacemaker(self, params_to_send: Dict[str, Union[int, float]]) -> None:
         with self._lock:
             self._sent_data = pack(self._PARAMS_FMT_STR, *[params_to_send[key] for key in self._PARAMS_ORDER])

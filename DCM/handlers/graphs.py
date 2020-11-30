@@ -3,7 +3,7 @@ from numpy import ndarray
 from pyqtgraph import PlotDataItem, PlotWidget
 
 
-# This class handles the graphs for the DCM and extends the QThread class to allow for multithreading
+# This class handles the graphs for the DCM
 class GraphsHandler:
     _atri_data: ndarray
     _vent_data: ndarray
@@ -42,13 +42,13 @@ class GraphsHandler:
         self._atri_data = np.zeros(data_size)
         self._vent_data = np.zeros(data_size)
 
-        # Create new sense and pace plots for the atrial and ventricular graphs, pace plots are red, sense are blue
+        # Create new sense plots for the atrial and ventricular graphs, in blue
         self._atri_plot = atri_plot.plot(pen=(0, 229, 255))
         self._vent_plot = vent_plot.plot(pen=(0, 229, 255))
 
         self._plot_data()
 
-    # Plot the pace and sense data on the graphs
+    # Plot the sense data on the graphs
     def _plot_data(self) -> None:
         self._atri_plot.setData(self._atri_data)
         self._vent_plot.setData(self._vent_data)
