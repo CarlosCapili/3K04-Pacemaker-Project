@@ -18,7 +18,7 @@ class ReportsHandler:
     def __init__(self, egram_report_ui: Ui_Dialog):
         print("Reports handler init")
         self._egram_report_ui = egram_report_ui
-        self._report_gen_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self._report_gen_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # used for egram report pdf file name
 
     # Handles the generation and presentation of the electrogram report
     def generate_egram(self, header: Dict[str, str], atri_snap, vent_snap) -> None:
@@ -37,23 +37,28 @@ class ReportsHandler:
         self._egram_report_ui.atri_label.setPixmap(atri_snap)
         self._egram_report_ui.vent_label.setPixmap(vent_snap)
 
+    # Export the egram report as a pdf, for printing
     def export_pdf(self, widget: QDialog):
-        file_name, _ = QFileDialog.getSaveFileName(widget, "Export Egram Report",
+        # Get user-specified file path
+        file_path, _ = QFileDialog.getSaveFileName(widget, "Export Egram Report",
                                                    f"egram_report_{self._report_gen_time}.pdf",
                                                    "PDF files (.pdf);;All Files ()")
 
-        if file_name:
-            if QFileInfo(file_name).suffix() == "":
-                file_name += ".pdf"
+        # If the user specified a file path
+        if file_path:
+            # Add .pdf suffix if it doesn't exist
+            if QFileInfo(file_path).suffix() == "":
+                file_path += ".pdf"
 
+            # Set up printer and painter to create pdf file
             printer = QPrinter(QPrinter.ScreenResolution)
             printer.setOrientation(QPrinter.Landscape)
             printer.setOutputFormat(QPrinter.PdfFormat)
-            printer.setOutputFileName(file_name)
+            printer.setOutputFileName(file_path)
             printer.setPageMargins(0, 0, 0, 0, QPrinter.Point)
             painter = QPainter(printer)
 
-            # scale widget
+            # Scale widget
             x_scale = printer.pageRect().width() * 1.0 / widget.width()
             y_scale = printer.pageRect().height() * 1.0 / widget.height()
             scale = min(x_scale, y_scale)
@@ -61,6 +66,7 @@ class ReportsHandler:
             painter.scale(scale, scale)
             painter.translate(-widget.width() / 2, -widget.height() / 2)
 
+            # Dump the contents of the egram report widget to the pdf, and write it to disk
             widget.render(painter)
             painter.end()
 
