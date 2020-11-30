@@ -23,7 +23,6 @@ class ParametersHandler:
     def __init__(self, table: QTableWidget):
         print("Parameters handler init")
         self._table = table
-        # self.table.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
         # Create dictionary of parameters per pacing mode
         self._params_per_mode = {
