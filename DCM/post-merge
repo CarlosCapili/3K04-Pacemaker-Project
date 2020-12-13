@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd DCM
+pipenv run ui2py.cmd
