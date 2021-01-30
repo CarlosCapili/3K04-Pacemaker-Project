@@ -1,2 +1,1 @@
-# 3K04-Project
-Main repo for our SFWRENG 3K04 project by Raeed, Shaqeeb, Udeep, Carlos, and Aaron.
+Pacemaker protoype was created and tested using Simulink while using Python to create the DCM.
